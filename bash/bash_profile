@@ -262,37 +262,7 @@ alias la="ls -la"
 # ALIASES
 # -------------------------------------------------------------------
 
-# Git
-alias gs="git status "
-alias ga="git add "
-alias gaa="git add --all"
-alias gb="git branch "
-alias gc="git commit"
-alias gd="git diff"
-alias gco="git checkout "
-alias gk="gitk --all&"
-alias gx="gitx --all"
-alias got="git "
-alias get="git "
-alias gci="git ci"
-alias gbr="git for-each-ref --sort=committerdate refs/remotes/ --format=%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))"
-alias grb="git for-each-ref --sort=committerdate refs/remotes/ --format=%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))"
-alias recent="git for-each-ref --sort=-committerdate"
-alias recentdate="git for-each-ref --sort=-committerdate refs/heads/ --format='%(refname) %(committerdate) %(authorname)' | sed 's/refs\/heads\///g'"
-git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
-
-# Docker
-alias compose="command docker-compose"
-alias machine="command docker-machine"
-alias swarm="command docker-swarm"
-
-# Read things aloud faster
-alias say="say --voice=Daniel --rate=275"
-
-# Quick clear
-alias c='clear'
-
-# Import additional alises
+# Import alises
 if [ -r ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi

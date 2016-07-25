@@ -1,0 +1,93 @@
+#!/bin/bash
+#
+# Aliases & functions for various apps
+#
+
+# ----------------------------------------------------------------------
+#  git
+# ----------------------------------------------------------------------
+
+alias gs="git status "
+alias ga="git add "
+alias gaa="git add --all"
+alias gb="git branch "
+alias gc="git commit"
+alias gd="git diff"
+alias gco="git checkout "
+alias gk="gitk --all&"
+alias gx="gitx --all"
+alias got="git "
+alias get="git "
+alias gci="git ci"
+alias gbr="git for-each-ref --sort=committerdate refs/remotes/ --format=%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))"
+alias grb="git for-each-ref --sort=committerdate refs/remotes/ --format=%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))"
+alias recent="git for-each-ref --sort=-committerdate"
+alias recentdate="git for-each-ref --sort=-committerdate refs/heads/ --format='%(refname) %(committerdate) %(authorname)' | sed 's/refs\/heads\///g'"
+
+git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+
+# ----------------------------------------------------------------------
+#  ffmpeg
+# ----------------------------------------------------------------------
+
+# Split MP4 files
+ffsplit () {
+    ffmpeg -i "$1" -f segment -segment_time 0.001 -vcodec copy -an -sn -y -reset_timestamps 1 -map 0 "$1.%04d.mp4"
+}
+
+# Use ffmpeg to create a GIF
+palette="/tmp/palette.png"
+filters="scale=${2-400}:-1:flags=lanczos"
+Ffmpeggif () {
+    ffmpeg -v warning -i "$1" -vf "$filters,palettegen" -y $palette
+    ffmpeg -v warning -i "$1" -i $palette -lavfi "$filters [x]; [x][1:v] paletteuse" -y "$1.gif"
+}
+
+# Convert file to WebM
+toWebM () {
+    ffmpeg -i "$1" -c:v libvpx -crf 10 -b:v 20M -c:a libvorbis "$1.$(date +%H%M%S%d%m%y).webm"
+}
+
+# Convert file to MP4
+toMP4 () {
+    ffmpeg -i "$1" -crf 17 -pix_fmt yuv420p "$1.$(date +%H%M%S%d%m%y).mp4"
+}
+
+# Convert video into smooth 60fps
+smooth() {
+    vspipe --arg in_filename="$1" --arg display_fps=60 --y4m ~/.mpv/60fps.py - | ffmpeg -i - -crf 17 -y "$1.$(date +%H%M%S%d%m%y).60fps.mp4"
+}
+
+deshake() {
+    ffmpeg -i "$1" -vf vidstabdetect=shakiness=10:accuracy=15:result="/tmp/mytransforms.trf" -f null -
+    ffmpeg -i "$1" -vf vidstabtransform=zoom=15:smoothing=30:input="/tmp/mytransforms.trf",unsharp=5:5:0.8:3:3:0.4 -crf 16 -y "$1.deshake.mp4"
+}
+
+
+# ----------------------------------------------------------------------
+#  Miscellany
+# ----------------------------------------------------------------------
+
+# Quick find
+f () {
+    find . -iname "*$1*"
+}
+
+# cd to directory, or if file, to containing dir
+cf () {
+    if [[ -e $1 ]]; then
+        if [[ -d $1 ]]; then
+            cd $1
+        else
+            cd $(dirname $1)
+        fi
+    fi
+}
+
+# Read things aloud faster
+alias say="say --voice=Daniel --rate=275"
+
+# Quick clear
+alias c='clear'
+
+# vim:syntax=sh

@@ -258,6 +258,10 @@ fi
 alias ll="ls -l"
 alias la="ls -la"
 
+# set iTerm profile depending on hostname
+echo -e "\033]50;SetProfile=Default\a"; # initially set to Default
+echo -e "\033]50;SetProfile=$(hostname)\a"; # then set to hostname
+
 # -------------------------------------------------------------------
 # ALIASES
 # -------------------------------------------------------------------

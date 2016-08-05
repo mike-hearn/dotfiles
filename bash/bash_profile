@@ -276,8 +276,8 @@ fi
 # -------------------------------------------------------------------
 
 # ~/.shenv is used as a machine specific ~/.bashrc
-if [ -r ~/.config/bash/bash_env.sh ]; then
-    . ~/.config/bash/bash_env.sh
+if [ -r ~/.bash_env ]; then
+    . ~/.bash_env
 fi
 
 # Use the color prompt by default when interactive

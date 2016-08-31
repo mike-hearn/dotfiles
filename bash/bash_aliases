@@ -27,13 +27,18 @@ alias recentdate="git for-each-ref --sort=-committerdate refs/heads/ --format='%
 git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 
 # ----------------------------------------------------------------------
+#  Docker container service/util aliases
+# ----------------------------------------------------------------------
+function tldr { docker run --rm mikehearn/tldr $@; }
+function hugo { docker run --rm -v $(pwd):/data mikehearn/hugo $@; }
+function gcloud { mkdir -p $HOME/.config/gcloud; docker run --rm -ti -v $HOME/.config/gcloud:/home/gcloud/.config/gcloud mikehearn/gcloud $@; }
+
+# ----------------------------------------------------------------------
 #  ffmpeg
 # ----------------------------------------------------------------------
 
 # Split MP4 files
-ffsplit () {
-    ffmpeg -i "$1" -f segment -segment_time 0.001 -vcodec copy -an -sn -y -reset_timestamps 1 -map 0 "$1.%04d.mp4"
-}
+ffsplit () { ffmpeg -i "$1" -f segment -segment_time 0.001 -vcodec copy -an -sn -y -reset_timestamps 1 -map 0 "$1.%04d.mp4"; }
 
 # Use ffmpeg to create a GIF
 palette="/tmp/palette.png"
@@ -44,19 +49,13 @@ Ffmpeggif () {
 }
 
 # Convert file to WebM
-toWebM () {
-    ffmpeg -i "$1" -c:v libvpx -crf 10 -b:v 20M -c:a libvorbis "$1.$(date +%H%M%S%d%m%y).webm"
-}
+toWebM () { ffmpeg -i "$1" -c:v libvpx -crf 10 -b:v 20M -c:a libvorbis "$1.$(date +%H%M%S%d%m%y).webm"; }
 
 # Convert file to MP4
-toMP4 () {
-    ffmpeg -i "$1" -crf 17 -pix_fmt yuv420p "$1.$(date +%H%M%S%d%m%y).mp4"
-}
+toMP4 () { ffmpeg -i "$1" -crf 17 -pix_fmt yuv420p "$1.$(date +%H%M%S%d%m%y).mp4"; }
 
 # Convert video into smooth 60fps
-smooth() {
-    vspipe --arg in_filename="$1" --arg display_fps=60 --y4m ~/.mpv/60fps.py - | ffmpeg -i - -crf 17 -y "$1.$(date +%H%M%S%d%m%y).60fps.mp4"
-}
+smooth() { vspipe --arg in_filename="$1" --arg display_fps=60 --y4m ~/.mpv/60fps.py - | ffmpeg -i - -crf 17 -y "$1.$(date +%H%M%S%d%m%y).60fps.mp4"; }
 
 deshake() {
     ffmpeg -i "$1" -vf vidstabdetect=shakiness=10:accuracy=15:result="/tmp/mytransforms.trf" -f null -
@@ -89,5 +88,9 @@ alias say="say --voice=Daniel --rate=275"
 
 # Quick clear
 alias c='clear'
+
+# Find external IP address
+alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
+
 
 # vim:syntax=sh

@@ -43,7 +43,6 @@
     set modelines=1                 " Modelines (last line of this file) work
     set mouse=a                     " Mouse support in iTerm et al
 
-
     " Trailing white space
     autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
     au InsertLeave * match ExtraWhitespace /\s\+$/
@@ -58,13 +57,17 @@
     set foldmethod=indent
     set foldnestmax=2
     set foldlevel=100
-    nnoremap z0 :set foldnestmax=2<CR>zR
+    nnoremap z0 :filetype detect<CR>zR
     nnoremap z) :set foldnestmax=2<CR>zA
     nnoremap z1 :set foldnestmax=2<CR>zM
     nnoremap z2 :set foldnestmax=2<CR>zMzr
     nnoremap z3 :set foldnestmax=3<CR>zMzrzr
     nnoremap z4 :set foldnestmax=4<CR>zMzrzrzr
     nnoremap z5 :set foldnestmax=5<CR>zMzrzrzrzr
+    nnoremap z6 :set foldnestmax=6<CR>zMzrzrzrzrzr
+    nnoremap z7 :set foldnestmax=7<CR>zMzrzrzrzrzrzr
+    nnoremap z8 :set foldnestmax=8<CR>zMzrzrzrzrzrzrzr
+    nnoremap z9 :set foldnestmax=9<CR>zMzrzrzrzrzrzrzrzr
 " }}}
 " Plugins {{{
     " Load vim-plug
@@ -91,7 +94,6 @@
     Plug 'michalbachowski/vim-wombat256mod'
     Plug 'AlessandroYorba/Alduin'
     Plug 'marcopaganini/mojave-vim-theme'
-    Plug 'Konstruktionist/vim'
     Plug 'trevorrjohn/vim-obsidian'
     Plug 'kocakosm/hilal'
     Plug 'geetarista/ego.vim'
@@ -214,8 +216,8 @@
 
     " Center the text on-screen when Ctrl+O / Ctrl+I
     " TODO remove this if you don't notice for a while
-    " nnoremap <C-O> <C-O>zz
-    " nnoremap <C-I> <C-I>zz
+    nnoremap <C-O> <C-O>zz
+    nnoremap <C-I> <C-I>zz
 
     " Save, and exit insert-mode afterward
     inoremap <D-s> <Esc>:w<CR>
@@ -378,7 +380,7 @@
     autocmd Filetype python setlocal foldnestmax=2 ts=4 sts=4 sw=4
     autocmd Filetype html setlocal ts=2 sts=2 sw=2 foldnestmax=5
     autocmd Filetype css setlocal ts=2 sts=2 sw=2
-    autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
+    autocmd Filetype javascript setlocal ts=2 sts=2 sw=2 foldnestmax=15
     autocmd Filetype javascript.jsx setlocal ts=2 sts=2 sw=2
 
     " Bash will properly handle $

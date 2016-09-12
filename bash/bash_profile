@@ -51,7 +51,7 @@ umask 0022
 # ----------------------------------------------------------------------
 # ENVIRONMENT VARIABLES
 # ----------------------------------------------------------------------
-NPM_PACKAGES="${HOME}/.npm-packages"
+export NPM_PACKAGES="${HOME}/.npm-packages"
 
 # ----------------------------------------------------------------------
 # PATH
@@ -59,13 +59,21 @@ NPM_PACKAGES="${HOME}/.npm-packages"
 
 # we want the various sbins on the path along with /usr/local/bin
 PATH="$PATH:/usr/local/sbin:/usr/sbin:/sbin"
+
+# I have a synced dropbox path, so why not
 PATH="${HOME}/Dropbox/bin:$PATH"
+
+# NPM global stuff
 PATH="$NPM_PACKAGES/bin:$PATH"
 PATH="/usr/local/bin:$PATH"
 
-# Unset manpath so we can inherit from /etc/manpath via the `manpath` command
+# Still NPM; unset manpath so we can inherit from /etc/manpath via the
+# `manpath` command
 unset MANPATH # delete if you already modified MANPATH elsewhere in your config
 export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
+
+# Tell Node about these packages
+export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
 
 # put ~/bin first on PATH
 if [ -d "$HOME/bin" ]; then

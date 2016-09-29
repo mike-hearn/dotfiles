@@ -109,6 +109,7 @@
     Plug 'NLKNguyen/papercolor-theme'
     Plug 'hachy/eva01.vim'
     Plug 'ratazzi/blackboard.vim'
+    Plug 'noahfrederick/vim-noctu'
 
     " Syntax
     Plug 'elzr/vim-json', { 'for': 'json' }
@@ -419,12 +420,12 @@
 
     else
         set background=dark
-        colorscheme base16-solarized-dark
+        colorscheme noctu
         let g:airline_theme="base16"
-        hi Folded ctermbg=bg
+        " hi Folded ctermbg=bg
     endif
     filetype plugin indent on
 
 " }}}
 
-" vim:foldmethod=marker:foldlevel=0
+" vim: foldmethod=marker: foldlevel=0

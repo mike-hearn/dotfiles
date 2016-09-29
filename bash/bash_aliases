@@ -97,5 +97,8 @@ alias c='clear'
 # Find external IP address
 alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
 
+# tmux with reasonable colors
+alias tmux="TERM=screen-256color-bce tmux"
+
 
 # vim:syntax=sh

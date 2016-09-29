@@ -52,10 +52,15 @@ Ffmpeggif () {
 toWebM () { ffmpeg -i "$1" -c:v libvpx -crf 10 -b:v 20M -c:a libvorbis "$1.$(date +%H%M%S%d%m%y).webm"; }
 
 # Convert file to MP4
-toMP4 () { ffmpeg -i "$1" -crf 17 -pix_fmt yuv420p "$1.$(date +%H%M%S%d%m%y).mp4"; }
+toMP4 () { ffmpeg -i "$1" -crf 17 -vf "scale=trunc(in_w/2)*2:trunc(in_h/2)*2" -pix_fmt yuv420p "$1.$(date +%H%M%S%d%m%y).mp4"; }
 
-# Convert video into smooth 60fps
+# Convert video into smooth 60fps... OR 24fps
 smooth() { vspipe --arg in_filename="$1" --arg display_fps=60 --y4m ~/.mpv/60fps.py - | ffmpeg -i - -crf 17 -y "$1.$(date +%H%M%S%d%m%y).60fps.mp4"; }
+to24fps() { vspipe --arg in_filename="$1" --arg display_fps=60 --y4m ~/.mpv/24fps.py - | ffmpeg -i - -crf 17 -y "$1.$(date +%H%M%S%d%m%y).24fps.mp4"; }
+
+stable() {
+    ffmpeg -i "$1" -vf vidstabdetect=stepsize=12:result=transform_vectors.trf -f null -;
+    ffmpeg -i "$1" -vf vidstabtransform=input=transform_vectors.trf:zoom=1:smoothing=30,unsharp=5:5:0.8:3:3:0.4 -vcodec libx264 -preset slow -tune film -crf 18 -acodec copy "$1.stable.mp4"; }
 
 deshake() {
     ffmpeg -i "$1" -vf vidstabdetect=shakiness=10:accuracy=15:result="/tmp/mytransforms.trf" -f null -

@@ -134,9 +134,10 @@
     Plug 'Lokaltog/vim-easymotion'
     Plug 'ctrlpvim/ctrlp.vim'
     Plug 'scrooloose/nerdcommenter'
-    Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+    Plug 'scrooloose/nerdtree'
     Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  'NERDTreeToggle' }
     Plug 'tpope/vim-fugitive'
+    Plug 'tpope/vim-unimpaired'  " Key bindings for vim-fugitive
     Plug 'rking/ag.vim', { 'on': 'Ag' }
     Plug 'airblade/vim-gitgutter'
     Plug 'tinymode.vim'

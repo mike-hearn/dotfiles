@@ -138,6 +138,7 @@
     Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  'NERDTreeToggle' }
     Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-unimpaired'  " Key bindings for vim-fugitive
+    Plug 'davidhalter/jedi-vim'
     Plug 'rking/ag.vim', { 'on': 'Ag' }
     Plug 'airblade/vim-gitgutter'
     Plug 'tinymode.vim'
@@ -145,10 +146,12 @@
     Plug 'vim-scripts/BufOnly.vim' " Close all buffers except open
     Plug 'airblade/vim-rooter' " Sets the pwd to git root (and makes me hit enter a lot)
     Plug 'teranex/jk-jumps.vim' " Adds a 'jump' when using, eg, 10j to move
+    Plug 'mike-hearn/vim-buffer-history' " Keeps track of buffer history
     if v:version >= 704
         try
             Plug 'SirVer/ultisnips'
-            Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+            Plug 'ternjs/tern_for_vim', {'do': 'npm install'}
+            Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
         catch
         endtry
     endif
@@ -184,6 +187,12 @@
     nnoremap <Leader>x :b #<CR>:bd #<CR>
     nnoremap <Leader>q <C-w>q
     nnoremap <Leader>X :BufOnly<CR>
+
+    " Home key buffer navigation
+    nnoremap <Leader>ja :BufferHistoryJumpTo 0<CR>
+    nnoremap <Leader>js :BufferHistoryJumpTo 1<CR>
+    nnoremap <Leader>jd :BufferHistoryJumpTo 2<CR>
+    nnoremap <Leader>jf :BufferHistoryJumpTo 3<CR>
 
     " Tab using leader + N/M
     nnoremap <Leader>N :tabprevious<CR>

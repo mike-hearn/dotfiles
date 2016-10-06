@@ -147,6 +147,7 @@
     Plug 'airblade/vim-rooter' " Sets the pwd to git root (and makes me hit enter a lot)
     Plug 'teranex/jk-jumps.vim' " Adds a 'jump' when using, eg, 10j to move
     Plug 'mike-hearn/vim-buffer-history' " Keeps track of buffer history
+    Plug 'junegunn/fzf' " Alternate to ctrlp
     if v:version >= 704
         try
             Plug 'SirVer/ultisnips'
@@ -285,6 +286,11 @@
     let g:ctrlp_regexp = 1
     let g:ctrlp_abbrev = { 'gmode': 't', 'abbrevs': [  { 'pattern': ' ', 'expanded': '.*', 'mode': 'pfrz', } ] }
     let g:ctrlp_mruf_max = 3000
+    if !has('gui_running')
+        let g:ctrlp_map = ''
+        nmap <C-p> :FZF<CR>
+        imap <C-p> :FZF<CR>
+    endif
 
     " Syntastic
     let g:syntastic_javascript_checkers = ['eslint']

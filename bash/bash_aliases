@@ -100,5 +100,13 @@ alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
 # tmux with reasonable colors
 alias tmux="TERM=screen-256color-bce tmux"
 
+# fzf
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+export FZF_CTRL_R_OPTS='--sort'
+export FZF_DEFAULT_COMMAND='ag -g ""'
+_fzf_compgen_path() {
+    ag -g "" "$1"
+}
+
 
 # vim:syntax=sh

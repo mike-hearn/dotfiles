@@ -110,6 +110,7 @@
     Plug 'hachy/eva01.vim'
     Plug 'ratazzi/blackboard.vim'
     Plug 'noahfrederick/vim-noctu'
+    Plug 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
 
     " Syntax
     Plug 'elzr/vim-json', { 'for': 'json' }
@@ -436,7 +437,7 @@
 
     else
         set background=dark
-        colorscheme noctu
+        colorscheme Tomorrow-Night
         let g:airline_theme="base16"
         " hi Folded ctermbg=bg
     endif

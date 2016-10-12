@@ -108,5 +108,18 @@ _fzf_compgen_path() {
     ag -g "" "$1"
 }
 
+# sagent
+sagent()
+{
+    [ -S "$SSH_AUTH_SOCK" ] || export SSH_AUTH_SOCK="$(< ~/.ssh/ssh-agent.env)"
+
+    # if cached agent socket is invalid, start a new one
+    [ -S "$SSH_AUTH_SOCK" ] || {
+        eval "$(ssh-agent)"
+        ssh-add -t 25920000 -K ~/.ssh/id_rsa
+        echo "$SSH_AUTH_SOCK" > ~/.ssh/ssh-agent.env
+    }
+}
+
 
 # vim:syntax=sh

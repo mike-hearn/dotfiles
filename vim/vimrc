@@ -128,7 +128,7 @@
     Plug 'evanmiller/nginx-vim-syntax'
 
     " Syntax Checking / Linting / Beautifying
-    Plug 'scrooloose/syntastic', {'for': ['html', 'python', 'javascript', 'javascript.jsx' ]}
+    " Plug 'scrooloose/syntastic', {'for': ['html', 'python', 'javascript', 'javascript.jsx' ]}
 
     " IDE & Productivity Features
     Plug 'bling/vim-airline'
@@ -149,11 +149,22 @@
     Plug 'teranex/jk-jumps.vim' " Adds a 'jump' when using, eg, 10j to move
     Plug 'mike-hearn/vim-buffer-history' " Keeps track of buffer history
     Plug 'junegunn/fzf' " Alternate to ctrlp
+    Plug 'ervandew/supertab' " Tab completion super-fied
+
+    " Version specific plugins
     if v:version >= 704
         try
             Plug 'SirVer/ultisnips'
             Plug 'ternjs/tern_for_vim', {'do': 'npm install'}
             Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
+            " Plug 'maralla/completor.vim'
+        catch
+        endtry
+    endif
+    if v:version >= 800
+        try
+            Plug 'maralla/validator.vim'
+            " Plug 'maralla/completor.vim'
         catch
         endtry
     endif
@@ -385,6 +396,7 @@
     let g:ycm_complete_in_strings = 1 " Completion in string
 
     " Ultisnips.vim
+    let g:UltiSnipsSnippetsDir = "~/.vim/UltiSnips/"
     let g:UltiSnipsExpandTrigger       = "<c-j>"
     let g:UltiSnipsJumpForwardTrigger  = "<c-j>"
     let g:UltiSnipsJumpBackwardTrigger = "<c-p>"

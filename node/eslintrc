@@ -1,0 +1,7 @@
+{
+  "extends": "airbnb",
+  "rules": {
+  }
+}
+
+// vim: syntax=javascript:ts=2:sw=2

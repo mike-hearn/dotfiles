@@ -1,0 +1,14 @@
+{
+    "libs": [
+        "lodash",
+        "moment",
+        "jquery",
+        "ember"
+    ],
+    "plugins": {
+        "node": {},
+        "complete_strings": {},
+        "es_modules": {}
+    }
+}
+

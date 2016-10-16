@@ -6,6 +6,8 @@ ln -sf $(pwd)/bash/bash_profile $HOME/.profile
 
 # Node
 ln -sf $(pwd)/node/npmrc $HOME/.npmrc
+ln -sf $(pwd)/node/tern-project $HOME/.tern-project
+ln -sf $(pwd)/node/eslintrc $HOME/.eslintrc
 
 # Tmux
 ln -sf $(pwd)/tmux/tmux.conf $HOME/.tmux.conf

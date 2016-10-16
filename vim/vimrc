@@ -163,8 +163,9 @@
     endif
     if v:version >= 800
         try
-            Plug 'maralla/validator.vim'
+            " Plug 'maralla/validator.vim'
             " Plug 'maralla/completor.vim'
+            Plug 'neomake/neomake'
         catch
         endtry
     endif
@@ -304,41 +305,47 @@
         imap <C-p> :FZF<CR>
     endif
 
-    " Syntastic
-    let g:syntastic_javascript_checkers = ['eslint']
-    let g:syntastic_error_symbol = "●"
-    let g:syntastic_warning_symbol = '-'
-    " let g:syntastic_warning_symbol = "●"
-    " let g:syntastic_error_symbol = '.'
-    let g:syntastic_style_error_symbol = '?'
-    let g:syntastic_style_warning_symbol = 'x'
+    " Syntastic (Disabled until either Syntastic is re-enabled or I remove it)
+    " let g:syntastic_javascript_checkers = ['eslint']
+    " let g:syntastic_error_symbol = "●"
+    " let g:syntastic_warning_symbol = '-'
+    " let g:syntastic_style_error_symbol = '?'
+    " let g:syntastic_style_warning_symbol = 'x'
 
-    let g:syntastic_always_populate_loc_list = 1
-    let g:syntastic_loc_list_height = 3
-    let g:syntastic_auto_loc_list = 0
-    let g:syntastic_check_on_open = 0
-    let g:syntastic_check_on_wq = 0
+    " let g:syntastic_always_populate_loc_list = 1
+    " let g:syntastic_loc_list_height = 3
+    " let g:syntastic_auto_loc_list = 0
+    " let g:syntastic_check_on_open = 0
+    " let g:syntastic_check_on_wq = 0
 
-    if exists(':SyntasticCheck')
-        set statusline+=%#warningmsg#
-        set statusline+=%{SyntasticStatuslineFlag()}
-        set statusline+=%*
+    " if exists(':SyntasticCheck')
+        " set statusline+=%#warningmsg#
+        " set statusline+=%{SyntasticStatuslineFlag()}
+        " set statusline+=%*
 
-        " Custom syntastic highlighting
-        hi Search term=reverse ctermfg=39 ctermbg=238 guifg=#66CCFF guibg=#555555
-        hi SyntasticErrorSign ctermfg=088 guifg=#870000
-        " hi SyntasticWarningSign ctermfg=088 guifg=#870000
-        hi SyntasticStyleErrorSign ctermfg=088 guifg=#870000
-        " hi SyntasticStyleWarningSign ctermfg=088 guifg=#870000
+        " " Custom syntastic highlighting
+        " hi Search term=reverse ctermfg=39 ctermbg=238 guifg=#66CCFF guibg=#555555
+        " hi SyntasticErrorSign ctermfg=088 guifg=#870000
+        " " hi SyntasticWarningSign ctermfg=088 guifg=#870000
+        " hi SyntasticStyleErrorSign ctermfg=088 guifg=#870000
+        " " hi SyntasticStyleWarningSign ctermfg=088 guifg=#870000
 
-        highlight link SyntasticErrorSign SignColumn
-        highlight link SyntasticWarningSign SignColumn
-        highlight link SyntasticStyleErrorSign SignColumn
-        highlight link SyntasticStyleWarningSign SignColumn
-    endif
+        " highlight link SyntasticErrorSign SignColumn
+        " highlight link SyntasticWarningSign SignColumn
+        " highlight link SyntasticStyleErrorSign SignColumn
+        " highlight link SyntasticStyleWarningSign SignColumn
+    " endif
+
+    " Validator.vim
+    " let g:validator_javascript_checkers = ['eslint']
+    " let g:validator_filetype_map = {'javascript.jsx': 'javascript'}
+
+    " Neomake (Disabled until I decide between Neomake/Validator)
+    autocmd! BufWritePost,BufEnter * Neomake
+    let g:neomake_javascript_enabled_makers = ['eslint']
+    let g:neomake_javascript_eslint_exe = system('PATH=$(npm bin):$PATH && which eslint | tr -d "\n"')
 
     " NERDTree
-
     let NERDTreeIgnore = ['node_modules']
 
     " jedi-vim

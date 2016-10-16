@@ -11,7 +11,9 @@ ln -sf $(pwd)/node/npmrc $HOME/.npmrc
 ln -sf $(pwd)/tmux/tmux.conf $HOME/.tmux.conf
 
 # Vim
+mkdir -p $HOME/.vim/UltiSnips
 ln -sf $(pwd)/vim/vimrc $HOME/.vimrc
+ln -sf $(pwd)/vim/UltiSnips $HOME/.vim/UltiSnips
 
 # Git
 ln -sf $(pwd)/git/gitconfig $HOME/.gitconfig

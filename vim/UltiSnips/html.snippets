@@ -1,0 +1,29 @@
+snippet html5 "Basic HTML5 boilerplate" b
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>$1</title>
+</head>
+<body>
+	$0
+</body>
+</html>
+endsnippet
+
+snippet el "A simple HTML element"
+<${1:div}>
+	$0
+</${1/(\w+).*/$1/}>
+endsnippet
+
+###########################################################################
+#                            Ember Snippets                               #
+###########################################################################
+
+snippet emlink "Ember link-to" b
+{{#link-to '${1}'}}
+  $1
+{{/link-to}}
+endsnippet

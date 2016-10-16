@@ -1,0 +1,31 @@
+snippet pydef "Create a basic Python definition or method" b
+def $1(self):
+	"""
+	${2:Enter method description here}
+	"""
+	pass
+
+endsnippet
+
+snippet djmodel "Create a basic Django model" b
+class $1(models.Model):
+	title = models.CharField(max_length=200)
+
+	def __str__(self):
+		return self.title
+
+
+
+endsnippet
+
+snippet djadmin "Create a basic ModelAdmin class and register it" b
+@admin.register($1)
+class $1Admin(admin.ModelAdmin):
+	pass
+endsnippet
+
+snippet djstr "Set the __str__ function" b
+def __str__(self):
+	return self.$0
+endsnippet
+

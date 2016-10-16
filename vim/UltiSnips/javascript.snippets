@@ -1,0 +1,129 @@
+###########################################################################
+#                            Standard JS Snippets                         #
+###########################################################################
+snippet fun "function (fun)"
+function ${1:function_name}(${2:argument}) {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet cl "console.log() statement" b
+// TODO: Remove console.log statement after debugging (`!v strftime("%Y-%m-%d %H:%M:%S")`)
+console.log($0);
+endsnippet
+
+snippet todo "Insert a standard TODO reminder" b
+// TODO: $0 (`!v strftime("%Y-%m-%d %H:%M:%S")`)
+endsnippet
+
+
+###########################################################################
+#                            React Snippets                               #
+###########################################################################
+
+snippet reactcomponent "A standard React component"
+import React from 'react';
+
+class $1 extends React.Component {
+	render() {
+		return (
+			<${2:div}>
+				$0
+			</$2>
+		);
+	}
+}
+
+$1.propTypes = {
+	optionalArray: React.PropTypes.array,
+	optionalBool: React.PropTypes.bool,
+	optionalFunc: React.PropTypes.func,
+	optionalNumber: React.PropTypes.number,
+	optionalObject: React.PropTypes.object,
+	optionalString: React.PropTypes.string,
+	optionalSymbol: React.PropTypes.symbol,
+};
+
+export default $1;
+endsnippet
+
+snippet reactbootstrap "React component plus imports"
+import React from 'react';
+import {observer} from 'mobx-react';
+import CSSModules from 'react-css-modules';
+
+import styles from './styles';
+
+@observer
+class $1 extends React.Component {
+	render() {
+		return (
+			<${2:div}>
+				<p>Hello, world</p>
+			</$2>
+		);
+	}
+}
+
+$1.propTypes = {
+	optionalArray: React.PropTypes.array,
+	optionalBool: React.PropTypes.bool,
+	optionalFunc: React.PropTypes.func,
+	optionalNumber: React.PropTypes.number,
+	optionalObject: React.PropTypes.object,
+	optionalString: React.PropTypes.string,
+	optionalSymbol: React.PropTypes.symbol,
+};
+
+export default CSSModules($1, styles);
+endsnippet
+
+snippet reactpure "React pure function component plus imports"
+import React from 'react';
+
+const $1 = ({}) => (
+	<${2:div}>
+		<p>Hello, world</p>
+	</$2>
+);
+
+$1.propTypes = {
+	optionalArray: React.PropTypes.array,
+	optionalBool: React.PropTypes.bool,
+	optionalFunc: React.PropTypes.func,
+	optionalNumber: React.PropTypes.number,
+	optionalObject: React.PropTypes.object,
+	optionalString: React.PropTypes.string,
+	optionalSymbol: React.PropTypes.symbol,
+};
+
+export default $1;
+endsnippet
+
+
+snippet validation "React props validation boilerplate" b
+$1.propTypes = {
+	optionalArray: React.PropTypes.array,
+	optionalBool: React.PropTypes.bool,
+	optionalFunc: React.PropTypes.func,
+	optionalNumber: React.PropTypes.number,
+	optionalObject: React.PropTypes.object,
+	optionalString: React.PropTypes.string,
+	optionalSymbol: React.PropTypes.symbol,
+};
+endsnippet
+
+###########################################################################
+#                            React Native Snippets                        #
+###########################################################################
+
+snippet reactnativestyles "React Native styles object" b
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'stretch',
+		backgroundColor: '#005e75',
+	},
+});
+endsnippet

@@ -12,6 +12,8 @@ ln -sf $(pwd)/node/stylelintrc $HOME/.stylelintrc
 
 # Tmux
 ln -sf $(pwd)/tmux/tmux.conf $HOME/.tmux.conf
+mkdir -p ~/.tmux/plugins
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 # Vim
 mkdir -p $HOME/.vim

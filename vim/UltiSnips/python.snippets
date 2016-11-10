@@ -15,6 +15,26 @@ class $1(models.Model):
 		return self.title
 
 
+endsnippet
+
+snippet djserializer  "Create a Django Rest Framework serializer" b
+from rest_framework import serializers
+
+
+class $1Serializer(serializers.ModelSerializer):
+	class Meta:
+		model = $1
+
+
+endsnippet
+
+snippet djviewset  "Create a Django Rest Framework ModelViewSet" b
+from rest_framework import viewsets
+
+
+class $1ViewSet(viewsets.ModelViewSet):
+	queryset = $1.objects.all()
+	serializer_class = $1Serializer
 
 endsnippet
 

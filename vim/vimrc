@@ -150,6 +150,7 @@
     Plug 'mike-hearn/vim-buffer-history' " Keeps track of buffer history
     Plug 'junegunn/fzf' " Alternate to ctrlp
     Plug 'ervandew/supertab' " Tab completion super-fied
+    Plug 'tpope/vim-obsession' " Remember vim session state
 
     " Version specific plugins
     if v:version >= 704
@@ -207,6 +208,8 @@
     nnoremap <Leader>js :BufferHistoryJumpTo 1<CR>
     nnoremap <Leader>jd :BufferHistoryJumpTo 2<CR>
     nnoremap <Leader>jf :BufferHistoryJumpTo 3<CR>
+    nnoremap <Leader>jg :BufferHistoryJumpTo 4<CR>
+    nnoremap <Leader>jh :BufferHistoryJumpTo 5<CR>
 
     " Tab using leader + N/M
     nnoremap <Leader>N :tabprevious<CR>
@@ -354,6 +357,7 @@
     let g:neomake_warning_sign={'text': '·'}
     let g:neomake_info_sign={'text': 'i'}
     let g:neomake_message_sign={'text': 'm'}
+    let g:neomake_verbose = 0
 
     " NERDTree
     let NERDTreeIgnore = ['node_modules']

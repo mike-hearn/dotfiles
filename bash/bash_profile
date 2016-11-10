@@ -57,7 +57,7 @@ export NPM_PACKAGES="${HOME}/.npm-packages"
 # PATH
 # ----------------------------------------------------------------------
 
-# we want the various sbins on the path along with /usr/local/bin
+# We want the various sbins on the path along with /usr/local/bin
 PATH="$PATH:/usr/local/sbin:/usr/sbin:/sbin"
 
 # I have a synced dropbox path, so why not
@@ -80,7 +80,10 @@ if [ -d "$HOME/bin" ]; then
     PATH="$HOME/bin:$PATH"
 fi
 
-# ----------------------------------------------------------------------
+# Yarn support
+export PATH="$PATH:$HOME/.yarn/bin"
+
+ #----------------------------------------------------------------------
 # ENVIRONMENT CONFIGURATION
 # ----------------------------------------------------------------------
 

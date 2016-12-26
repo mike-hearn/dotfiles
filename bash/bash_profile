@@ -197,7 +197,7 @@ prompt_color() {
 }
 
 prompt_full() {
-    PS1="\n${GREY}[${COLOR1}\u${GREY}@${COLOR2}\h${GREY}:${COLOR1}\w${GREY}]\n${GREY}$P${PS_CLEAR} "
+    PS1="\n\n\n${GREY}[${COLOR1}\u${GREY}@${COLOR2}\h${GREY}:${COLOR1}\w${GREY}]\n${GREY}$P${PS_CLEAR} "
     PS2="> "
 }
 

@@ -100,6 +100,15 @@ alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
 # tmux with reasonable colors
 alias tmux="TERM=screen-256color-bce tmux"
 
+# tmux fzf session switch
+fs() {
+    local session
+    session=$(tmux list-sessions -F "#{session_id} #{session_name}" | sort -r | \
+        sed 's/\$\([0-9]\)/\1/g' | \
+        fzf --query="$1" --select-1 --exit-0) &&
+        tmux switch-client -t "`echo $session | sed 's/^[0-9]* //g'`"
+}
+
 # fzf
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 export FZF_CTRL_R_OPTS='--sort'

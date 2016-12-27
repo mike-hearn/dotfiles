@@ -470,7 +470,7 @@
 
     else
         set background=dark
-        colorscheme Tomorrow-Night
+        colorscheme solarized
         let g:airline_theme="base16"
         " hi Folded ctermbg=bg
     endif

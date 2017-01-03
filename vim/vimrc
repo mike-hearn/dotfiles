@@ -278,7 +278,7 @@
 " }}}
 " Plugin Settings {{{
     " Airline Settings
-    let g:airline_powerline_fonts = 0
+    let g:airline_powerline_fonts = 1
     let g:airline_extensions = ['tabline', 'whitespace']
     let g:airline#extensions#tabline#enabled = 1
     let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
@@ -470,7 +470,7 @@
 
     else
         set background=dark
-        colorscheme solarized
+        colorscheme Tomorrow-Night-Bright
         let g:airline_theme="base16"
         " hi Folded ctermbg=bg
     endif

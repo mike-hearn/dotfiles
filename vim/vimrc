@@ -151,6 +151,7 @@
     Plug 'junegunn/fzf' " Alternate to ctrlp
     Plug 'ervandew/supertab' " Tab completion super-fied
     Plug 'tpope/vim-obsession' " Remember vim session state
+    Plug 'vimwiki/vimwiki' " Org-mode for vim, kind of
 
     " Version specific plugins
     if v:version >= 704

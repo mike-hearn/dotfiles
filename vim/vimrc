@@ -6,7 +6,7 @@
     set autoindent
     set smartindent
 
-    set relativenumber              " Show line numbers
+    set relativenumber number              " Show line numbers
     set tw=79                       " Width of document (used by gd)
     set nowrap                      " Don't automatically wrap on load
     set fo-=t                       " Don't automatically wrap text when typing
@@ -85,32 +85,8 @@
     Plug 'vim-airline/vim-airline-themes'
     Plug 'chriskempson/base16-vim'
     Plug 'tomasr/molokai'
-    Plug 'altercation/vim-colors-solarized'
-    Plug 'cesardeazevedo/Fx-ColorScheme'
-    Plug 'scwood/vim-hybrid'
-    Plug 'marciomazza/vim-brogrammer-theme'
-    Plug 'mhinz/vim-janah'
-    Plug 'AlessandroYorba/Sierra'
-    Plug 'michalbachowski/vim-wombat256mod'
-    Plug 'AlessandroYorba/Alduin'
-    Plug 'marcopaganini/mojave-vim-theme'
-    Plug 'trevorrjohn/vim-obsidian'
-    Plug 'kocakosm/hilal'
-    Plug 'geetarista/ego.vim'
-    Plug 'mhartington/oceanic-next'
-    Plug 'marcopaganini/termschool-vim-theme'
-    Plug 'changyuheng/color-scheme-holokai-for-vim'
-    Plug 'atelierbram/vim-colors_duotones'
-    Plug 'petelewis/vim-evolution'
-    Plug 'mkarmona/materialbox'
-    Plug 'jscappini/material.vim'
-    Plug 'ronny/birds-of-paradise.vim'
-    Plug 'zsoltf/vim-maui'
-    Plug 'NLKNguyen/papercolor-theme'
-    Plug 'hachy/eva01.vim'
-    Plug 'ratazzi/blackboard.vim'
-    Plug 'noahfrederick/vim-noctu'
     Plug 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
+    Plug 'ryanoasis/vim-devicons'
 
     " Syntax
     Plug 'elzr/vim-json', { 'for': 'json' }
@@ -127,9 +103,6 @@
     Plug 'fountain.vim'
     Plug 'evanmiller/nginx-vim-syntax'
 
-    " Syntax Checking / Linting / Beautifying
-    " Plug 'scrooloose/syntastic', {'for': ['html', 'python', 'javascript', 'javascript.jsx' ]}
-
     " IDE & Productivity Features
     Plug 'bling/vim-airline'
     Plug 'Lokaltog/vim-easymotion'
@@ -140,7 +113,6 @@
     Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-unimpaired'  " Key bindings for vim-fugitive
     Plug 'davidhalter/jedi-vim'
-    Plug 'rking/ag.vim', { 'on': 'Ag' }
     Plug 'airblade/vim-gitgutter'
     Plug 'tinymode.vim'
     Plug 'sjl/gundo.vim', { 'on': 'GundoToggle' }
@@ -148,10 +120,14 @@
     Plug 'airblade/vim-rooter' " Sets the pwd to git root (and makes me hit enter a lot)
     Plug 'teranex/jk-jumps.vim' " Adds a 'jump' when using, eg, 10j to move
     Plug 'mike-hearn/vim-buffer-history' " Keeps track of buffer history
-    Plug 'junegunn/fzf' " Alternate to ctrlp
+    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  }
+    Plug 'junegunn/fzf.vim'
     Plug 'ervandew/supertab' " Tab completion super-fied
     Plug 'tpope/vim-obsession' " Remember vim session state
     Plug 'vimwiki/vimwiki' " Org-mode for vim, kind of
+    Plug 'christoomey/vim-tmux-navigator'
+    Plug 'terryma/vim-multiple-cursors'
+    Plug 'jiangmiao/auto-pairs'
 
     " Version specific plugins
     if v:version >= 704
@@ -159,15 +135,12 @@
             Plug 'SirVer/ultisnips'
             Plug 'ternjs/tern_for_vim', {'do': 'npm install'}
             Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
-            " Plug 'maralla/completor.vim'
         catch
         endtry
     endif
     if v:version >= 800
         try
-            " Plug 'maralla/validator.vim'
-            " Plug 'maralla/completor.vim'
-            Plug 'neomake/neomake'
+            Plug 'w0rp/ale'
         catch
         endtry
     endif
@@ -187,13 +160,18 @@
     nnoremap / /\v
     vnoremap / /\v
 
-    " Speed up C-e, C-y
-    nnoremap <C-y> <C-y><C-y><C-y><C-y><C-y>
-    nnoremap <C-e> <C-e><C-e><C-e><C-e><C-e>
-
     " Sensible traversal using j/k
     nnoremap j gj
     nnoremap k gk
+
+    " Easier jumping to beginning & end
+    noremap H ^
+    noremap L g_
+    noremap J 5<C-e>
+    noremap K 5<C-y>
+
+    " Get to console easier
+    nnoremap ; :
 
     " Buffer management; for additiona mappings, see tinymode PluginSettings()
     noremap <Leader>a <C-^>
@@ -309,56 +287,8 @@
         imap <C-p> :FZF<CR>
     endif
 
-    " Syntastic (Disabled until either Syntastic is re-enabled or I remove it)
-    " let g:syntastic_javascript_checkers = ['eslint']
-    " let g:syntastic_error_symbol = "●"
-    " let g:syntastic_warning_symbol = '-'
-    " let g:syntastic_style_error_symbol = '?'
-    " let g:syntastic_style_warning_symbol = 'x'
-
-    " let g:syntastic_always_populate_loc_list = 1
-    " let g:syntastic_loc_list_height = 3
-    " let g:syntastic_auto_loc_list = 0
-    " let g:syntastic_check_on_open = 0
-    " let g:syntastic_check_on_wq = 0
-
-    " if exists(':SyntasticCheck')
-        " set statusline+=%#warningmsg#
-        " set statusline+=%{SyntasticStatuslineFlag()}
-        " set statusline+=%*
-
-        " " Custom syntastic highlighting
-        " hi Search term=reverse ctermfg=39 ctermbg=238 guifg=#66CCFF guibg=#555555
-        " hi SyntasticErrorSign ctermfg=088 guifg=#870000
-        " " hi SyntasticWarningSign ctermfg=088 guifg=#870000
-        " hi SyntasticStyleErrorSign ctermfg=088 guifg=#870000
-        " " hi SyntasticStyleWarningSign ctermfg=088 guifg=#870000
-
-        " highlight link SyntasticErrorSign SignColumn
-        " highlight link SyntasticWarningSign SignColumn
-        " highlight link SyntasticStyleErrorSign SignColumn
-        " highlight link SyntasticStyleWarningSign SignColumn
-    " endif
-
-    " Validator.vim
-    " let g:validator_javascript_checkers = ['eslint']
-    " let g:validator_filetype_map = {'javascript.jsx': 'javascript'}
-
-    " Neomake (Disabled until I decide between Neomake/Validator)
-    autocmd! BufWritePost,BufEnter * Neomake
-    let g:neomake_javascript_enabled_makers = ['eslint']
-    let g:neomake_javascript_eslint_exe = system('PATH=$(npm bin):$PATH && which eslint | tr -d "\n"')
-    let g:neomake_scss_enabled_makers = ['stylelint']
-    let g:neomake_scss_stylelint_maker = {
-          \ 'exe': 'stylelint',
-          \ 'args': ['--no-color'],
-          \ 'errorformat': '%+P%f,%*\s%l:%c  %t  %m,%-Q' }
-    let g:neomake_serialize=1
-    let g:neomake_error_sign={'text': '×'}
-    let g:neomake_warning_sign={'text': '·'}
-    let g:neomake_info_sign={'text': 'i'}
-    let g:neomake_message_sign={'text': 'm'}
-    let g:neomake_verbose = 0
+    " Devicons
+    let g:WebDevIconsUnicodeDecorateFolderNodes = 1
 
     " NERDTree
     let NERDTreeIgnore = ['node_modules']
@@ -409,6 +339,13 @@
 
     " vim-rooter
     let g:rooter_silent_chdir = 1
+
+    " vim-tmux-navigator
+    let g:tmux_navigator_no_mappings = 1
+    nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
+    nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
+    nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
+    nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
 
     " YouCompleteMe
     let g:ycm_collect_identifiers_from_tags_files = 1 " Let YCM read tags from Ctags file

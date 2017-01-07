@@ -273,10 +273,9 @@
     nmap <leader>9 <Plug>AirlineSelectTab9
 
     " CtrlP
-    nmap <Leader>s :CtrlPBuffer<CR>
-    imap <Leader>s <Esc>:CtrlPBuffer<CR>
-    nmap <Leader>f :CtrlPMRU<CR>
-    imap <Leader>f <Esc>:CtrlPMRU<CR>
+    noremap <Leader>s <Esc>:Buffers<CR>
+    noremap <Leader>f <Esc>:History<CR>
+    noremap <Leader>g <Esc>:Ag<CR>
     let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden --ignore-dir=.git --ignore="*.pyc*" -g ""'
     let g:ctrlp_regexp = 1
     let g:ctrlp_abbrev = { 'gmode': 't', 'abbrevs': [  { 'pattern': ' ', 'expanded': '.*', 'mode': 'pfrz', } ] }

@@ -43,6 +43,8 @@
     set modelines=1                 " Modelines (last line of this file) work
     set mouse=a                     " Mouse support in iTerm et al
 
+    set autoread                    " Check if buffer was modified
+
     " Trailing white space
     autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
     au InsertLeave * match ExtraWhitespace /\s\+$/
@@ -128,6 +130,8 @@
     Plug 'christoomey/vim-tmux-navigator'
     Plug 'terryma/vim-multiple-cursors'
     Plug 'jiangmiao/auto-pairs'
+    Plug 'editorconfig/editorconfig-vim'
+    Plug 'tmux-plugins/vim-tmux-focus-events' " For auto-reloading on focus
 
     " Version specific plugins
     if v:version >= 704
@@ -379,6 +383,8 @@
 
     au BufNewFile,BufRead *.md setf markdown
     au BufNewFile,BufRead *.fountain setf fountain
+
+    au FocusGained * checktime
 " }}}
 " Colorscheme {{{
     syntax enable

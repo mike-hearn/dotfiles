@@ -15,6 +15,15 @@
 # readline config
 : ${INPUTRC=~/.inputrc}
 
+# establish dotfile location
+dotfiles_location() {
+    this_file="${BASH_SOURCE[0]}"
+    true_profile_location=$(readlink $this_file)
+    profile_dirname=$(dirname $true_profile_location)
+    git -C $profile_dirname rev-parse --show-toplevel
+}
+DOTFILES_DIR=$(dotfiles_location)
+
 # ----------------------------------------------------------------------
 #  SHELL OPTIONS
 # ----------------------------------------------------------------------
@@ -278,8 +287,8 @@ echo -e "\033]50;SetProfile=$(hostname)\a"; # then set to hostname
 # -------------------------------------------------------------------
 
 # Import alises
-if [ -r ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+if [ -r $DOTFILES_DIR/bash/bash_aliases ]; then
+    . $DOTFILES_DIR/bash/bash_aliases
 fi
 
 # -------------------------------------------------------------------
@@ -292,8 +301,8 @@ if [ -r ~/.bash_env ]; then
 fi
 
 # Use the color prompt by default when interactive
-if [ -n "$PS1" ]; then
-    prompt_full
+if [ -r $DOTFILES_DIR/bash/bash_prompt ]; then
+    . $DOTFILES_DIR/bash/bash_prompt
 fi
 
 # Load those secrets, if they exist
@@ -312,4 +321,5 @@ fi
 alias beep='tput bel'
 
 # vim: ts=4 sts=4 shiftwidth=4 expandtab
+
 

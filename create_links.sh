@@ -1,7 +1,6 @@
 #!/usr/bin/env /bin/bash
 
 # Bash
-ln -sf $(pwd)/bash/bash_aliases $HOME/.bash_aliases
 ln -sf $(pwd)/bash/bash_profile $HOME/.profile
 
 # Node

@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# We want the various sbins on the path along with /usr/local/bin
+PATH="$PATH:/usr/local/sbin:/usr/sbin:/sbin"
+
+# I have a synced dropbox path, so why not
+PATH="${HOME}/Dropbox/bin:$PATH"
+
+# NPM global stuff
+PATH="$NPM_PACKAGES/bin:$PATH"
+PATH="/usr/local/bin:$PATH"
+
+# Put ~/bin first on PATH
+[ -d "$HOME/bin" ] && PATH="$HOME/bin:$PATH"
+
+# Yarn support
+PATH="$PATH:$HOME/.yarn/bin"
+
+# vim: syntax=sh ts=4 sts=4 shiftwidth=4 expandtab

@@ -171,11 +171,16 @@
     " Easier jumping to beginning & end
     noremap H ^
     noremap L g_
-    noremap J 5<C-e>
-    noremap K 5<C-y>
 
     " Get to console easier
     nnoremap ; :
+
+    " Quick delete entire line
+    nnoremap D 0C<Esc>
+
+    " Global copy/paste
+    vmap <leader>y :w! /tmp/vitmp<CR>
+    nmap <leader>p :r! cat /tmp/vitmp<CR>
 
     " Buffer management; for additiona mappings, see tinymode PluginSettings()
     noremap <Leader>a <C-^>
@@ -226,11 +231,6 @@
     nnoremap ∆ :m .+1<CR>==
     nnoremap ˚ :m .-2<CR>==
 
-    " Center the text on-screen when Ctrl+O / Ctrl+I
-    " TODO remove this if you don't notice for a while
-    nnoremap <C-O> <C-O>zz
-    nnoremap <C-I> <C-I>zz
-
     " Save, and exit insert-mode afterward
     inoremap <D-s> <Esc>:w<CR>
     nnoremap <D-s> :w<CR>
@@ -277,21 +277,30 @@
     nmap <leader>9 <Plug>AirlineSelectTab9
 
     " CtrlP
-    noremap <Leader>s <Esc>:Buffers<CR>
-    noremap <Leader>f <Esc>:History<CR>
-    noremap <Leader>g <Esc>:Ag<CR>
+    nnoremap <Leader>s :Buffers<CR>
+    nnoremap <Leader>f :History<CR>
     let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden --ignore-dir=.git --ignore="*.pyc*" -g ""'
     let g:ctrlp_regexp = 1
     let g:ctrlp_abbrev = { 'gmode': 't', 'abbrevs': [  { 'pattern': ' ', 'expanded': '.*', 'mode': 'pfrz', } ] }
     let g:ctrlp_mruf_max = 3000
     if !has('gui_running')
         let g:ctrlp_map = ''
-        nmap <C-p> :FZF<CR>
-        imap <C-p> :FZF<CR>
+        nmap <C-p> :Files<CR>
+        imap <C-p> :Files<CR>
     endif
 
     " Devicons
     let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+
+    " FZF
+    let g:fzf_files_options =
+                \ '--preview "(highlight -O ansi {} || cat {}) 2> /dev/null | head -'.&lines.'"'
+
+    autocmd VimEnter * command! -bang -nargs=* Ag
+                \ call fzf#vim#ag(<q-args>,
+                \                 <bang>0 ? fzf#vim#with_preview('up:60%')
+                \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
+                \                 <bang>0)
 
     " NERDTree
     let NERDTreeIgnore = ['node_modules']

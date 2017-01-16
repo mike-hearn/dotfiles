@@ -1,3 +1,7 @@
+# Python Snippets
+
+# {{{ General Python Snippets
+
 snippet pydef "Create a basic Python definition or method" b
 def $1(self):
 	"""
@@ -6,6 +10,9 @@ def $1(self):
 	pass
 
 endsnippet
+
+# }}}
+# {{{ Django Snippets
 
 snippet djmodel "Create a basic Django model" b
 class $1(models.Model):
@@ -49,3 +56,6 @@ def __str__(self):
 	return self.$0
 endsnippet
 
+# }}}
+
+# vim: foldmethod=marker: foldlevel=0

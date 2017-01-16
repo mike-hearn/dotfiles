@@ -1,6 +1,6 @@
-###########################################################################
-#                            Standard JS Snippets                         #
-###########################################################################
+# Javascript Snippets
+
+# {{{ Standard JS Snippets
 snippet fun "function (fun)"
 function ${1:function_name}(${2:argument}) {
 	${VISUAL}$0
@@ -15,12 +15,8 @@ endsnippet
 snippet todo "Insert a standard TODO reminder" b
 // TODO: $0 (`!v strftime("%Y-%m-%d %H:%M:%S")`)
 endsnippet
-
-
-###########################################################################
-#                            React Snippets                               #
-###########################################################################
-
+# }}}
+# {{{ React Snippets
 snippet reactcomponent "A standard React component"
 import React from 'react';
 
@@ -112,11 +108,8 @@ $1.propTypes = {
 	optionalSymbol: React.PropTypes.symbol,
 };
 endsnippet
-
-###########################################################################
-#                            React Native Snippets                        #
-###########################################################################
-
+# }}}
+# {{{ React Native Snippets
 snippet reactnativestyles "React Native styles object" b
 const styles = StyleSheet.create({
 	container: {
@@ -127,3 +120,43 @@ const styles = StyleSheet.create({
 	},
 });
 endsnippet
+# }}}
+# {{{ Webpack Snippets
+snippet webpackconfig "Basic webpack config" b
+var path = require('path');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+module.exports = {
+	entry: './index.js',
+	output: {
+		path: path.resolve(__dirname, 'dist'),
+		filename: 'bundle.js',
+	},
+	module: {
+		rules: [
+			{
+				test: /\.jsx?$/,
+				include: [path.resolve(__dirname)],
+				loader: 'babel-loader',
+				options: { presets: ['es2015'] },
+			},
+			{
+				test: /\.scss$/,
+				include: [path.resolve(__dirname)],
+				loader:	ExtractTextPlugin.extract({
+					loader: 'css-loader?importLoaders=1!sass-loader',
+				}),
+			},
+		],
+	},
+	plugins: [
+		new ExtractTextPlugin({
+			filename: '[name].bundle.css',
+			allChunks: true,
+		}),
+	],
+};
+endsnippet
+# }}}
+
+# vim: foldmethod=marker: foldlevel=0

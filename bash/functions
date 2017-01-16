@@ -277,10 +277,6 @@ function deshake() {
 }
 
 
-# ----------------------------------------------------------------------
-#  Miscellany
-# ----------------------------------------------------------------------
-
 # Quick find
 function f () {
     find . -iname "*$1*"
@@ -308,6 +304,16 @@ function sagent()
         ssh-add -t 25920000 -K ~/.ssh/id_rsa
         echo "$SSH_AUTH_SOCK" > ~/.ssh/ssh-agent.env
     }
+}
+
+# cd to top of git repo
+function cdg() {
+    cd $(git rev-parse --show-toplevel)
+}
+
+# Actviate virtualenv from anywhere in repo (only works when named 'venv')
+function vactivate() {
+    source $(git rev-parse --show-toplevel)/venv/bin/activate
 }
 
 # vim: syntax=sh ts=4 sts=4 shiftwidth=4 expandtab

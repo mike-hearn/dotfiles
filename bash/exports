@@ -2,12 +2,7 @@
 
 # Make vim the default editor.
 set -o vi # Default editor is now VIM
-if [ -n "$HAVE_VIM" ]; then
-    EDITOR=vim
-else
-    EDITOR=vi
-fi
-export EDITOR
+export EDITOR=vim
 
 # PAGER
 if [ -n "$(command -v less)" ]; then

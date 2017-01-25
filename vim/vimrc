@@ -88,12 +88,12 @@
     Plug 'chriskempson/base16-vim'
     Plug 'tomasr/molokai'
     Plug 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
-    Plug 'ryanoasis/vim-devicons'
 
     " Syntax
     Plug 'elzr/vim-json', { 'for': 'json' }
     Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
-    Plug 'pangloss/vim-javascript', { 'for': [ 'javascript', 'javascript.jsx' ]}
+    Plug 'jelera/vim-javascript-syntax'
+    Plug 'pangloss/vim-javascript'
     Plug 'othree/html5.vim', { 'for': 'html' }
     Plug 'sophacles/vim-bundle-mako', { 'for': 'html' }
     Plug 'tpope/vim-haml', { 'for': 'haml' }
@@ -104,6 +104,8 @@
     Plug 'mustache/vim-mustache-handlebars'
     Plug 'fountain.vim'
     Plug 'evanmiller/nginx-vim-syntax'
+    Plug 'godlygeek/tabular'
+    Plug 'plasticboy/vim-markdown'
 
     " IDE & Productivity Features
     Plug 'bling/vim-airline'
@@ -111,7 +113,7 @@
     Plug 'ctrlpvim/ctrlp.vim'
     Plug 'scrooloose/nerdcommenter'
     Plug 'scrooloose/nerdtree'
-    Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  'NERDTreeToggle' }
+    Plug 'Xuyuanp/nerdtree-git-plugin'
     Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-unimpaired'  " Key bindings for vim-fugitive
     Plug 'davidhalter/jedi-vim'
@@ -126,19 +128,19 @@
     Plug 'junegunn/fzf.vim'
     Plug 'ervandew/supertab' " Tab completion super-fied
     Plug 'tpope/vim-obsession' " Remember vim session state
-    Plug 'vimwiki/vimwiki' " Org-mode for vim, kind of
     Plug 'christoomey/vim-tmux-navigator'
     Plug 'terryma/vim-multiple-cursors'
     Plug 'jiangmiao/auto-pairs'
     Plug 'editorconfig/editorconfig-vim'
     Plug 'tmux-plugins/vim-tmux-focus-events' " For auto-reloading on focus
+    Plug 'mattn/emmet-vim'
 
     " Version specific plugins
     if v:version >= 704
         try
             Plug 'SirVer/ultisnips'
-            Plug 'ternjs/tern_for_vim', {'do': 'npm install'}
             Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
+            Plug 'ternjs/tern_for_vim', {'do': 'npm install'}
         catch
         endtry
     endif
@@ -189,6 +191,7 @@
     nnoremap <Leader>m :bn<CR>
     nnoremap <Leader>x :b #<CR>:bd #<CR>
     nnoremap <Leader>q <C-w>q
+    nnoremap <Leader>r :on<CR>
     nnoremap <Leader>X :BufOnly<CR>
 
     " Home key buffer navigation
@@ -209,7 +212,6 @@
 
     " Code folding
     nnoremap <space> za
-    nnoremap <S-space> zA
     vnoremap <space> zf
 
     " Window switching
@@ -359,6 +361,12 @@
     nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
     nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
 
+    " vimwiki
+    let g:vimwiki_map_prefix = '<Leader>i'
+    let g:vimwiki_list = [{'path': '~/Documents/Wiki', 'syntax': 'markdown', 'ext': '.md'}]
+    nmap <Leader>iy <Plug>VimwikiDiaryIndex
+    nmap <Leader>ii <Plug>VimwikiIndex
+
     " YouCompleteMe
     let g:ycm_collect_identifiers_from_tags_files = 1 " Let YCM read tags from Ctags file
     let g:ycm_use_ultisnips_completer = 1 " Default 1, just ensure
@@ -430,5 +438,6 @@
     filetype plugin indent on
 
 " }}}
+
 
 " vim: foldmethod=marker: foldlevel=0

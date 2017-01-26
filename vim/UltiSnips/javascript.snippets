@@ -143,7 +143,7 @@ module.exports = {
 			{
 				test: /\.scss$/,
 				include: [path.resolve(__dirname)],
-				loader:	ExtractTextPlugin.extract({
+				loader: ExtractTextPlugin.extract({
 					loader: 'css-loader?importLoaders=1!sass-loader',
 				}),
 			},
@@ -156,6 +156,27 @@ module.exports = {
 		}),
 	],
 };
+endsnippet
+# }}}
+# {{{ Ember Snippets
+snippet embertest "Ember test boilerplate" b
+test ('$1', function(assert) {
+	$0
+});
+endsnippet
+
+snippet embermodel "Ember model boilerplate" b
+import DS from 'ember-data';
+
+const { Model, attr, hasMany } = DS;
+
+export default Model.extend({
+	name: DS.attr('string'),
+	age: DS.attr('number'),
+	admin: DS.attr('boolean'),
+	birthday: DS.attr('date'),
+	relatives: hasMany('person')
+});
 endsnippet
 # }}}
 

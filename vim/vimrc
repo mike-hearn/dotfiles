@@ -135,6 +135,10 @@
     Plug 'editorconfig/editorconfig-vim'
     Plug 'tmux-plugins/vim-tmux-focus-events' " For auto-reloading on focus
     Plug 'mattn/emmet-vim'
+    Plug 'Chiel92/vim-autoformat' " Integrate yapf & other autoformatters
+    Plug 'fisadev/vim-isort' " Autosort python imports
+    Plug 'python-mode/python-mode' " Better vim python handling
+    Plug 'nathanaelkane/vim-indent-guides' " Show indent guides
 
     " Version specific plugins
     if v:version >= 704

@@ -33,7 +33,7 @@
 
     set autochdir                   " Autoset working dir to current file's dir
     set laststatus=2
-    set guifont=SauceCodePowerline-Regular:h14
+    set guifont=InputMonoNerdFont-Regular:h14
     set guioptions-=L
 
     set wildmenu                    " Visual autocomplete for command menu
@@ -106,6 +106,7 @@
     Plug 'evanmiller/nginx-vim-syntax'
     Plug 'godlygeek/tabular'
     Plug 'plasticboy/vim-markdown'
+    Plug 'elixir-lang/vim-elixir'
 
     " IDE & Productivity Features
     Plug 'bling/vim-airline'
@@ -360,12 +361,6 @@
     nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
     nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
     nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
-
-    " vimwiki
-    let g:vimwiki_map_prefix = '<Leader>i'
-    let g:vimwiki_list = [{'path': '~/Documents/Wiki', 'syntax': 'markdown', 'ext': '.md'}]
-    nmap <Leader>iy <Plug>VimwikiDiaryIndex
-    nmap <Leader>ii <Plug>VimwikiIndex
 
     " YouCompleteMe
     let g:ycm_collect_identifiers_from_tags_files = 1 " Let YCM read tags from Ctags file

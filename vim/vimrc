@@ -97,7 +97,7 @@
     Plug 'othree/html5.vim', { 'for': 'html' }
     Plug 'sophacles/vim-bundle-mako', { 'for': 'html' }
     Plug 'tpope/vim-haml', { 'for': 'haml' }
-    Plug 'ekalinin/Dockerfile.vim', { 'for': 'Dockerfile' }
+    Plug 'ekalinin/Dockerfile.vim'
     Plug 'toyamarinyon/vim-swift'
     Plug 'mako.vim', { 'for': 'html' }
     Plug 'mxw/vim-jsx', { 'for': [ 'javascript', 'javascript.jsx' ]}
@@ -107,6 +107,8 @@
     Plug 'godlygeek/tabular'
     Plug 'plasticboy/vim-markdown'
     Plug 'elixir-lang/vim-elixir'
+    Plug 'chase/vim-ansible-yaml'
+    Plug 'leafgarland/typescript-vim'
 
     " IDE & Productivity Features
     Plug 'bling/vim-airline'
@@ -139,6 +141,8 @@
     Plug 'fisadev/vim-isort' " Autosort python imports
     Plug 'python-mode/python-mode' " Better vim python handling
     Plug 'nathanaelkane/vim-indent-guides' " Show indent guides
+    Plug 'tpope/vim-surround' " Easy surrounding bracket or tag changing
+    Plug 'kien/rainbow_parentheses.vim' " Matching brackets have the same color
 
     " Version specific plugins
     if v:version >= 704
@@ -409,39 +413,14 @@
     au FocusGained * checktime
 " }}}
 " Colorscheme {{{
+    let base16colorspace=256
     syntax enable
     set t_Co=256
-    if has('gui_running')
-        set background=dark
-
-        function! RandomColor()
-            " let schemes = 'molokai Kafka OceanicNext hybrid brogrammer janah sierra wombat256mod alduin obsidian hilal ego termschool holokai duotone-darkcave duotone-darkforest duotone-darklake duotone-darkmeadow evolution materialbox material birds-of-paradise maui PaperColor eva01 blackboard'
-            let schemes = 'molokai PaperColor hybrid OceanicNext'
-            " let schemes = 'OceanicNext hilal'
-            let seconds = str2nr(strftime('%S'))
-            " execute 'colorscheme '.split(schemes)[seconds%25]
-            execute 'colorscheme '.split(schemes)[seconds%4]
-        endfunction
-        function! RandomBG()
-            let bgcolors = '#1f0000 #001f01 #00041f #1f001c #001f1c #222222 #111111 #000000'
-            let seconds = str2nr(strftime('%S'))
-            execute 'highlight Normal guibg='.split(bgcolors)[seconds%8]
-        endfunction
-        call RandomColor()
-        call RandomBG()
-        nnoremap <Leader>r :call RandomColor()<CR>
-        hi Folded guibg=bg
-        let g:airline_theme="base16"
-
-    else
-        set background=dark
-        colorscheme Tomorrow-Night-Bright
-        let g:airline_theme="base16"
-        " hi Folded ctermbg=bg
-    endif
+    set background=dark
+    colorscheme base16-oceanicnext
+    let g:airline_theme="base16"
     filetype plugin indent on
 
 " }}}
-
 
 " vim: foldmethod=marker: foldlevel=0

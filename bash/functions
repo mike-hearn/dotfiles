@@ -239,7 +239,7 @@ function tre() {
 #  Docker container service/util aliases
 # ----------------------------------------------------------------------
 function tldr { docker run --rm mikehearn/tldr $@; }
-function hugo { docker run --rm -v $(pwd):/data mikehearn/hugo $@; }
+# function hugo { docker run --rm -v $(pwd):/data mikehearn/hugo $@; }
 function gcloud { mkdir -p $HOME/.config/gcloud; docker run --rm -ti -v $HOME/.config/gcloud:/home/gcloud/.config/gcloud mikehearn/gcloud $@; }
 
 # ----------------------------------------------------------------------
@@ -274,6 +274,10 @@ function stable() {
 function deshake() {
     ffmpeg -i "$1" -vf vidstabdetect=shakiness=10:accuracy=15:result="/tmp/mytransforms.trf" -f null -
     ffmpeg -i "$1" -vf vidstabtransform=zoom=15:smoothing=30:input="/tmp/mytransforms.trf",unsharp=5:5:0.8:3:3:0.4 -crf 16 -y "$1.deshake.mp4"
+}
+
+function decimate() {
+    ffmpeg -i "$1" -vf mpdecimate=hi=64*24 -vsync 2 -crf 16 -y "$1.decimated.mp4"
 }
 
 
@@ -314,6 +318,18 @@ function cdg() {
 # Actviate virtualenv from anywhere in repo (only works when named 'venv')
 function vactivate() {
     source $(git rev-parse --show-toplevel)/venv/bin/activate
+}
+
+# fbr - checkout git branch
+gh() {
+    local branches branch
+    branches=$(git branch -vv) &&
+        branch=$(echo "$branches" | fzf +m) &&
+        git checkout $(echo "$branch" | awk '{print $1}' | sed "s/.* //")
+}
+
+tn() {
+    tmux rename-session -t "$(tmux display-message -p '#{session_id}')" "$(basename $(git rev-parse --show-toplevel) | sed 's/[-_]/ /g')"
 }
 
 # vim: syntax=sh ts=4 sts=4 shiftwidth=4 expandtab

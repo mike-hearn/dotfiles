@@ -1,4 +1,6 @@
 " Settings {{{
+    syntax enable
+
     set nocompatible
 
     set encoding=utf-8
@@ -44,6 +46,7 @@
     set mouse=a                     " Mouse support in iTerm et al
 
     set autoread                    " Check if buffer was modified
+    set nostartofline               " Cursor maintains position when switching buffers
 
     " Trailing white space
     autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
@@ -104,16 +107,17 @@
     Plug 'mustache/vim-mustache-handlebars'
     Plug 'fountain.vim'
     Plug 'evanmiller/nginx-vim-syntax'
-    Plug 'godlygeek/tabular'
+    " Plug 'godlygeek/tabular'
     Plug 'plasticboy/vim-markdown'
     Plug 'elixir-lang/vim-elixir'
     Plug 'chase/vim-ansible-yaml'
     Plug 'leafgarland/typescript-vim'
 
     " IDE & Productivity Features
-    Plug 'bling/vim-airline'
+    " Plug 'bling/vim-airline'
+    Plug 'itchyny/lightline.vim'
     Plug 'Lokaltog/vim-easymotion'
-    Plug 'ctrlpvim/ctrlp.vim'
+    " Plug 'ctrlpvim/ctrlp.vim'
     Plug 'scrooloose/nerdcommenter'
     Plug 'scrooloose/nerdtree'
     Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -134,7 +138,7 @@
     Plug 'christoomey/vim-tmux-navigator'
     Plug 'terryma/vim-multiple-cursors'
     Plug 'jiangmiao/auto-pairs'
-    Plug 'editorconfig/editorconfig-vim'
+    " Plug 'editorconfig/editorconfig-vim'
     Plug 'tmux-plugins/vim-tmux-focus-events' " For auto-reloading on focus
     Plug 'mattn/emmet-vim'
     Plug 'Chiel92/vim-autoformat' " Integrate yapf & other autoformatters
@@ -148,7 +152,7 @@
     if v:version >= 704
         try
             Plug 'SirVer/ultisnips'
-            Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
+            " Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
             Plug 'ternjs/tern_for_vim', {'do': 'npm install'}
         catch
         endtry
@@ -290,15 +294,7 @@
     " CtrlP
     nnoremap <Leader>s :Buffers<CR>
     nnoremap <Leader>f :History<CR>
-    let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden --ignore-dir=.git --ignore="*.pyc*" -g ""'
-    let g:ctrlp_regexp = 1
-    let g:ctrlp_abbrev = { 'gmode': 't', 'abbrevs': [  { 'pattern': ' ', 'expanded': '.*', 'mode': 'pfrz', } ] }
-    let g:ctrlp_mruf_max = 3000
-    if !has('gui_running')
-        let g:ctrlp_map = ''
-        nmap <C-p> :Files<CR>
-        imap <C-p> :Files<CR>
-    endif
+    map <C-p> :Files<CR>
 
     " Devicons
     let g:WebDevIconsUnicodeDecorateFolderNodes = 1
@@ -414,7 +410,6 @@
 " }}}
 " Colorscheme {{{
     let base16colorspace=256
-    syntax enable
     set t_Co=256
     set background=dark
     colorscheme base16-oceanicnext
@@ -422,5 +417,9 @@
     filetype plugin indent on
 
 " }}}
+
+let g:lightline = {
+            \ 'colorscheme': 'wombat',
+            \ }
 
 " vim: foldmethod=marker: foldlevel=0

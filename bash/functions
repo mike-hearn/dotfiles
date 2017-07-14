@@ -238,7 +238,7 @@ function tre() {
 # ----------------------------------------------------------------------
 #  Docker container service/util aliases
 # ----------------------------------------------------------------------
-function tldr { docker run --rm mikehearn/tldr $@; }
+# function tldr { docker run --rm mikehearn/tldr $@; }
 # function hugo { docker run --rm -v $(pwd):/data mikehearn/hugo $@; }
 function gcloud { mkdir -p $HOME/.config/gcloud; docker run --rm -ti -v $HOME/.config/gcloud:/home/gcloud/.config/gcloud mikehearn/gcloud $@; }
 
@@ -329,7 +329,13 @@ gh() {
 }
 
 tn() {
-    tmux rename-session -t "$(tmux display-message -p '#{session_id}')" "$(basename $(git rev-parse --show-toplevel) | sed 's/[-_]/ /g')"
+    tmux rename-session -t "$(tmux display-message -p '#{session_id}')" "$(basename $(git rev-parse --show-toplevel) | sed 's/[-_\.]/ /g')"
+}
+
+nvm() {
+    export NVM_DIR="$HOME/.nvm"
+    . "/usr/local/opt/nvm/nvm.sh"
+    nvm $@
 }
 
 # vim: syntax=sh ts=4 sts=4 shiftwidth=4 expandtab

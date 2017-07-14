@@ -63,4 +63,7 @@ export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
 # ignore backups, CVS directories, python bytecode, vim swap files
 export FIGNORE="~:CVS:#:.pyc:.swp:.swa:apache-solr-*"
 
+# golang
+export GOPATH=~/.go
+
 # vim: syntax=sh ts=4 sts=4 shiftwidth=4 expandtab

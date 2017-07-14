@@ -14,6 +14,15 @@ PATH="/usr/local/bin:$PATH"
 [ -d "$HOME/bin" ] && PATH="$HOME/bin:$PATH"
 
 # Yarn support
-PATH="$PATH:$HOME/.yarn/bin"
+# PATH="$PATH:$HOME/.yarn/bin"
+
+# Rustup support
+[ -d $HOME/.cargo/bin ] && PATH="$HOME/.cargo/bin:$PATH"
+
+# Go support
+[ -d $HOME/.go/bin ] && PATH="$HOME/.go/bin:$PATH"
+
+# Final export
+export PATH
 
 # vim: syntax=sh ts=4 sts=4 shiftwidth=4 expandtab

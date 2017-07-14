@@ -1,7 +1,12 @@
 {
-  "extends": "airbnb",
+  "parser": "babel-eslint",
+  "extends": "eslint:recommended",
   "rules": {
-    "space-before-function-paren": "off"
+    "space-before-function-paren": "off",
+    "prefer-arrow-callback": "off",
+    "func-names": "off",
+    "object-curly-spacing": "off",
+    "camelcase": [2, {properties: "always"}],
   }
 }
 

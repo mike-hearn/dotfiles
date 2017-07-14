@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Add tab completion for many Bash commands
-[ -f /usr/local/etc/bash_completion  ] && . /usr/local/etc/bash_completion
+# [ -f /usr/local/etc/bash_completion  ] && . /usr/local/etc/bash_completion
 
 # Autojump
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
@@ -19,5 +19,9 @@ export FZF_DEFAULT_COMMAND='ag -g ""'
 _fzf_compgen_path() {
     ag -g "" "$1"
 }
+
+if [ -f ~/.git-completion.bash  ]; then
+    . ~/.git-completion.bash
+fi
 
 # vim: syntax=sh ts=4 sts=4 shiftwidth=4 expandtab

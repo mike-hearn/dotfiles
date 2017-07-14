@@ -6,60 +6,10 @@
 # iTerm → Profiles → Text → use 13pt Monaco with 1.1 vertical spacing.
 
 if [[ $COLORTERM = gnome-* && $TERM = xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
-	export TERM='gnome-256color';
+    export TERM='gnome-256color';
 elif infocmp xterm-256color >/dev/null 2>&1; then
-	export TERM='xterm-256color';
+    export TERM='xterm-256color';
 fi;
-
-prompt_git() {
-	local s='';
-	local branchName='';
-
-	# Check if the current directory is in a Git repository.
-	if [ $(git rev-parse --is-inside-work-tree &>/dev/null; echo "${?}") == '0' ]; then
-
-		# check if the current directory is in .git before running git checks
-		if [ "$(git rev-parse --is-inside-git-dir 2> /dev/null)" == 'false' ]; then
-
-			# Ensure the index is up to date.
-			git update-index --really-refresh -q &>/dev/null;
-
-			# Check for uncommitted changes in the index.
-			if ! $(git diff --quiet --ignore-submodules --cached); then
-				s+='+';
-			fi;
-
-			# Check for unstaged changes.
-			if ! $(git diff-files --quiet --ignore-submodules --); then
-				s+='!';
-			fi;
-
-			# Check for untracked files.
-			if [ -n "$(git ls-files --others --exclude-standard)" ]; then
-				s+='?';
-			fi;
-
-			# Check for stashed files.
-			if $(git rev-parse --verify refs/stash &>/dev/null); then
-				s+='$';
-			fi;
-
-		fi;
-
-		# Get the short symbolic ref.
-		# If HEAD isn’t a symbolic ref, get the short SHA for the latest commit
-		# Otherwise, just give up.
-		branchName="$(git symbolic-ref --quiet --short HEAD 2> /dev/null || \
-			git rev-parse --short HEAD 2> /dev/null || \
-			echo '(unknown)')";
-
-		[ -n "${s}" ] && s=" [${s}]";
-
-		echo -e "${1}${branchName}${2}${s}";
-	else
-		return;
-	fi;
-}
 
 if tput setaf 1 &> /dev/null; then
 	tput sgr0; # reset colors
@@ -108,18 +58,49 @@ else
 	hostStyle="${yellow}";
 fi;
 
-# Set the terminal title and prompt.
-PS1="\[\033]0;\W\007\]"; # working directory base name
-PS1+="\[${bold}\]\n"; # newline
-PS1+="\[${userStyle}\]\u"; # username
-PS1+="\[${white}\]@";
-PS1+="\[${hostStyle}\]\h"; # host
-PS1+="\[${white}\]:";
-PS1+="\[${green}\]\w"; # working directory full path
-PS1+="\$(prompt_git \"\[${white}\] on \[${violet}\]\" \"\[${blue}\]\")"; # Git repository details
-PS1+="\n";
-PS1+="\[${white}\]\$ \[${reset}\]"; # `$` (and reset color)
-export PS1;
+# Get Virtual Env
+function virtualenv_info(){
+    # Get Virtual Env
+    if [[ -n "$VIRTUAL_ENV" ]]; then
+        # Strip out the path and just leave the env name
+        venv="${VIRTUAL_ENV##*/}"
+    else
+        # In case you don't have one activated
+        venv=''
+    fi
+    [[ -n "$venv" ]] && echo "(virtualenv:$venv) "
+}
+export VIRTUAL_ENV_DISABLE_PROMPT=1 # disable the default virtualenv prompt
+VENV="\$(virtualenv_info)";
+
+
+
+
+source $(dotfiles_location)/bash/scripts/git-prompt.sh
+
+# Prompt variables
+PROMPT_BEFORE+="\[\033]0;\W\007\]"; # working directory base name
+PROMPT_BEFORE+="\[${bold}\]${VENV}";
+PROMPT_BEFORE+="\[${bold}\]\n"; # newline
+PROMPT_BEFORE+="\[${userStyle}\]\u"; # username
+PROMPT_BEFORE+="\[${white}\]@";
+PROMPT_BEFORE+="\[${hostStyle}\]\h"; # host
+PROMPT_BEFORE+="\[${white}\]:";
+PROMPT_BEFORE+="\[${green}\]\w"; # working directory full path
+
+PROMPT_AFTER="\[${reset}\]\\n\\\$ "
+
+PROMPT_FORMAT=" \[${white}\]on %s"; # working directory full path
+
+# Prompt command
+PROMPT_COMMAND='__git_ps1 "$PROMPT_BEFORE" "$PROMPT_AFTER" "$PROMPT_FORMAT"'
+
+# Git prompt features (read ~/.git-prompt.sh for reference)
+export GIT_PS1_SHOWDIRTYSTATE="true"
+export GIT_PS1_SHOWSTASHSTATE="true"
+export GIT_PS1_SHOWUNTRACKEDFILES="true"
+export GIT_PS1_SHOWUPSTREAM="auto"
+export GIT_PS1_SHOWCOLORHINTS="true"
 
 PS2="\[${yellow}\]→ \[${reset}\]";
 export PS2;

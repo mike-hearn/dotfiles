@@ -26,9 +26,14 @@ endsnippet
 # {{{ Ember Snippets
 
 snippet emlink "Ember link-to" b
-{{#link-to '${1}'}}
-	$1
-{{/link-to}}
+{{#link-to '${1}'}}${1/\w+\s*/\u$0/g}{{/link-to}}
+endsnippet
+
+
+snippet if "Ember if" b
+{{#if $1}}
+$0
+{{/if}}
 endsnippet
 
 # }}}

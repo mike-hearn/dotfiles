@@ -18,6 +18,7 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 mkdir -p $HOME/.vim
 ln -sf $(pwd)/vim/vimrc $HOME/.vimrc
 ln -sf $(pwd)/vim/UltiSnips $HOME/.vim/
+ln -sf $(pwd)/vim/UltiSnips $HOME/.config/nvim/
 
 # Git
 ln -sf $(pwd)/git/gitconfig $HOME/.gitconfig

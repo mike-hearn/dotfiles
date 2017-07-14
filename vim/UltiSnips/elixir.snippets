@@ -1,0 +1,37 @@
+snippet defmodule "Quick Defmodule" b
+defmodule $1 do
+	def $0(x, y) do
+		IO.inspect [x, y]
+	end
+end
+
+endsnippet
+
+snippet def "Function definition" b
+def ${1:defname}(${2:arguments}) do
+	$0
+end
+endsnippet
+
+snippet case "Case statement" b
+case ${1:argument} do
+	${2::ok} -> ${3:expression}
+end
+endsnippet
+
+snippet test "Test case" b
+test "${1:what this test does}" do
+	${2:expression}
+	assert ${0:equality}
+end
+endsnippet
+
+snippet defmoduleph "Phoenix defmodule" b
+defmodule ${1:ModuleName}.$1Controller do
+	use $1.Web, :controller
+
+	def ${2:function_name}(conn, _params) do
+		render conn, "$3.html"
+	end
+end
+endsnippet

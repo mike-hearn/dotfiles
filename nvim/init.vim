@@ -330,7 +330,7 @@ endif
     let g:buftabline_numbers = 2
     let g:buftabline_indicators = 1
     let g:buftabline_separators = 1
-    hi! link BufTabLineCurrent DiffText
+    hi! link BufTabLineCurrent LightlineLeft_normal_0
     hi! link BufTabLineActive TabLineSel
 
     nmap <leader>1 <Plug>BufTabLine.Go(1)
@@ -345,7 +345,7 @@ endif
     nmap <leader>0 <Plug>BufTabLine.Go(10)
 
     let g:lightline = {
-      \ 'colorscheme': 'wombat',
+      \ 'colorscheme': 'jellybeans',
       \ }
     " Ale
     highlight clear ALEErrorSign

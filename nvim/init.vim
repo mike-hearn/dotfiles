@@ -72,26 +72,13 @@
 " }}}
 " Plugins {{{
     " Load vim-plug
-    if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
-        silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
-                    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-        silent !mkdir -p ~/.vim/tmp/backup
-        silent !mkdir -p ~/.vim/tmp/swap
-        silent !mkdir -p ~/.vim/tmp/undo
-        autocmd VimEnter * PlugInstall
-    endif
     call plug#begin('~/.local/share/nvim/plugged')
 
     " Start with sensible defaults
     Plug 'tpope/vim-sensible'
 
     " Themes
-    " Plug 'vim-airline/vim-airline-themes'
     Plug 'chriskempson/base16-vim'
-    Plug 'tomasr/molokai'
-    Plug 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
-    Plug 'joshdick/onedark.vim'
-    Plug 'rakr/vim-one'
 
     " Syntax
     Plug 'elzr/vim-json', { 'for': 'json' }
@@ -115,7 +102,6 @@
     Plug 'leafgarland/typescript-vim'
 
     " IDE & Productivity Features
-    " Plug 'bling/vim-airline'
     Plug 'itchyny/lightline.vim'
     Plug 'ap/vim-buftabline'
     Plug 'Lokaltog/vim-easymotion'
@@ -165,6 +151,46 @@
 
 
     call plug#end()
+" }}}
+" Colorscheme {{{
+
+    syntax enable
+    set termguicolors
+    set background=dark
+    colorscheme base16-oceanicnext
+    let g:airline_theme="base16"
+    filetype plugin indent on
+
+" }}}
+" {{{ Functions
+
+" Save current view settings on a per-window, per-buffer basis.
+function! AutoSaveWinView()
+    if !exists("w:SavedBufView")
+        let w:SavedBufView = {}
+    endif
+    let w:SavedBufView[bufnr("%")] = winsaveview()
+endfunction
+
+" Restore current view settings.
+function! AutoRestoreWinView()
+    let buf = bufnr("%")
+    if exists("w:SavedBufView") && has_key(w:SavedBufView, buf)
+        let v = winsaveview()
+        let atStartOfFile = v.lnum == 1 && v.col == 0
+        if atStartOfFile && !&diff
+            call winrestview(w:SavedBufView[buf])
+        endif
+        unlet w:SavedBufView[buf]
+    endif
+endfunction
+
+" When switching buffers, preserve window view.
+if v:version >= 700
+    autocmd BufLeave * call AutoSaveWinView()
+    autocmd BufEnter * call AutoRestoreWinView()
+endif
+
 " }}}
 " Mappings {{{
     let g:mapleader = ","
@@ -426,15 +452,7 @@
     au BufNewFile,BufRead *.fountain setf fountain
 
 " }}}
-" Colorscheme {{{
 
-    syntax enable
-    set termguicolors
-    set background=dark
-    colorscheme base16-oceanicnext
-    let g:airline_theme="base16"
-    filetype plugin indent on
 
-" }}}
 
 " vim: foldmethod=marker: foldlevel=0

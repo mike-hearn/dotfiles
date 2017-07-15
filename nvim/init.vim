@@ -73,15 +73,15 @@
 " }}}
 " Plugins {{{
     " Load vim-plug
-    if empty(glob('~/.vim/autoload/plug.vim'))
-        silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-            \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
+        silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
+                    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
         silent !mkdir -p ~/.vim/tmp/backup
         silent !mkdir -p ~/.vim/tmp/swap
         silent !mkdir -p ~/.vim/tmp/undo
         autocmd VimEnter * PlugInstall
     endif
-    call plug#begin()
+    call plug#begin('~/.local/share/nvim/plugged')
 
     " Themes
     Plug 'vim-airline/vim-airline-themes'
@@ -100,9 +100,9 @@
     Plug 'tpope/vim-haml', { 'for': 'haml' }
     Plug 'ekalinin/Dockerfile.vim'
     Plug 'toyamarinyon/vim-swift'
-    Plug 'mako.vim', { 'for': 'html' }
+    Plug 'vim-scripts/mako.vim', { 'for': 'html' }
     Plug 'mxw/vim-jsx', { 'for': [ 'javascript.jsx' ]}
-    Plug 'fountain.vim'
+    Plug 'vim-scripts/fountain.vim'
     Plug 'evanmiller/nginx-vim-syntax'
     Plug 'godlygeek/tabular'
     Plug 'plasticboy/vim-markdown'
@@ -122,7 +122,7 @@
     Plug 'tpope/vim-unimpaired'  " Key bindings for vim-fugitive
     Plug 'davidhalter/jedi-vim'
     Plug 'airblade/vim-gitgutter'
-    Plug 'tinymode.vim'
+    Plug 'vim-scripts/tinymode.vim'
     Plug 'sjl/gundo.vim', { 'on': 'GundoToggle' }
     Plug 'vim-scripts/BufOnly.vim' " Close all buffers except open
     Plug 'airblade/vim-rooter' " Sets the pwd to git root (and makes me hit enter a lot)
@@ -298,20 +298,20 @@
     nmap <Leader>s :Buffers<CR>
     nmap <Leader>f :History<CR>
 
-    " Devicons
-    let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+    " Deoplete
+    let g:deoplete#enable_at_startup = 1
 
     " FZF
     let g:fzf_files_options =
-                \ '--preview "(highlight -O ansi {} || cat {}) 2> /dev/null | head -'.&lines.'"'
+        \ '--preview "(highlight -O ansi {} || cat {}) 2> /dev/null | head -'.&lines.'"'
 
     autocmd VimEnter * command! -bang -nargs=* Ag
-                \ call fzf#vim#grep(
-                \   'rg --column --hidden --max-columns=500 --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-                \   <bang>0 ? fzf#vim#with_preview('up:60%')
-                \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-                \   <bang>0
-                \)
+        \ call fzf#vim#grep(
+        \   'rg --column --hidden --max-columns=500 --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+        \   <bang>0 ? fzf#vim#with_preview('up:60%')
+        \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+        \   <bang>0
+        \)
 
     " NERDTree
     let NERDTreeIgnore = ['node_modules']
@@ -409,7 +409,6 @@
 
 " }}}
 
-let g:deoplete#enable_at_startup = 1
 " let g:rainbow_active = 1
 
 highlight clear ALEErrorSign

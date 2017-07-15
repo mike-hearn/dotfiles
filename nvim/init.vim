@@ -1,15 +1,12 @@
 " Settings {{{
-    set nocompatible
 
-    set encoding=utf-8
-    set hidden
+    set hidden                      " Allows changing buffers w/o outright closing them
     set autoindent
     set smartindent
 
-    set relativenumber number              " Show line numbers
+    set relativenumber number       " Show line numbers, make 'em relative to the current line
     set tw=79                       " Width of document (used by gd)
     set nowrap                      " Don't automatically wrap on load
-    set fo-=t                       " Don't automatically wrap text when typing
     set colorcolumn=80
 
     set undofile                    " Undo history maintained across sessions
@@ -17,37 +14,34 @@
     set undoreload=10000
     set undodir=~/.vim/tmp/undo/
 
-    set incsearch                   " Starts searching when you type the first char
-    set hlsearch                    " Highlights search terms
     set ignorecase                  " Ignore case when searching
     set smartcase                   " Ignore case if search pattern is lowercase
 
-    set showmatch                   " Highlight matching [{()}]
-    set matchtime=3
+    set showmatch                   " Highlight matching paren, brace, bracket
+    set matchtime=3                 " Time in tenths of seconds to show match
 
     set expandtab                   " Convert tabs to spaces
     set tabstop=4                   " Specifies width of tab character
     set shiftwidth=4                " Amount of whitespace to insert
     set softtabstop=4               " Fine-tunes amount of insert whitespace
-    set shiftround
+    set shiftround                  " Rounds your tabs if you're on a weird interval, like 3 spaces in, will move it to 4 (instead of 7)
 
     set autochdir                   " Autoset working dir to current file's dir
-    set laststatus=2
-    set guifont=InputMonoNerdFont-Regular:h14
-    set guioptions-=L
 
     set wildmenu                    " Visual autocomplete for command menu
+
     set spellsuggest=best,10        " Spelling
-    set backspace=indent,eol,start  " Let backspace erase chars in insert mode
-    set modelines=1                 " Modelines (last line of this file) work
+
     set mouse=a                     " Mouse support in iTerm et al
 
-    set autoread                    " Check if buffer was modified
     set nostartofline               " Cursor maintains position when switching buffers
+
+    set fillchars+=vert:│           " Sleeker split character between panes
+    hi VertSplit ctermbg=NONE guibg=NONE
 
     " Trailing white space
     autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
-    au InsertLeave * match ExtraWhitespace /\s\+$/
+
 " }}}
 " Directories {{{
     set backupdir=~/.vim/tmp/backup/
@@ -56,10 +50,11 @@
     set noswapfile
 " }}}
 " Folding {{{
-    set foldmethod=indent
-    set foldnestmax=2
-    set foldlevel=100
-    nnoremap z0 :filetype detect<CR>zR
+    " set foldmethod=indent
+    " set foldnestmax=2
+    " set foldlevel=100
+    " nnoremap z0 :filetype detect<CR>zR
+    nnoremap z0 zi
     nnoremap z) :set foldnestmax=2<CR>zA
     nnoremap z1 :set foldnestmax=2<CR>zM
     nnoremap z2 :set foldnestmax=2<CR>zMzr
@@ -82,6 +77,9 @@
         autocmd VimEnter * PlugInstall
     endif
     call plug#begin('~/.local/share/nvim/plugged')
+
+    " Start with sensible defaults
+    Plug 'tpope/vim-sensible'
 
     " Themes
     Plug 'vim-airline/vim-airline-themes'
@@ -170,10 +168,6 @@
     inoremap kj <ESC>
     inoremap jk <ESC>
 
-    " Sane regex
-    nnoremap / /\v
-    vnoremap / /\v
-
     " Sensible traversal using j/k
     nnoremap j gj
     nnoremap k gk
@@ -194,7 +188,6 @@
 
     " Buffer management; for additiona mappings, see tinymode PluginSettings()
     noremap <Leader>a <C-^>
-    noremap <C-Tab> <C-^>
     nnoremap <Leader>n :bp<CR>
     nnoremap <Leader>m :bn<CR>
     nnoremap <Leader>x :b #<CR>:bd #<CR>
@@ -269,29 +262,41 @@
     nnoremap <leader>W :wa<CR>
     inoremap <leader>W <Esc>:wa<CR>
 
-
     " Git / fugitive mappings
     nmap <leader>gs :Gstatus<cr>gg<C-n>
     nmap <leader>gd :Gdiff<cr>
     nmap <leader>gw :Gwrite<cr>
     nmap <leader>gr :Gread<cr>
+
+    " Search for the visual selection with // in visual mode
+    vnoremap // y/<C-R>"<CR>
+
 " }}}
 " Plugin Settings {{{
-    " Airline Settings
-    let g:airline_powerline_fonts = 1
-    let g:airline_extensions = ['tabline', 'whitespace']
-    let g:airline#extensions#tabline#enabled = 1
-    let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
-    let g:airline#extensions#tabline#buffer_idx_mode = 1
-    nmap <leader>1 <Plug>AirlineSelectTab1
-    nmap <leader>2 <Plug>AirlineSelectTab2
-    nmap <leader>3 <Plug>AirlineSelectTab3
-    nmap <leader>4 <Plug>AirlineSelectTab4
-    nmap <leader>5 <Plug>AirlineSelectTab5
-    nmap <leader>6 <Plug>AirlineSelectTab6
-    nmap <leader>7 <Plug>AirlineSelectTab7
-    nmap <leader>8 <Plug>AirlineSelectTab8
-    nmap <leader>9 <Plug>AirlineSelectTab9
+
+    " {{{ vim-airline settings
+        let g:airline_powerline_fonts = 1
+        let g:airline_extensions = ['tabline', 'whitespace']
+        let g:airline#extensions#tabline#enabled = 1
+        let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+        let g:airline#extensions#tabline#buffer_idx_mode = 1
+        nmap <leader>1 <Plug>AirlineSelectTab1
+        nmap <leader>2 <Plug>AirlineSelectTab2
+        nmap <leader>3 <Plug>AirlineSelectTab3
+        nmap <leader>4 <Plug>AirlineSelectTab4
+        nmap <leader>5 <Plug>AirlineSelectTab5
+        nmap <leader>6 <Plug>AirlineSelectTab6
+        nmap <leader>7 <Plug>AirlineSelectTab7
+        nmap <leader>8 <Plug>AirlineSelectTab8
+        nmap <leader>9 <Plug>AirlineSelectTab9
+    " }}}
+    " {{{ Rainbow Parentheses Settings
+        let g:rainbow_active = 0
+    " }}}
+
+    " Ale
+    highlight clear ALEErrorSign
+    highlight clear ALEWarningSign
 
     " CtrlP
     nmap <C-p> :Files<CR>
@@ -380,8 +385,6 @@
 
 " }}}
 " Filetype Settings {{{
-    filetype indent on
-
     autocmd FileType json setlocal ts=2 foldnestmax=5
     autocmd Filetype python setlocal foldnestmax=2 ts=4 sts=4 sw=4
     autocmd Filetype html setlocal ts=2 sts=2 sw=2 foldnestmax=5
@@ -391,17 +394,13 @@
     autocmd Filetype javascript setlocal ts=2 sts=2 sw=2 foldnestmax=15 foldmethod=syntax
     " autocmd Filetype javascript.jsx setlocal ts=2 sts=2 sw=2
 
-    " Bash will properly handle $
-    autocmd Filetype sh,bash set ts=4 sts=4 sw=4 expandtab
-    let g:is_posix = 1
-
     au BufNewFile,BufRead *.md setf markdown
     au BufNewFile,BufRead *.fountain setf fountain
-
-    au FocusGained * checktime
 " }}}
 " Colorscheme {{{
+
     syntax enable
+    set termguicolors
     set background=dark
     colorscheme base16-oceanicnext
     let g:airline_theme="base16"
@@ -409,28 +408,8 @@
 
 " }}}
 
-" let g:rainbow_active = 1
-
-highlight clear ALEErrorSign
-highlight clear ALEWarningSign
-
-set fillchars+=vert:│
-hi VertSplit ctermbg=NONE guibg=NONE
-
-if (has("nvim"))
-    "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
-    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-endif
-"For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
-"Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
-" < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
-if (has("termguicolors"))
-    set termguicolors
-endif
 
 
-" call deoplete#custom#set('ultisnips', 'matchers', ['matcher_fuzzy'])
-vnoremap // y/<C-R>"<CR>
 
 
 " vim: foldmethod=marker: foldlevel=0

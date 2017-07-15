@@ -42,12 +42,16 @@
     " Trailing white space
     autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 
+    set noshowmode                  " Hides --INSERT-- because lightline handles it
+
 " }}}
 " Directories {{{
+
     set backupdir=~/.vim/tmp/backup/
     set directory=~/.vim/tmp/swap/
     set backup
     set noswapfile
+
 " }}}
 " Folding {{{
     " set foldmethod=indent
@@ -82,7 +86,7 @@
     Plug 'tpope/vim-sensible'
 
     " Themes
-    Plug 'vim-airline/vim-airline-themes'
+    " Plug 'vim-airline/vim-airline-themes'
     Plug 'chriskempson/base16-vim'
     Plug 'tomasr/molokai'
     Plug 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
@@ -111,7 +115,9 @@
     Plug 'leafgarland/typescript-vim'
 
     " IDE & Productivity Features
-    Plug 'bling/vim-airline'
+    " Plug 'bling/vim-airline'
+    Plug 'itchyny/lightline.vim'
+    Plug 'ap/vim-buftabline'
     Plug 'Lokaltog/vim-easymotion'
     Plug 'scrooloose/nerdcommenter'
     Plug 'scrooloose/nerdtree'
@@ -294,6 +300,27 @@
         let g:rainbow_active = 0
     " }}}
 
+
+    let g:buftabline_numbers = 2
+    let g:buftabline_indicators = 1
+    let g:buftabline_separators = 1
+    hi! link BufTabLineCurrent DiffText
+    hi! link BufTabLineActive TabLineSel
+
+    nmap <leader>1 <Plug>BufTabLine.Go(1)
+    nmap <leader>2 <Plug>BufTabLine.Go(2)
+    nmap <leader>3 <Plug>BufTabLine.Go(3)
+    nmap <leader>4 <Plug>BufTabLine.Go(4)
+    nmap <leader>5 <Plug>BufTabLine.Go(5)
+    nmap <leader>6 <Plug>BufTabLine.Go(6)
+    nmap <leader>7 <Plug>BufTabLine.Go(7)
+    nmap <leader>8 <Plug>BufTabLine.Go(8)
+    nmap <leader>9 <Plug>BufTabLine.Go(9)
+    nmap <leader>0 <Plug>BufTabLine.Go(10)
+
+    let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ }
     " Ale
     highlight clear ALEErrorSign
     highlight clear ALEWarningSign
@@ -385,6 +412,7 @@
 
 " }}}
 " Filetype Settings {{{
+
     autocmd FileType json setlocal ts=2 foldnestmax=5
     autocmd Filetype python setlocal foldnestmax=2 ts=4 sts=4 sw=4
     autocmd Filetype html setlocal ts=2 sts=2 sw=2 foldnestmax=5
@@ -396,6 +424,7 @@
 
     au BufNewFile,BufRead *.md setf markdown
     au BufNewFile,BufRead *.fountain setf fountain
+
 " }}}
 " Colorscheme {{{
 
@@ -407,9 +436,5 @@
     filetype plugin indent on
 
 " }}}
-
-
-
-
 
 " vim: foldmethod=marker: foldlevel=0

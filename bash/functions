@@ -263,6 +263,9 @@ function toWebM () { ffmpeg -i "$1" -c:v libvpx -crf 10 -b:v 20M -c:a libvorbis 
 # Convert file to MP4
 function toMP4 () { ffmpeg -i "$1" -crf 17 -vf "scale=trunc(in_w/2)*2:trunc(in_h/2)*2" -pix_fmt yuv420p "$1.$(date +%H%M%S%d%m%y).mp4"; }
 
+# All keyframes
+function allkeyframes () { ffmpeg -i "$1" -crf 18 -x264-params keyint=1 -pix_fmt yuv420p -y "$1.$(date +%H%M%S%d%m%y).allkeyframes.mp4"; }
+
 # Convert video into smooth 60fps... OR 24fps
 function smooth() { vspipe --arg in_filename="$1" --arg display_fps=60 --y4m ~/.mpv/60fps.py - | ffmpeg -i - -crf 17 -y "$1.$(date +%H%M%S%d%m%y).60fps.mp4"; }
 function to24fps() { vspipe --arg in_filename="$1" --arg display_fps=24 --y4m ~/.mpv/60fps.py - | ffmpeg -i - -crf 17 -y "$1.$(date +%H%M%S%d%m%y).24fps.mp4"; }

@@ -27,6 +27,9 @@ curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 ln -sf $(pwd)/nvim/init.vim $HOME/.config/nvim/init.vim
 
+# Editorconfig
+ln -sf $(pwd)/editorconfig/editorconfig $HOME/.editorconfig
+
 # Git
 ln -sf $(pwd)/git/gitconfig $HOME/.gitconfig
 ln -sf $(pwd)/git/gitignore_global $HOME/.gitignore_global

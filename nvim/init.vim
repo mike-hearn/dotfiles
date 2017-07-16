@@ -36,10 +36,8 @@
 
     set nostartofline               " Cursor maintains position when switching buffers
 
-    set fillchars+=vert:│           " Sleeker split character between panes
-    hi VertSplit ctermbg=NONE guibg=NONE
 
-    " Trailing white space
+    " Highlight trailing white space
     autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 
     set noshowmode                  " Hides --INSERT-- because lightline handles it
@@ -52,23 +50,6 @@
     set backup
     set noswapfile
 
-" }}}
-" Folding {{{
-    " set foldmethod=indent
-    " set foldnestmax=2
-    " set foldlevel=100
-    " nnoremap z0 :filetype detect<CR>zR
-    nnoremap z0 zi
-    nnoremap z) :set foldnestmax=2<CR>zA
-    nnoremap z1 :set foldnestmax=2<CR>zM
-    nnoremap z2 :set foldnestmax=2<CR>zMzr
-    nnoremap z3 :set foldnestmax=3<CR>zMzrzr
-    nnoremap z4 :set foldnestmax=4<CR>zMzrzrzr
-    nnoremap z5 :set foldnestmax=5<CR>zMzrzrzrzr
-    nnoremap z6 :set foldnestmax=6<CR>zMzrzrzrzrzr
-    nnoremap z7 :set foldnestmax=7<CR>zMzrzrzrzrzrzr
-    nnoremap z8 :set foldnestmax=8<CR>zMzrzrzrzrzrzrzr
-    nnoremap z9 :set foldnestmax=9<CR>zMzrzrzrzrzrzrzrzr
 " }}}
 " Plugins {{{
     " Load vim-plug
@@ -91,7 +72,7 @@
     Plug 'toyamarinyon/vim-swift'
     Plug 'vim-scripts/mako.vim', { 'for': 'html' }
     Plug 'mxw/vim-jsx', { 'for': [ 'javascript.jsx' ]}
-    Plug 'vim-scripts/fountain.vim'
+    Plug 'mike-hearn/fountain.vim'
     Plug 'evanmiller/nginx-vim-syntax'
     Plug 'godlygeek/tabular'
     Plug 'plasticboy/vim-markdown'
@@ -246,6 +227,17 @@ endif
     " Code folding
     nnoremap <space> za
     vnoremap <space> zf
+    nnoremap z0 zRzz
+    nnoremap z) :set foldnestmax=2<CR>zA
+    nnoremap z1 :set foldnestmax=2<CR>zM
+    nnoremap z2 :set foldnestmax=2<CR>zMzr
+    nnoremap z3 :set foldnestmax=3<CR>zMzrzr
+    nnoremap z4 :set foldnestmax=4<CR>zMzrzrzr
+    nnoremap z5 :set foldnestmax=5<CR>zMzrzrzrzr
+    nnoremap z6 :set foldnestmax=6<CR>zMzrzrzrzrzr
+    nnoremap z7 :set foldnestmax=7<CR>zMzrzrzrzrzrzr
+    nnoremap z8 :set foldnestmax=8<CR>zMzrzrzrzrzrzrzr
+    nnoremap z9 :set foldnestmax=9<CR>zMzrzrzrzrzrzrzrzr
 
     " Window switching
     nnoremap <C-h> <C-w>h
@@ -437,22 +429,25 @@ endif
     nnoremap <Leader>U :UltiSnipsEdit<CR>
 
 " }}}
-" Filetype Settings {{{
+" Filetype/Autoload Settings {{{
 
-    autocmd FileType json setlocal ts=2 foldnestmax=5
-    autocmd Filetype python setlocal foldnestmax=2 ts=4 sts=4 sw=4
-    autocmd Filetype html setlocal ts=2 sts=2 sw=2 foldnestmax=5
-    autocmd Filetype handlebars setlocal ts=2 sts=2 sw=2 foldnestmax=5
-    autocmd Filetype css setlocal ts=2 sts=2 sw=2
-    autocmd Filetype scss setlocal ts=2 sts=2 sw=2
-    autocmd Filetype javascript setlocal ts=2 sts=2 sw=2 foldnestmax=15 foldmethod=syntax
+    " autocmd FileType json setlocal ts=2 foldnestmax=5
+    " autocmd Filetype python setlocal foldnestmax=2 ts=4 sts=4 sw=4
+    " autocmd Filetype html setlocal ts=2 sts=2 sw=2 foldnestmax=5
+    " autocmd Filetype handlebars setlocal ts=2 sts=2 sw=2 foldnestmax=5
+    " autocmd Filetype css setlocal ts=2 sts=2 sw=2
+    " autocmd Filetype scss setlocal ts=2 sts=2 sw=2
+    " autocmd Filetype javascript setlocal ts=2 sts=2 sw=2 foldnestmax=15 foldmethod=syntax
     " autocmd Filetype javascript.jsx setlocal ts=2 sts=2 sw=2
 
-    au BufNewFile,BufRead *.md setf markdown
-    au BufNewFile,BufRead *.fountain setf fountain
 
 " }}}
+" {{{ Finishing Touches
 
+    set fillchars+=vert:│           " Sleeker split character between panes
+    hi VertSplit ctermbg=NONE guibg=NONE
+
+" }}}
 
 
 " vim: foldmethod=marker: foldlevel=0

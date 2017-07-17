@@ -81,13 +81,14 @@
     Plug 'joukevandermaas/vim-ember-hbs'
     Plug 'evidens/vim-twig'
     Plug 'leafgarland/typescript-vim'
+    Plug 'cespare/vim-toml'
 
     " IDE & Productivity Features
     Plug 'itchyny/lightline.vim'
     Plug 'ap/vim-buftabline'
     Plug 'Lokaltog/vim-easymotion'
     Plug 'scrooloose/nerdcommenter'
-    Plug 'scrooloose/nerdtree'
+    Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
     Plug 'Xuyuanp/nerdtree-git-plugin'
     Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-unimpaired'  " Key bindings for vim-fugitive
@@ -123,7 +124,7 @@
     Plug 'romainl/vim-cool' " Un-highlights text if you navigate away from word
 
     " Completion
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins', 'on': []}
     Plug 'carlitux/deoplete-ternjs'
     Plug 'zchee/deoplete-jedi'
     Plug 'slashmili/alchemist.vim'
@@ -138,7 +139,7 @@
     syntax enable
     set termguicolors
     set background=dark
-    colorscheme base16-oceanicnext
+    colorscheme $COLORSCHEMEVIM
     let g:airline_theme="base16"
     filetype plugin indent on
 
@@ -339,6 +340,7 @@ endif
     let g:lightline = {
       \ 'colorscheme': 'jellybeans',
       \ }
+
     " Ale
     highlight clear ALEErrorSign
     highlight clear ALEWarningSign
@@ -349,7 +351,15 @@ endif
     nmap <Leader>f :History<CR>
 
     " Deoplete
+    augroup load_us_ycm
+        autocmd!
+        autocmd InsertEnter * call plug#load('deoplete.nvim')
+                    \| autocmd! load_us_ycm
+    augroup END
     let g:deoplete#enable_at_startup = 1
+
+    " Editorconfig
+    let g:EditorConfig_core_mode = 'python_external'
 
     " FZF
     let g:fzf_files_options =
@@ -431,15 +441,16 @@ endif
 " }}}
 " Filetype/Autoload Settings {{{
 
-    " autocmd FileType json setlocal ts=2 foldnestmax=5
-    " autocmd Filetype python setlocal foldnestmax=2 ts=4 sts=4 sw=4
-    " autocmd Filetype html setlocal ts=2 sts=2 sw=2 foldnestmax=5
-    " autocmd Filetype handlebars setlocal ts=2 sts=2 sw=2 foldnestmax=5
-    " autocmd Filetype css setlocal ts=2 sts=2 sw=2
-    " autocmd Filetype scss setlocal ts=2 sts=2 sw=2
-    " autocmd Filetype javascript setlocal ts=2 sts=2 sw=2 foldnestmax=15 foldmethod=syntax
-    " autocmd Filetype javascript.jsx setlocal ts=2 sts=2 sw=2
+    " Bash/sh
+    let g:is_posix = 1
 
+    " Foldmethods
+    autocmd FileType json setlocal foldmethod=syntax
+    autocmd Filetype python setlocal foldmethod=expr foldlevel=4
+    autocmd Filetype html setlocal foldmethod=indent
+    autocmd Filetype handlebars setlocal foldmethod=indent
+    autocmd Filetype javascript setlocal foldmethod=syntax
+    autocmd Filetype javascript.jsx setlocal foldmethod=syntax
 
 " }}}
 " {{{ Finishing Touches

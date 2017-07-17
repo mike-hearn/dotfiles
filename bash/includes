@@ -17,7 +17,14 @@ if [ -e $HOME/.secrets ]; then source $HOME/.secrets; fi
 export FZF_CTRL_R_OPTS='--sort'
 export FZF_DEFAULT_COMMAND='ag -g ""'
 _fzf_compgen_path() {
-    ag -g "" "$1"
+    rg --files --no-ignore --hidden --color=never \
+        --glob \!"*node_modules*" \
+        --glob \!"*tmp*" \
+        --glob \!"*bower_components*" \
+        --glob \!"*venv*" \
+        --glob \!"*.git" \
+        --glob \!"*.pyc" \
+        "$1"
 }
 
 if [ -f ~/.git-completion.bash  ]; then

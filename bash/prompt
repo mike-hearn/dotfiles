@@ -74,8 +74,6 @@ export VIRTUAL_ENV_DISABLE_PROMPT=1 # disable the default virtualenv prompt
 VENV="\$(virtualenv_info)";
 
 
-
-
 source $(dotfiles_location)/bash/scripts/git-prompt.sh
 
 # Prompt variables
@@ -86,7 +84,7 @@ PROMPT_BEFORE+="\[${userStyle}\]\u"; # username
 PROMPT_BEFORE+="\[${white}\]@";
 PROMPT_BEFORE+="\[${hostStyle}\]\h"; # host
 PROMPT_BEFORE+="\[${white}\]:";
-PROMPT_BEFORE+="\[${green}\]\w"; # working directory full path
+PROMPT_BEFORE+="\e[1;34m\w"; # working directory full path
 
 PROMPT_AFTER="\[${reset}\]\\n\\\$ "
 

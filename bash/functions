@@ -341,4 +341,11 @@ nvm() {
     nvm $@
 }
 
+setcolorscheme() {
+    export COLORSCHEME=$1  # Bash uses underscores (except "-dark")
+    export COLORSCHEMEVIM=$(echo $COLORSCHEME | sed s/_/\-/g)  # vim uses dashes
+    echo $COLORSCHEME > ~/.config/bash/colorscheme
+    eval $COLORSCHEME
+}
+
 # vim: syntax=sh ts=4 sts=4 shiftwidth=4 expandtab

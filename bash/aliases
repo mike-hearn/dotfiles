@@ -35,6 +35,7 @@ alias tmux="TERM=screen-256color-bce tmux"
 
 # we always pass these to ls(1)
 LS_COMMON="-hBGl"
+GLS_COMMON="--color -la --group-directories-first"
 
 if [ "$(uname)" == "Linux" ]; then
     LS_COMMON="$LS_COMMON -F --color --show-control-chars"
@@ -52,11 +53,11 @@ fi
 unset dircolors
 
 # setup the main ls alias if we've established common args
-[ -n "$LS_COMMON" ] && alias ls="command ls $LS_COMMON"
+[ -n "$LS_COMMON" ] && alias ls="command gls $GLS_COMMON 2> /dev/null || command ls $LS_COMMON"
 
 alias ll="ls -l"
 alias la="ls -la"
 
-alias rg="rg --max-columns=1000"
+alias rg="rg --max-columns=1000 --smart-case"
 
 # vim:syntax=sh

@@ -332,7 +332,8 @@ gh() {
 }
 
 tn() {
-    tmux rename-session -t "$(tmux display-message -p '#{session_id}')" "$(basename $(git rev-parse --show-toplevel) | sed 's/[-_\.]/ /g')"
+    local GITROOT=$(git rev-parse --show-toplevel 2> /dev/null)
+    tmux rename-session -t "$(tmux display-message -p '#{session_id}')" "$(basename ${GITROOT:-$(basename $(pwd))}  | sed 's/[-_\.]/ /g')"
 }
 
 nvm() {

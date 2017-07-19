@@ -92,6 +92,7 @@
     Plug 'Xuyuanp/nerdtree-git-plugin'
     Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-unimpaired'  " Key bindings for vim-fugitive
+    Plug 'tpope/vim-repeat'      " Repeatable events from pugins
     Plug 'davidhalter/jedi-vim'
     Plug 'airblade/vim-gitgutter'
     Plug 'vim-scripts/tinymode.vim'

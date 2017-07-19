@@ -92,7 +92,7 @@
     Plug 'scrooloose/nerdcommenter'
     Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
     Plug 'Xuyuanp/nerdtree-git-plugin'
-    Plug 'tpope/vim-fugitive'
+    Plug 'tpope/vim-fugitive'    " Git management within vim
     Plug 'tpope/vim-unimpaired'  " Key bindings for vim-fugitive
     Plug 'tpope/vim-repeat'      " Repeatable events from pugins
     Plug 'davidhalter/jedi-vim'
@@ -143,8 +143,6 @@
     set termguicolors
     set background=dark
     colorscheme $COLORSCHEMEVIM
-    let g:airline_theme="base16"
-    filetype plugin indent on
 
 " }}}
 " {{{ Functions
@@ -202,6 +200,7 @@ endif
     " Global copy/paste
     vmap <leader>y :w! /tmp/vitmp<CR>
     nmap <leader>p :r! cat /tmp/vitmp<CR>
+    vmap <leader>p d:r! cat /tmp/vitmp<CR>
 
     " Buffer management; for additiona mappings, see tinymode PluginSettings()
     noremap <Leader>a <C-^>
@@ -340,8 +339,9 @@ endif
     nmap <leader>9 <Plug>BufTabLine.Go(9)
     nmap <leader>0 <Plug>BufTabLine.Go(10)
 
+
     let g:lightline = {
-      \ 'colorscheme': 'jellybeans',
+      \ 'colorscheme': $COLORSCHEMELIGHTLINE,
       \ }
 
     " Ale
@@ -370,7 +370,7 @@ endif
 
     autocmd VimEnter * command! -bang -nargs=* Ag
         \ call fzf#vim#grep(
-        \   'rg --column --hidden --max-columns=500 --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+        \   'rg --smart-case --column --hidden --max-columns=500 --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
         \   <bang>0 ? fzf#vim#with_preview('up:60%')
         \           : fzf#vim#with_preview('right:50%:hidden', '?'),
         \   <bang>0
@@ -451,9 +451,9 @@ endif
     autocmd FileType json setlocal foldmethod=syntax
     autocmd Filetype python setlocal foldmethod=expr foldlevel=4
     autocmd Filetype html setlocal foldmethod=indent
-    autocmd Filetype handlebars setlocal foldmethod=indent
-    autocmd Filetype javascript setlocal foldmethod=syntax
-    autocmd Filetype javascript.jsx setlocal foldmethod=syntax
+    autocmd Filetype handlebars setlocal foldmethod=indent foldlevel=20
+    autocmd Filetype javascript setlocal foldmethod=syntax foldlevel=4
+    autocmd Filetype javascript.jsx setlocal foldmethod=syntax foldlevel=4
 
 " }}}
 " {{{ Finishing Touches

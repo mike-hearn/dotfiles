@@ -7,6 +7,7 @@
     set relativenumber number       " Show line numbers, make 'em relative to the current line
     set tw=79                       " Width of document (used by gd)
     set nowrap                      " Don't automatically wrap on load
+    set fo-=t                       " Don't wrap at 80 characters when typing
     set colorcolumn=80
 
     set undofile                    " Undo history maintained across sessions

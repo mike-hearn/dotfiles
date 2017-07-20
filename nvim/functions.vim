@@ -1,11 +1,12 @@
 " User functions file for Neovim
 
 function! FoldAroundSelection()
-    if !exists("b:originafoldmethod")
+    if !exists("b:originalfoldmethod")
         let b:originalfoldmethod = &foldmethod
-        let &foldmethod = "manual"
     endif
+    set foldmethod=manual
 
+    normal zE
     normal 
     normal `<k
     normal zfgg
@@ -14,3 +15,9 @@ function! FoldAroundSelection()
     normal `<
 endfunction
 
+function! RemoveAllFoldsAndResetFoldmethod()
+    if exists("b:originalfoldmethod")
+        let &foldmethod = b:originalfoldmethod
+    endif
+    normal zRzz
+endfunction

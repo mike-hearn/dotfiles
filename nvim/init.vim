@@ -232,7 +232,8 @@
     " Code folding
     nnoremap <space> za
     vnoremap <space> zf
-    nnoremap z0 zRzz
+    vnoremap <leader>za :call FoldAroundSelection()<CR>
+    nnoremap z0 :call RemoveAllFoldsAndResetFoldmethod()<CR>
     nnoremap z) :set foldnestmax=2<CR>zA
     nnoremap z1 :set foldnestmax=2<CR>zM
     nnoremap z2 :set foldnestmax=2<CR>zMzr
@@ -254,10 +255,6 @@
     map <D-\> :NERDTreeToggle<CR>
     map <C-\> :NERDTreeToggle<CR>
     nnoremap <Leader>F :NERDTreeFind<CR>
-
-    " Center paragraph jumps
-    nmap { {zz
-    nmap } }zz
 
     " Move lines up/down with ease (alt + j/k)
     nnoremap ∆ :m .+1<CR>==
@@ -299,6 +296,14 @@
 
     " Search for the visual selection with // in visual mode
     vnoremap // y/<C-R>"<CR>
+
+    " Quick editing/re-loading of config & functions file
+    nnoremap <leader>R :source ~/.config/nvim/init.vim<CR>
+                     \ :source ~/.config/nvim/init.vim<CR>
+                     \ :echo "Neovim config reloaded!"<CR>
+    nnoremap <leader>ef :e ~/.config/nvim/functions.vim<CR>
+    nnoremap <leader>eF :so ~/.config/nvim/functions.vim<CR>
+    nnoremap <leader>ec :e ~/.config/nvim/init.vim<CR>
 
 " }}}
 " Plugin Settings {{{
@@ -453,6 +458,7 @@
     autocmd FileType json setlocal foldmethod=syntax
     autocmd Filetype python setlocal foldmethod=expr foldlevel=4
     autocmd Filetype html setlocal foldmethod=indent
+    autocmd Filetype scss setlocal foldmethod=indent foldlevel=4
     autocmd Filetype handlebars setlocal foldmethod=indent foldlevel=20
     autocmd Filetype javascript setlocal foldmethod=syntax foldlevel=4
     autocmd Filetype javascript.jsx setlocal foldmethod=syntax foldlevel=4

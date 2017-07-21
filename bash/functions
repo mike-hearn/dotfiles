@@ -345,7 +345,9 @@ nvm() {
 setcolorscheme() {
     export COLORSCHEME=$1  # Bash uses underscores (except "-dark")
     export COLORSCHEMEVIM=$(echo $COLORSCHEME | sed s/_/\-/g)  # vim uses dashes
-    echo $COLORSCHEME > ~/.config/bash/colorscheme
+    export COLORSCHEMELIGHTLINE=$(echo $COLORSCHEME | sed s/\-/_/g)  # vim uses dashes
+    mkdir -p $HOME/.config/bash
+    echo $COLORSCHEME > $HOME/.config/bash/colorscheme
     eval $COLORSCHEME
 }
 

@@ -54,10 +54,10 @@ case "$0" in
     *)  unset LOGIN ;;
 esac
 
-if [ -n "$INTERACTIVE" -a -n "$LOGIN" ]; then
-    uname -npsr
-    uptime
-fi
+# if [ -n "$INTERACTIVE" -a -n "$LOGIN" ]; then
+    # uname -npsr
+    # uptime
+# fi
 
 
 # bash colorscheme
@@ -70,6 +70,7 @@ else
     export COLORSCHEME="base16_solarized-dark"  # Bash uses underscores (except "-dark")
 fi
 export COLORSCHEMEVIM=$(echo $COLORSCHEME | sed s/_/\-/g)  # vim uses dashes
+export COLORSCHEMELIGHTLINE=$(echo $COLORSCHEME | sed s/\-/_/g)  # vim uses dashes
 eval $COLORSCHEME
 
 

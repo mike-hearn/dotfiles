@@ -314,6 +314,9 @@
     nnoremap <leader>eF :so ~/.config/nvim/functions.vim<CR>
     nnoremap <leader>ec :e ~/.config/nvim/init.vim<CR>
 
+    " Ag search for visually selected text
+    vnoremap <leader>f y:Ag <C-R>0<CR>
+
 " }}}
 " Plugin Settings {{{
 

@@ -149,6 +149,12 @@
 
     source ~/.config/nvim/functions.vim
 
+    " Writes current full file path to ~/.vim_history
+    function! WriteFileToHistory()
+        call system('touch ~/.vim_history')
+        call system('echo '.shellescape(expand('%:p')).' >> ~/.vim_history')
+    endfunction
+
     " Save current view settings on a per-window, per-buffer basis.
     function! AutoSaveWinView()
         if !exists("w:SavedBufView")
@@ -358,7 +364,7 @@
     " CtrlP
     nmap <C-p> :Files<CR>
     nmap <Leader>s :Buffers<CR>
-    nmap <Leader>f :History<CR>
+    nmap <Leader>f :FilesFromVimHistory<CR>
 
     " Deoplete
     augroup load_us_ycm
@@ -382,6 +388,12 @@
         \           : fzf#vim#with_preview('right:50%:hidden', '?'),
         \   <bang>0
         \)
+
+    " Read file history from ~/.vim_history rather than ':oldfiles' (see
+    " WriteFileToHistory function for where each buffer is written to Vim
+    " history)
+    command! -bang -nargs=* FilesFromVimHistory
+                \ call fzf#vim#grep('tail -r ~/.vim_history | cat -n | sort -uk2 | sort -nk1 | cut -f2- | sed "s/$/:1/"', 0)
 
     " NERDTree
     let NERDTreeIgnore = ['node_modules']
@@ -450,6 +462,9 @@
 
 " }}}
 " Filetype/Autoload Settings {{{
+
+    " Write filename to history file on open/read
+    autocmd BufReadPost * call WriteFileToHistory()
 
     " Bash/sh
     let g:is_posix = 1

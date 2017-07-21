@@ -21,3 +21,7 @@ function! RemoveAllFoldsAndResetFoldmethod()
     endif
     normal zRzz
 endfunction
+
+command! -bang -nargs=* FilesFromVimHistory
+            \ call fzf#vim#grep('tail -r ~/.vim_history | cat -n | sort -uk2 | sort -nk1 | cut -f2- | sed "s/$/:1/"', 0)
+

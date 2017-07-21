@@ -27,7 +27,7 @@ export PYTHONIOENCODING='UTF-8';
 # Bash history
 export HISTFILESIZE=100000
 export HISTSIZE=500000
-export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:clear"  # Don't record some commands
+export HISTIGNORE="&:[ ]*:exit:bg:fg:history:clear"  # Don't record some commands
 export HISTTIMEFORMAT='%F %T '
 export HISTCONTROL="erasedups:ignoreboth"
 shopt -s histappend                     # append to history, don't overwrite it

@@ -351,4 +351,10 @@ setcolorscheme() {
     eval $COLORSCHEME
 }
 
+gri() {
+    git stash save --include-untracked;
+    git rebase -i $1;
+    git stash pop;
+}
+
 # vim: syntax=sh ts=4 sts=4 shiftwidth=4 expandtab

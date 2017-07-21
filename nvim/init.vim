@@ -449,6 +449,7 @@
     let g:pymode_warnings = 0
     let g:pymode_lint = 0
     let g:pymode_rope = 0
+    let g:pymode_motion = 0
 
     " vim-rooter
     let g:rooter_silent_chdir = 1

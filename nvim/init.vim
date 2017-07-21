@@ -149,10 +149,13 @@
 
     source ~/.config/nvim/functions.vim
 
-    " Writes current full file path to ~/.vim_history
+    " Writes current full file path to ~/.vim_history unless it is part of a
+    " plugin (hence the check for ///, e.g. fugitive:///...)
     function! WriteFileToHistory()
-        call system('touch ~/.vim_history')
-        call system('echo '.shellescape(expand('%:p')).' >> ~/.vim_history')
+        if expand('%:p') !~ "\/\/\/"
+            call system('touch ~/.vim_history')
+            call system('echo '.shellescape(expand('%:p')).' >> ~/.vim_history')
+        endif
     endfunction
 
     " Save current view settings on a per-window, per-buffer basis.

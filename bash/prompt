@@ -76,23 +76,36 @@ VENV="\$(virtualenv_info)";
 
 source $(dotfiles_location)/bash/scripts/git-prompt.sh
 
+# https://gist.github.com/mkottman/1936195
+RESET="\[\033[0m\]"
+RED="\[\033[0;31m\]"
+GREEN="\[\033[01;32m\]"
+BLUE="\[\033[01;34m\]"
+YELLOW="\[\033[0;33m\]"
+
+PS_LINE=`printf -- '─%.0s' {1..400}`
+function parse_git_branch {
+  PS_FILL=${PS_LINE:0:$COLUMNS}
+}
+
+PS_TIME="\[\033[\$((COLUMNS-12))G\]   $RED[\t]"
+
 # Prompt variables
-PROMPT_BEFORE+="\n\n`printf '\e[90m%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' .`"; # working directory base name
 PROMPT_BEFORE+="\[\033]0;\W\007\]"; # working directory base name
 PROMPT_BEFORE+="\[${bold}\]${VENV}";
 PROMPT_BEFORE+="\[${bold}\]\n"; # newline
-PROMPT_BEFORE+="\e[1;35m\u"; # username
+PROMPT_BEFORE+="\e[90m\${PS_FILL}\[\033[0G\]\e[1;35m\u"; # username
 PROMPT_BEFORE+="\[${white}\]@";
 PROMPT_BEFORE+="\[${hostStyle}\]\h"; # host
 PROMPT_BEFORE+="\[${white}\]:";
 PROMPT_BEFORE+="\e[1;34m\w"; # working directory full path
 
-PROMPT_AFTER="\[${reset}\]\\n\\\$ "
+PROMPT_AFTER="${PS_TIME}\n${RESET}\$ "
 
-PROMPT_FORMAT=" \[${white}\]on %s"; # working directory full path
+PROMPT_FORMAT=" \[${white}\]on %s   "; # working directory full path
 
 # Prompt command
-PROMPT_COMMAND='__git_ps1 "$PROMPT_BEFORE" "$PROMPT_AFTER" "$PROMPT_FORMAT"'
+PROMPT_COMMAND='__git_ps1 "$PROMPT_BEFORE" "$PROMPT_AFTER" "$PROMPT_FORMAT"; parse_git_branch'
 
 # Git prompt features (read ~/.git-prompt.sh for reference)
 export GIT_PS1_SHOWDIRTYSTATE="true"

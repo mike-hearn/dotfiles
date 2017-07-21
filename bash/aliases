@@ -7,6 +7,7 @@ alias gaa="git add --all"
 alias gb="git branch "
 alias gc="git commit"
 alias gd="git diff"
+alias gf="git fetch --all"
 alias gco="git checkout "
 alias gk="gitk --all&"
 alias gx="gitx --all"
@@ -34,30 +35,24 @@ alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias tmux="TERM=screen-256color-bce tmux"
 
 # we always pass these to ls(1)
-LS_COMMON="-hBGl"
-GLS_COMMON="--color -la --group-directories-first"
+LS_COMMON="-hBGlA"
+LS_LINUX_PARAMS="--color -F --show-control-chars --group-directories-first"
 
 if [ "$(uname)" == "Linux" ]; then
-    LS_COMMON="$LS_COMMON -F --color --show-control-chars"
+    LS_COMMON="$LS_COMMON $LS_LINUX_PARAMS"
 fi
 
-# if the dircolors utility is available, set that up to
-dircolors="$(type -P gdircolors dircolors | head -1)"
-if [ -n "$dircolors" ]; then
-    COLORS=/etc/DIR_COLORS
-    test -e "/etc/DIR_COLORS.$TERM"   && COLORS="/etc/DIR_COLORS.$TERM"
-    test -e "$HOME/.dircolors"        && COLORS="$HOME/.dircolors"
-    test ! -e "$COLORS"               && COLORS=
-    eval `$dircolors --sh $COLORS`
+# Use gls (from brew utils) if it exists
+if type "gls" > /dev/null; then
+    alias ls="command gls $LS_COMMON $LS_LINUX_PARAMS"
+else
+    alias ls="command ls $LS_COMMON"
 fi
-unset dircolors
-
-# setup the main ls alias if we've established common args
-[ -n "$LS_COMMON" ] && alias ls="command gls $GLS_COMMON 2> /dev/null || command ls $LS_COMMON"
 
 alias ll="ls -l"
 alias la="ls -la"
 
+alias ag="rg"
 alias rg="rg --max-columns=1000 --smart-case"
 
 # vim:syntax=sh

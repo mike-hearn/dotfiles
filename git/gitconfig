@@ -4,14 +4,23 @@
 	top = rev-parse --show-toplevel
 	rb = for-each-ref --count=20 --sort=-committerdate refs/heads/ --format=\\'%(refname:short)\\'
     stash-all = stash save --include-untracked
+    stash-unstaged = stash save --keep-index
 [core]
 	excludesfile = ~/.gitignore_global
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+	path =
 [mergetool "sourcetree"]
 	cmd = /opt/homebrew-cask/Caskroom/sourcetree/2.0.2/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
 [user]
 	name = Michael Hearn
 	email = git@mikehearn.net
+[color]
+    diff = auto
+
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold

@@ -1,66 +1,18 @@
 #!/usr/bin/env bash
 
-# Shell prompt based on the Solarized Dark theme.
-# Screenshot: http://i.imgur.com/EkEtphC.png
-# Heavily inspired by @necolas’s prompt: https://github.com/necolas/dotfiles
-# iTerm → Profiles → Text → use 13pt Monaco with 1.1 vertical spacing.
+# Two-line, full-width prompt based on:
+# https://gist.github.com/mkottman/1936195
 
-if [[ $COLORTERM = gnome-* && $TERM = xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
-    export TERM='gnome-256color';
-elif infocmp xterm-256color >/dev/null 2>&1; then
-    export TERM='xterm-256color';
-fi;
+source $(dotfiles_location)/bash/scripts/git-prompt.sh
 
-if tput setaf 1 &> /dev/null; then
-	tput sgr0; # reset colors
-	bold=$(tput bold);
-	reset=$(tput sgr0);
-	# Solarized colors, taken from http://git.io/solarized-colors.
-	black=$(tput setaf 0);
-	blue=$(tput setaf 33);
-	cyan=$(tput setaf 37);
-	# green=$(tput setaf 64);
-	green=$(tput setaf 30);
-	# orange=$(tput setaf 166);
-	orange=$(tput setaf 202);
-	purple=$(tput setaf 125);
-	red=$(tput setaf 124);
-	violet=$(tput setaf 61);
-	white=$(tput setaf 15);
-	# yellow=$(tput setaf 136);
-	yellow=$(tput setaf 220);
-else
-	bold='';
-	reset="\e[0m";
-	black="\e[1;30m";
-	blue="\e[1;34m";
-	cyan="\e[1;36m";
-	green="\e[1;32m";
-	orange="\e[1;33m";
-	purple="\e[1;35m";
-	red="\e[1;31m";
-	violet="\e[1;35m";
-	white="\e[1;37m";
-	yellow="\e[1;33m";
-fi;
+# Create horizontal line to fill bash prompt
+function parse_git_branch {
+    PS_LINE=`printf -- '─%.0s' {1..400}`
+    PS_FILL=${PS_LINE:0:$COLUMNS}
+}
 
-# Highlight the user name when logged in as root.
-if [[ "${USER}" == "root" ]]; then
-	userStyle="${red}";
-else
-	userStyle="${orange}";
-fi;
-
-# Highlight the hostname when connected via SSH.
-if [[ "${SSH_TTY}" ]]; then
-	hostStyle="${bold}${red}";
-else
-	hostStyle="\e[1;33m";
-fi;
-
-# Get Virtual Env
+# Find and print the active virtual environment
 function virtualenv_info(){
-    # Get Virtual Env
     if [[ -n "$VIRTUAL_ENV" ]]; then
         # Strip out the path and just leave the env name
         venv="${VIRTUAL_ENV##*/}"
@@ -68,41 +20,55 @@ function virtualenv_info(){
         # In case you don't have one activated
         venv=''
     fi
-    [[ -n "$venv" ]] && echo "(virtualenv:$venv) "
-}
-export VIRTUAL_ENV_DISABLE_PROMPT=1 # disable the default virtualenv prompt
-VENV="\$(virtualenv_info)";
-
-
-source $(dotfiles_location)/bash/scripts/git-prompt.sh
-
-# https://gist.github.com/mkottman/1936195
-RESET="\[\033[0m\]"
-RED="\[\033[0;31m\]"
-GREEN="\[\033[01;32m\]"
-BLUE="\[\033[01;34m\]"
-YELLOW="\[\033[0;33m\]"
-
-PS_LINE=`printf -- '─%.0s' {1..400}`
-function parse_git_branch {
-  PS_FILL=${PS_LINE:0:$COLUMNS}
+    [[ -n "$venv" ]] && printf "\n[environment: $venv] "
 }
 
-PS_TIME="\[\033[\$((COLUMNS-12))G\]   $RED[\t]"
+if [[ $COLORTERM = gnome-* && $TERM = xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
+    export TERM='gnome-256color';
+elif infocmp xterm-256color >/dev/null 2>&1; then
+    export TERM='xterm-256color';
+fi;
+
+# Color codes
+reset="\[\e[0m\]";
+black="\[\e[1;30m\]";
+red="\[\e[1;31m\]";
+green="\[\e[1;32m\]";
+yellow="\[\e[1;33m\]";
+blue="\[\e[1;34m\]";
+purple="\[\e[1;35m\]";
+cyan="\[\e[1;36m\]";
+white="\[\e[1;37m\]";
+darkgray="\[\e[90m\]";
+
+# Highlight the user name when logged in as root.
+if [[ "${USER}" == "root" ]]; then
+	userStyle="${red}";
+else
+	userStyle="${yellow}";
+fi;
+
+# Highlight the hostname when connected via SSH.
+if [[ "${SSH_TTY}" ]]; then
+	hostStyle="${red}";
+else
+	hostStyle="${yellow}";
+fi;
+
+
+PS_TIME="\[\033[\$((COLUMNS-12))G\]   \[\033[0;31m\][\t]"
 
 # Prompt variables
-PROMPT_BEFORE+="\[\033]0;\W\007\]"; # working directory base name
-PROMPT_BEFORE+="\[${bold}\]${VENV}";
-PROMPT_BEFORE+="\[${bold}\]\n"; # newline
-PROMPT_BEFORE+="\e[90m\${PS_FILL}\[\033[0G\]\e[1;35m\u"; # username
-PROMPT_BEFORE+="\[${white}\]@";
-PROMPT_BEFORE+="\[${hostStyle}\]\h"; # host
-PROMPT_BEFORE+="\[${white}\]:";
-PROMPT_BEFORE+="\e[1;34m\w"; # working directory full path
-
-PROMPT_AFTER="${PS_TIME}\n${RESET}\$ "
-
-PROMPT_FORMAT=" \[${white}\]on %s   "; # working directory full path
+VENV="\$(virtualenv_info)";
+PROMPT_BEFORE+="${VENV} ";
+PROMPT_BEFORE+="\n"; # newline
+PROMPT_BEFORE+="${darkgray}\${PS_FILL}\[\033[0G\]${purple}\u"; # username
+PROMPT_BEFORE+="${white}@";
+PROMPT_BEFORE+="${hostStyle}\h"; # host
+PROMPT_BEFORE+="${white}:";
+PROMPT_BEFORE+="${blue}\w"; # working directory full path
+PROMPT_AFTER="${PS_TIME}\n${reset}\$ "
+PROMPT_FORMAT=" ${white}on %s   "; # working directory full path
 
 # Prompt command
 PROMPT_COMMAND='__git_ps1 "$PROMPT_BEFORE" "$PROMPT_AFTER" "$PROMPT_FORMAT"; parse_git_branch'
@@ -113,6 +79,7 @@ export GIT_PS1_SHOWSTASHSTATE="true"
 export GIT_PS1_SHOWUNTRACKEDFILES="true"
 export GIT_PS1_SHOWUPSTREAM="auto"
 export GIT_PS1_SHOWCOLORHINTS="true"
+export VIRTUAL_ENV_DISABLE_PROMPT=1 # disable the default virtualenv prompt
 
 PS2="\[${yellow}\]→ \[${reset}\]";
 export PS2;

@@ -95,7 +95,7 @@
     Plug 'tpope/vim-fugitive'    " Git management within vim
     Plug 'tpope/vim-unimpaired'  " Key bindings for vim-fugitive
     Plug 'tpope/vim-repeat'      " Repeatable events from pugins
-    Plug 'davidhalter/jedi-vim'
+    " Plug 'davidhalter/jedi-vim'
     Plug 'airblade/vim-gitgutter'
     Plug 'vim-scripts/tinymode.vim'
     Plug 'sjl/gundo.vim', { 'on': 'GundoToggle' }
@@ -121,13 +121,14 @@
     Plug 'SirVer/ultisnips'
     Plug 'honza/vim-snippets'
     Plug 'tpope/vim-surround'
-    Plug 'ludovicchabant/vim-gutentags'
+    Plug 'majutsushi/tagbar'
     Plug 'luochen1990/rainbow'
     Plug 'editorconfig/editorconfig-vim'
     Plug 'romainl/vim-cool' " Un-highlights text if you navigate away from word
 
     " Completion
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins', 'on': []}
+    Plug 'ternjs/tern_for_vim', {'do': 'npm install'}
     Plug 'carlitux/deoplete-ternjs'
     Plug 'zchee/deoplete-jedi'
     Plug 'slashmili/alchemist.vim'
@@ -140,9 +141,32 @@
 " Colorscheme {{{
 
     syntax enable
-    set termguicolors
+    " set termguicolors
     set background=dark
     colorscheme $COLORSCHEMEVIM
+
+    " base16 overrides
+    hi ColorColumn ctermbg=18
+    hi CursorLine ctermbg=18
+    hi CursorLineNr ctermbg=18
+    hi DiffAdd ctermbg=0
+    hi DiffChange ctermbg=0
+    hi DiffDelete ctermbg=0
+    hi DiffText ctermbg=0
+    hi FoldColumn ctermbg=18
+    hi Folded ctermbg=18
+    hi GitGutterAdd ctermbg=18
+    hi GitGutterChange ctermbg=18
+    hi GitGutterChangeDelete ctermbg=18
+    hi GitGutterDelete ctermbg=18
+    hi LineNr ctermbg=18
+    hi Pmenu ctermbg=18
+    hi StatusLineNC ctermbg=0
+    hi TabLine ctermbg=18
+    hi TabLineFill ctermbg=18 ctermfg=20
+    hi TabLineSel ctermbg=19
+    hi VertSplit ctermfg=20
+    hi Visual ctermbg=19
 
 " }}}
 " {{{ Functions
@@ -261,7 +285,6 @@
     nnoremap <C-l> <C-w>l
 
     " Toggle NERDTree
-    map <D-\> :NERDTreeToggle<CR>
     map <C-\> :NERDTreeToggle<CR>
     nnoremap <Leader>F :NERDTreeFind<CR>
 
@@ -315,7 +338,7 @@
     nnoremap <leader>ec :e ~/.config/nvim/init.vim<CR>
 
     " Ag search for visually selected text
-    vnoremap <leader>f y:Ag <C-R>0<CR>
+    vnoremap f y:Ag <C-R>0<CR>
 
 " }}}
 " Plugin Settings {{{
@@ -364,8 +387,9 @@
       \ }
 
     " Ale
-    highlight clear ALEErrorSign
-    highlight clear ALEWarningSign
+    highlight ALEErrorSign ctermbg=Red ctermfg=18
+    highlight ALEWarningSign ctermbg=18 ctermfg=Yellow
+
 
     " CtrlP
     nmap <C-p> :Files<CR>
@@ -389,7 +413,7 @@
 
     autocmd VimEnter * command! -bang -nargs=* Ag
         \ call fzf#vim#grep(
-        \   'rg --smart-case --column --hidden --max-columns=500 --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+        \   'rg --smart-case --column --hidden --max-columns=500  --glob=\!".git" --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
         \   <bang>0 ? fzf#vim#with_preview('up:60%')
         \           : fzf#vim#with_preview('right:50%:hidden', '?'),
         \   <bang>0
@@ -493,5 +517,6 @@
 
 " }}}
 
+let g:ale_sign_error = '×'
 
 " vim: foldmethod=marker: foldlevel=0

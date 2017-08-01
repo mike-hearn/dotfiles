@@ -125,6 +125,7 @@
     Plug 'luochen1990/rainbow'
     Plug 'editorconfig/editorconfig-vim'
     Plug 'romainl/vim-cool' " Un-highlights text if you navigate away from word
+    Plug 'blueyed/vim-diminactive'
 
     " Completion
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins', 'on': []}
@@ -302,6 +303,7 @@
 
     " Vertically split the current & alternative buffer
     nnoremap <leader>v :b #<CR>:vsp #<CR>
+    nnoremap <leader>V zzmt:vsp %<CR>'tzz
 
     " Toggle between standard and relative line numbers
     function! NumberToggle()
@@ -338,7 +340,7 @@
     nnoremap <leader>ec :e ~/.config/nvim/init.vim<CR>
 
     " Ag search for visually selected text
-    vnoremap f y:Ag <C-R>0<CR>
+    vnoremap <leader>f y:Ag <C-R>0<CR>
 
 " }}}
 " Plugin Settings {{{
@@ -388,7 +390,9 @@
 
     " Ale
     highlight ALEErrorSign ctermbg=Red ctermfg=18
-    highlight ALEWarningSign ctermbg=18 ctermfg=Yellow
+    highlight ALEWarningSign ctermbg=Yellow ctermfg=18
+    let g:ale_sign_error = 'x'
+    let g:ale_sign_warning = '?'
 
 
     " CtrlP
@@ -517,6 +521,6 @@
 
 " }}}
 
-let g:ale_sign_error = '×'
+let g:diminactive_enable_focus = 1
 
 " vim: foldmethod=marker: foldlevel=0

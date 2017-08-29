@@ -88,7 +88,7 @@ PROMPT_AFTER="${PS_TIME}\n${base_reset}\$ "
 PROMPT_FORMAT=" ${base_white}on %s   "; # working directory full path
 
 # Prompt command
-PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND} __git_ps1 \"$PROMPT_BEFORE\" \"$PROMPT_AFTER\" \"$PROMPT_FORMAT\"; parse_git_branch"
+PROMPT_COMMAND='__git_ps1 "$PROMPT_BEFORE" "$PROMPT_AFTER" "$PROMPT_FORMAT"; parse_git_branch'
 
 # Git prompt features (read ~/.git-prompt.sh for reference)
 export GIT_PS1_SHOWDIRTYSTATE="true"

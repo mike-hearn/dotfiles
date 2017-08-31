@@ -124,8 +124,7 @@
     Plug 'majutsushi/tagbar'
     Plug 'luochen1990/rainbow'
     Plug 'editorconfig/editorconfig-vim'
-    Plug 'romainl/vim-cool' " Un-highlights text if you navigate away from word
-    Plug 'blueyed/vim-diminactive'
+    Plug 'junegunn/vim-slash' " Un-highlights text if you navigate away from word
 
     " Completion
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins', 'on': []}
@@ -162,6 +161,7 @@
     hi GitGutterDelete ctermbg=18
     hi LineNr ctermbg=18
     hi Pmenu ctermbg=18
+    hi QuickFixLine ctermbg=19
     hi StatusLineNC ctermbg=0
     hi TabLine ctermbg=18
     hi TabLineFill ctermbg=18 ctermfg=20
@@ -327,6 +327,7 @@
     nmap <leader>gd :Gdiff<cr>
     nmap <leader>gw :Gwrite<cr>
     nmap <leader>gr :Gread<cr>
+    nmap <leader>gcc :Gwrite<cr>:Gcommit<cr>I
 
     " Search for the visual selection with // in visual mode
     vnoremap // y/<C-R>"<CR>
@@ -520,7 +521,5 @@
     hi VertSplit ctermbg=NONE guibg=NONE
 
 " }}}
-
-let g:diminactive_enable_focus = 1
 
 " vim: foldmethod=marker: foldlevel=0

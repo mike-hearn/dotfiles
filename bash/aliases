@@ -31,9 +31,6 @@ alias x='exit'
 # Find external IP address
 alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
 
-# Tmux with reasonable colors
-alias tmux="TERM=screen-256color-bce tmux"
-
 # we always pass these to ls(1)
 LS_COMMON="-hBGlA"
 LS_LINUX_PARAMS="--color -F --show-control-chars --group-directories-first"

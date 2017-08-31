@@ -345,8 +345,8 @@ setcolorscheme() {
     eval $COLORSCHEME
 }
 
-tac() {
-    if [[ -n $(command -v tac) ]]; then
+recentfiles() {
+    if hash tac 2>/dev/null; then
         command tac $@
     else
         command tail -r $@

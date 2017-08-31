@@ -336,12 +336,6 @@ tn() {
     tmux rename-session -t "$(tmux display-message -p '#{session_id}')" "$(basename ${GITROOT:-$(basename $(pwd))}  | sed 's/[-_\.]/ /g')"
 }
 
-nvm() {
-    export NVM_DIR="$HOME/.nvm"
-    . "/usr/local/opt/nvm/nvm.sh"
-    nvm $@
-}
-
 setcolorscheme() {
     export COLORSCHEME=$1  # Bash uses underscores (except "-dark")
     export COLORSCHEMEVIM=$(echo $COLORSCHEME | sed s/_/\-/g)  # vim uses dashes

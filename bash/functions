@@ -345,6 +345,14 @@ setcolorscheme() {
     eval $COLORSCHEME
 }
 
+tac() {
+    if [[ -n $(command -v tac) ]]; then
+        command tac $@
+    else
+        command tail -r $@
+    fi
+}
+
 gri() {
     git stash save --include-untracked;
     git rebase -i $1;

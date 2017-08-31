@@ -5,6 +5,7 @@
 
 # Autojump
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+[ -f /etc/profile.d/autojump.sh ] && . /etc/profile.d/autojump.sh
 
 # ~/.shenv is used as a machine specific ~/.bashrc
 [ -r ~/.bash_env ] && . ~/.bash_env
@@ -15,9 +16,9 @@ if [ -e $HOME/.secrets ]; then source $HOME/.secrets; fi
 # FZF
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 export FZF_CTRL_R_OPTS='--sort'
-export FZF_DEFAULT_COMMAND='ag -g ""'
+export FZF_DEFAULT_COMMAND='command rg --files'
 _fzf_compgen_path() {
-    rg --files --no-ignore --hidden --color=never \
+    command rg --files --no-ignore --hidden --color=never \
         --glob \!"*node_modules*" \
         --glob \!"*tmp*" \
         --glob \!"*bower_components*" \

@@ -22,6 +22,9 @@ PATH="/usr/local/bin:$PATH"
 # Go support
 [ -d $HOME/.go/bin ] && PATH="$HOME/.go/bin:$PATH"
 
+# Python local bin support
+[ -d $HOME/.local/bin ] && PATH="$HOME/.local/bin:$PATH"
+
 # Final export
 export PATH
 

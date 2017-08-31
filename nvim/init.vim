@@ -427,7 +427,7 @@
     " WriteFileToHistory function for where each buffer is written to Vim
     " history)
     command! -bang -nargs=* FilesFromVimHistory
-                \ call fzf#vim#grep('tail -r ~/.vim_history | cat -n | sort -uk2 | sort -nk1 | cut -f2- | sed "s/$/:1/"', 0)
+                \ call fzf#vim#grep('tac ~/.vim_history | cat -n | sort -uk2 | sort -nk1 | cut -f2- | sed "s/$/:1/"', 0)
 
     " NERDTree
     let NERDTreeIgnore = ['node_modules']

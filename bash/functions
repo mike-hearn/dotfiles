@@ -345,14 +345,6 @@ setcolorscheme() {
     eval $COLORSCHEME
 }
 
-recentfiles() {
-    if hash tac 2>/dev/null; then
-        command tac $@
-    else
-        command tail -r $@
-    fi
-}
-
 gri() {
     git stash save --include-untracked;
     git rebase -i $1;

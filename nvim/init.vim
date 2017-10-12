@@ -21,7 +21,6 @@
     set showmatch                   " Highlight matching paren, brace, bracket
     set matchtime=3                 " Time in tenths of seconds to show match
 
-    set expandtab                   " Convert tabs to spaces
     set tabstop=4                   " Specifies width of tab character
     set shiftwidth=4                " Amount of whitespace to insert
     set softtabstop=4               " Fine-tunes amount of insert whitespace
@@ -75,7 +74,7 @@
     Plug 'vim-scripts/mako.vim', { 'for': 'html' }
     Plug 'mxw/vim-jsx', { 'for': [ 'javascript.jsx' ]}
     Plug 'mike-hearn/fountain.vim'
-    Plug 'evanmiller/nginx-vim-syntax'
+    Plug 'chr4/nginx.vim'
     Plug 'godlygeek/tabular'
     Plug 'plasticboy/vim-markdown'
     Plug 'elixir-lang/vim-elixir'
@@ -84,6 +83,9 @@
     Plug 'evidens/vim-twig'
     Plug 'leafgarland/typescript-vim'
     Plug 'cespare/vim-toml'
+    Plug 'fatih/vim-go', { 'for': 'go' }
+    Plug 'slashmili/alchemist.vim'
+    Plug 'tomlion/vim-solidity'
 
     " IDE & Productivity Features
     Plug 'itchyny/lightline.vim'
@@ -105,7 +107,7 @@
     Plug 'mike-hearn/vim-buffer-history' " Keeps track of buffer history
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  }
     Plug 'junegunn/fzf.vim'
-    Plug 'ervandew/supertab' " Tab completion super-fied
+    " Plug 'ervandew/supertab' " Tab completion super-fied
     Plug 'tpope/vim-obsession' " Remember vim session state
     Plug 'christoomey/vim-tmux-navigator'
     Plug 'terryma/vim-multiple-cursors'
@@ -115,7 +117,7 @@
     Plug 'mattn/emmet-vim'
     Plug 'Chiel92/vim-autoformat' " Integrate yapf & other autoformatters
     Plug 'fisadev/vim-isort' " Autosort python imports
-    Plug 'python-mode/python-mode' " Better vim python handling
+    " Plug 'python-mode/python-mode' " Better vim python handling
     Plug 'nathanaelkane/vim-indent-guides' " Show indent guides
     Plug 'w0rp/ale'
     Plug 'SirVer/ultisnips'
@@ -125,14 +127,10 @@
     Plug 'luochen1990/rainbow'
     Plug 'editorconfig/editorconfig-vim'
     Plug 'junegunn/vim-slash' " Un-highlights text if you navigate away from word
+	Plug 'ludovicchabant/vim-gutentags'
 
     " Completion
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins', 'on': []}
-    Plug 'ternjs/tern_for_vim', {'do': 'npm install'}
-    Plug 'carlitux/deoplete-ternjs'
-    Plug 'zchee/deoplete-jedi'
-    Plug 'slashmili/alchemist.vim'
-    Plug 'zchee/deoplete-go'
+	Plug 'roxma/nvim-completion-manager'
 
 
 
@@ -154,7 +152,7 @@
     hi DiffDelete ctermbg=0
     hi DiffText ctermbg=0
     hi FoldColumn ctermbg=18
-    hi Folded ctermbg=18
+    hi Folded ctermbg=18 ctermfg=21
     hi GitGutterAdd ctermbg=18
     hi GitGutterChange ctermbg=18
     hi GitGutterChangeDelete ctermbg=18
@@ -343,6 +341,9 @@
     " Ag search for visually selected text
     vnoremap <leader>f y:Ag <C-R>0<CR>
 
+    " C-i now incremeents, because C-a is tmux prefix
+    nmap <leader>i <C-a>
+
 " }}}
 " Plugin Settings {{{
 
@@ -400,14 +401,6 @@
     nmap <C-p> :Files<CR>
     nmap <Leader>s :Buffers<CR>
     nmap <Leader>f :FilesFromVimHistory<CR>
-
-    " Deoplete
-    augroup load_us_ycm
-        autocmd!
-        autocmd InsertEnter * call plug#load('deoplete.nvim')
-                    \| autocmd! load_us_ycm
-    augroup END
-    let g:deoplete#enable_at_startup = 1
 
     " Editorconfig
     let g:EditorConfig_core_mode = 'python_external'
@@ -496,7 +489,6 @@
     nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
 
     " Ultisnips.vim
-    let g:UltiSnipsExpandTrigger="<tab>"
     let g:UltiSnipsJumpForwardTrigger="<c-b>"
     let g:UltiSnipsJumpBackwardTrigger="<c-z>"
     nnoremap <Leader>U :UltiSnipsEdit<CR>
@@ -526,5 +518,14 @@
     hi VertSplit ctermbg=NONE guibg=NONE
 
 " }}}
+
+let g:ale_linters = {
+\   'go': ['go build'],
+\}
+
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+let g:gutentags_cache_dir = '.git'
 
 " vim: foldmethod=marker: foldlevel=0

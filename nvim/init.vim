@@ -1,46 +1,31 @@
 " Settings {{{
 
     set hidden                      " Allows changing buffers w/o outright closing them
-    set autoindent
-    set smartindent
-
+    set autoindent                  " Copy the indentation from the previous line
     set relativenumber number       " Show line numbers, make 'em relative to the current line
     set tw=79                       " Width of document (used by gd)
     set nowrap                      " Don't automatically wrap on load
     set fo-=t                       " Don't wrap at 80 characters when typing
-    set colorcolumn=80
-
+    set colorcolumn=80              " Visually mark col 80
     set undofile                    " Undo history maintained across sessions
-    set undolevels=1000
-    set undoreload=10000
-    set undodir=~/.vim/tmp/undo/
-
+    set undolevels=1000             " Save last 1000 changes"
+    set undoreload=10000            " Load last 10,000 changes?
+    set undodir=~/.vim/tmp/undo/    " Dir for saving file changes
     set ignorecase                  " Ignore case when searching
     set smartcase                   " Ignore case if search pattern is lowercase
-
     set showmatch                   " Highlight matching paren, brace, bracket
     set matchtime=3                 " Time in tenths of seconds to show match
-
     set tabstop=4                   " Specifies width of tab character
     set shiftwidth=4                " Amount of whitespace to insert
     set softtabstop=4               " Fine-tunes amount of insert whitespace
     set shiftround                  " Rounds your tabs if you're on a weird interval, like 3 spaces in, will move it to 4 (instead of 7)
-
     set autochdir                   " Autoset working dir to current file's dir
-
     set wildmenu                    " Visual autocomplete for command menu
-
     set spellsuggest=best,10        " Spelling
-
     set mouse=a                     " Mouse support in iTerm et al
-
     set nostartofline               " Cursor maintains position when switching buffers
-
-
-    " Highlight trailing white space
-    autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
-
     set noshowmode                  " Hides --INSERT-- because lightline handles it
+	set nofoldenable
 
 " }}}
 " Directories {{{
@@ -117,14 +102,14 @@
     Plug 'mattn/emmet-vim'
     Plug 'Chiel92/vim-autoformat' " Integrate yapf & other autoformatters
     Plug 'fisadev/vim-isort' " Autosort python imports
-    " Plug 'python-mode/python-mode' " Better vim python handling
+	Plug 'python-mode/python-mode' " Better vim python handling
     Plug 'nathanaelkane/vim-indent-guides' " Show indent guides
     Plug 'w0rp/ale'
     Plug 'SirVer/ultisnips'
     Plug 'honza/vim-snippets'
     Plug 'tpope/vim-surround'
     Plug 'majutsushi/tagbar'
-    Plug 'luochen1990/rainbow'
+	Plug 'junegunn/rainbow_parentheses.vim'
     Plug 'editorconfig/editorconfig-vim'
     Plug 'junegunn/vim-slash' " Un-highlights text if you navigate away from word
 	Plug 'ludovicchabant/vim-gutentags'
@@ -132,14 +117,11 @@
     " Completion
 	Plug 'roxma/nvim-completion-manager'
 
-
-
     call plug#end()
 " }}}
 " Colorscheme {{{
 
     syntax enable
-    " set termguicolors
     set background=dark
     colorscheme $COLORSCHEMEVIM
 
@@ -166,6 +148,8 @@
     hi TabLineSel ctermbg=19
     hi VertSplit ctermfg=20
     hi Visual ctermbg=19
+
+    autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 
 " }}}
 " {{{ Functions
@@ -347,27 +331,18 @@
 " }}}
 " Plugin Settings {{{
 
-    " {{{ vim-airline settings
-        let g:airline_powerline_fonts = 1
-        let g:airline_extensions = ['tabline', 'whitespace']
-        let g:airline#extensions#tabline#enabled = 1
-        let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
-        let g:airline#extensions#tabline#buffer_idx_mode = 1
-        nmap <leader>1 <Plug>AirlineSelectTab1
-        nmap <leader>2 <Plug>AirlineSelectTab2
-        nmap <leader>3 <Plug>AirlineSelectTab3
-        nmap <leader>4 <Plug>AirlineSelectTab4
-        nmap <leader>5 <Plug>AirlineSelectTab5
-        nmap <leader>6 <Plug>AirlineSelectTab6
-        nmap <leader>7 <Plug>AirlineSelectTab7
-        nmap <leader>8 <Plug>AirlineSelectTab8
-        nmap <leader>9 <Plug>AirlineSelectTab9
-    " }}}
-    " {{{ Rainbow Parentheses Settings
-        let g:rainbow_active = 0
-    " }}}
+    " Ale ---------------------------------------------------------------------
+    highlight ALEErrorSign ctermbg=Red ctermfg=18
+    highlight ALEWarningSign ctermbg=Yellow ctermfg=18
 
+    let g:ale_sign_error = 'x'
+    let g:ale_sign_warning = '?'
 
+	let g:ale_linters = {
+	\   'go': ['go build'],
+	\}
+
+	" Buftabline --------------------------------------------------------------
     let g:buftabline_numbers = 2
     let g:buftabline_indicators = 1
     let g:buftabline_separators = 1
@@ -385,27 +360,15 @@
     nmap <leader>9 <Plug>BufTabLine.Go(9)
     nmap <leader>0 <Plug>BufTabLine.Go(10)
 
-
-    let g:lightline = {
-      \ 'colorscheme': $COLORSCHEMELIGHTLINE,
-      \ }
-
-    " Ale
-    highlight ALEErrorSign ctermbg=Red ctermfg=18
-    highlight ALEWarningSign ctermbg=Yellow ctermfg=18
-    let g:ale_sign_error = 'x'
-    let g:ale_sign_warning = '?'
-
-
-    " CtrlP
+    " CtrlP -------------------------------------------------------------------
     nmap <C-p> :Files<CR>
     nmap <Leader>s :Buffers<CR>
     nmap <Leader>f :FilesFromVimHistory<CR>
 
-    " Editorconfig
+    " Editorconfig ------------------------------------------------------------
     let g:EditorConfig_core_mode = 'python_external'
 
-    " FZF
+    " FZF ---------------------------------------------------------------------
     let g:fzf_files_options =
         \ '--preview "(highlight -O ansi {} || cat {}) 2> /dev/null | head -'.&lines.'"'
 
@@ -417,21 +380,28 @@
         \   <bang>0
         \)
 
+	" For use with FZF's grep functionality to replicate :History
     " Read file history from ~/.vim_history rather than ':oldfiles' (see
     " WriteFileToHistory function for where each buffer is written to Vim
     " history)
-    if executable('tac')
-        command! -bang -nargs=* FilesFromVimHistory
-                    \ call fzf#vim#grep('tac ~/.vim_history | cat -n | sort -uk2 | sort -nk1 | cut -f2- | sed "s/$/:1/"', 0)
-    else
-        command! -bang -nargs=* FilesFromVimHistory
-                    \ call fzf#vim#grep('tail -r ~/.vim_history | cat -n | sort -uk2 | sort -nk1 | cut -f2- | sed "s/$/:1/"', 0)
-    endif
+	if executable('tac')
+		command! -bang -nargs=* FilesFromVimHistory
+					\ call fzf#vim#grep('tac ~/.vim_history | cat -n | sort -uk2 | sort -nk1 | cut -f2- | sed "s/$/:1/"', 0)
+	else
+		command! -bang -nargs=* FilesFromVimHistory
+					\ call fzf#vim#grep('tail -r ~/.vim_history | cat -n | sort -uk2 | sort -nk1 | cut -f2- | sed "s/$/:1/"', 0)
+	endif
 
-    " NERDTree
-    let NERDTreeIgnore = ['node_modules']
+    " Easymotion --------------------------------------------------------------
+    map s <Plug>(easymotion-s)
 
-    " jedi-vim
+    " gitgutter ---------------------------------------------------------------
+    let g:gitgutter_max_signs = 1500
+
+	" gutentags ---------------------------------------------------------------
+	let g:gutentags_cache_dir = '.git'
+
+    " jedi-vim ----------------------------------------------------------------
     let g:jedi#usages_command = "<leader>z"
     let g:jedi#popup_on_dot = 0
     let g:jedi#popup_select_first = 0
@@ -439,19 +409,33 @@
     map <Leader>b oimport ipdb<CR>ipdb.set_trace()  # BREAKPOINT<C-c>
     map <Leader>B Oimport ipdb<CR>ipdb.set_trace()  # BREAKPOINT<C-c>
 
-    " Easymotion
-    map s <Plug>(easymotion-s)
+	" Lightline ---------------------------------------------------------------
+    let g:lightline = {
+      \ 'colorscheme': $COLORSCHEMELIGHTLINE,
+      \ }
 
-    " vim-gitgutter
-    let g:gitgutter_max_signs = 1500
+    " NERDCommenter -----------------------------------------------------------
+    let g:NERDSpaceDelims=1
 
-    " tinymode.vim - Buffer mappings
+    " NERDTree ----------------------------------------------------------------
+    let NERDTreeIgnore = ['node_modules']
+
+    " python-mode -------------------------------------------------------------
+    let g:pymode_warnings = 0
+    let g:pymode_lint = 0
+    let g:pymode_rope = 0
+    let g:pymode_motion = 0
+
+	" Rainbow Parentheses -----------------------------------------------------
+	let g:rainbow_active = 0
+
+    " tinymode.vim - Buffer mappings ------------------------------------------
     call tinymode#EnterMap("bufferchange", "<Leader>m", "m")
     call tinymode#EnterMap("bufferchange", "<Leader>n", "n")
     call tinymode#Map("bufferchange", "m", "bn")
     call tinymode#Map("bufferchange", "n", "bp")
 
-    " tinymode.vim - Tab mappings
+    " tinymode.vim - Tab mappings ---------------------------------------------
     call tinymode#EnterMap("tabchange", "<Leader>M", "M")
     call tinymode#EnterMap("tabchange", "<Leader>N", "N")
     call tinymode#EnterMap("tabchange", "<M", "M")
@@ -459,7 +443,7 @@
     call tinymode#Map("tabchange", "M", "tabnext")
     call tinymode#Map("tabchange", "N", "tabprevious")
 
-    " tinymode.vimm - Window size mappings
+    " tinymode.vimm - Window size mappings ------------------------------------
     call tinymode#EnterMap("winsize", "<C-W>+", "+")
     call tinymode#EnterMap("winsize", "<C-W>-", "-")
     call tinymode#Map("winsize", "+", "3wincmd +")
@@ -469,26 +453,18 @@
     call tinymode#Map("winsize", ">", "3wincmd >")
     call tinymode#Map("winsize", "<", "3wincmd <")
 
-    " NERDCommenter
-    let g:NERDSpaceDelims=1
-
-    " python-mode
-    let g:pymode_warnings = 0
-    let g:pymode_lint = 0
-    let g:pymode_rope = 0
-    let g:pymode_motion = 0
-
-    " vim-rooter
+    " vim-rooter --------------------------------------------------------------
     let g:rooter_silent_chdir = 1
 
-    " vim-tmux-navigator
+    " vim-tmux-navigator ------------------------------------------------------
     let g:tmux_navigator_no_mappings = 1
     nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
     nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
     nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
     nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
 
-    " Ultisnips.vim
+    " Ultisnips.vim -----------------------------------------------------------
+	let g:UltiSnipsExpandTrigger="<c-t>"
     let g:UltiSnipsJumpForwardTrigger="<c-b>"
     let g:UltiSnipsJumpBackwardTrigger="<c-z>"
     nnoremap <Leader>U :UltiSnipsEdit<CR>
@@ -519,13 +495,10 @@
 
 " }}}
 
-let g:ale_linters = {
-\   'go': ['go build'],
-\}
 
+set shortmess+=c
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-let g:gutentags_cache_dir = '.git'
 
 " vim: foldmethod=marker: foldlevel=0

@@ -48,35 +48,36 @@
     Plug 'mike-hearn/base16-vim-lightline'
 
     " Syntax
-    Plug 'elzr/vim-json', { 'for': 'json' }
-    Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
-    Plug 'pangloss/vim-javascript'
-    Plug 'othree/html5.vim', { 'for': 'html' }
-    Plug 'sophacles/vim-bundle-mako', { 'for': 'html' }
-    Plug 'tpope/vim-haml', { 'for': 'haml' }
-    Plug 'ekalinin/Dockerfile.vim'
-    Plug 'toyamarinyon/vim-swift'
-    Plug 'vim-scripts/mako.vim', { 'for': 'html' }
-    Plug 'mxw/vim-jsx', { 'for': [ 'javascript.jsx' ]}
-    Plug 'mike-hearn/fountain.vim'
-    Plug 'chr4/nginx.vim'
-    Plug 'godlygeek/tabular'
-    Plug 'plasticboy/vim-markdown'
-    Plug 'elixir-lang/vim-elixir'
-    Plug 'chase/vim-ansible-yaml'
-    Plug 'joukevandermaas/vim-ember-hbs'
-    Plug 'evidens/vim-twig'
-    Plug 'leafgarland/typescript-vim'
-    Plug 'cespare/vim-toml'
-    Plug 'fatih/vim-go', { 'for': 'go' }
-    Plug 'slashmili/alchemist.vim'
-    Plug 'tomlion/vim-solidity'
+    " Plug 'elzr/vim-json', { 'for': 'json' }
+    " Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
+    " Plug 'pangloss/vim-javascript'
+    " Plug 'othree/html5.vim', { 'for': 'html' }
+    " Plug 'sophacles/vim-bundle-mako', { 'for': 'html' }
+    " Plug 'tpope/vim-haml', { 'for': 'haml' }
+    " Plug 'ekalinin/Dockerfile.vim'
+    " Plug 'toyamarinyon/vim-swift'
+    " Plug 'vim-scripts/mako.vim', { 'for': 'html' }
+    " Plug 'mxw/vim-jsx', { 'for': [ 'javascript.jsx' ]}
+    " Plug 'mike-hearn/fountain.vim'
+    " Plug 'chr4/nginx.vim'
+    " Plug 'godlygeek/tabular'
+    " Plug 'plasticboy/vim-markdown'
+    " Plug 'elixir-lang/vim-elixir'
+    " Plug 'chase/vim-ansible-yaml'
+    " Plug 'joukevandermaas/vim-ember-hbs'
+    " Plug 'evidens/vim-twig'
+    " Plug 'leafgarland/typescript-vim'
+    " Plug 'cespare/vim-toml'
+    " Plug 'fatih/vim-go', { 'for': 'go' }
+    " Plug 'slashmili/alchemist.vim'
+    " Plug 'tomlion/vim-solidity'
+	Plug 'sheerun/vim-polyglot'
 
     " IDE & Productivity Features
     Plug 'itchyny/lightline.vim'
     Plug 'ap/vim-buftabline'
     Plug 'Lokaltog/vim-easymotion'
-    Plug 'scrooloose/nerdcommenter'
+    Plug 'tpope/vim-commentary'
     Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
     Plug 'Xuyuanp/nerdtree-git-plugin'
     Plug 'tpope/vim-fugitive'    " Git management within vim
@@ -92,7 +93,7 @@
     Plug 'mike-hearn/vim-buffer-history' " Keeps track of buffer history
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  }
     Plug 'junegunn/fzf.vim'
-    " Plug 'ervandew/supertab' " Tab completion super-fied
+    Plug 'ervandew/supertab' " Tab completion super-fied
     Plug 'tpope/vim-obsession' " Remember vim session state
     Plug 'christoomey/vim-tmux-navigator'
     Plug 'terryma/vim-multiple-cursors'
@@ -102,7 +103,7 @@
     Plug 'mattn/emmet-vim'
     Plug 'Chiel92/vim-autoformat' " Integrate yapf & other autoformatters
     Plug 'fisadev/vim-isort' " Autosort python imports
-	Plug 'python-mode/python-mode' " Better vim python handling
+    Plug 'python-mode/python-mode' " Better vim python handling
     Plug 'nathanaelkane/vim-indent-guides' " Show indent guides
     Plug 'w0rp/ale'
     Plug 'SirVer/ultisnips'
@@ -113,6 +114,7 @@
     Plug 'editorconfig/editorconfig-vim'
     Plug 'junegunn/vim-slash' " Un-highlights text if you navigate away from word
 	Plug 'ludovicchabant/vim-gutentags'
+	Plug 'tpope/vim-sleuth'
 
     " Completion
 	Plug 'roxma/nvim-completion-manager'
@@ -233,7 +235,7 @@
     nnoremap <Leader>ja :BufferHistoryJumpTo 0<CR>
     nnoremap <Leader>js :BufferHistoryJumpTo 1<CR>
     nnoremap <Leader>jd :BufferHistoryJumpTo 2<CR>
-    nnoremap <Leader>jf :BufferHistoryJumpTo 3<CR>
+    nnoremap <Leader>jf :BufferHistorJumpTo 3<CR>
     nnoremap <Leader>jg :BufferHistoryJumpTo 4<CR>
     nnoremap <Leader>jh :BufferHistoryJumpTo 5<CR>
 
@@ -360,6 +362,11 @@
     nmap <leader>9 <Plug>BufTabLine.Go(9)
     nmap <leader>0 <Plug>BufTabLine.Go(10)
 
+
+    " Commentary --------------------------------------------------------------
+    nnoremap <silent> <leader>c<space> :Commentary<CR>
+    vnoremap <silent> <leader>c<space> :Commentary<CR>
+
     " CtrlP -------------------------------------------------------------------
     nmap <C-p> :Files<CR>
     nmap <Leader>s :Buffers<CR>
@@ -479,13 +486,13 @@
     let g:is_posix = 1
 
     " Foldmethods
-    autocmd FileType json setlocal foldmethod=syntax
-    autocmd Filetype python setlocal foldmethod=expr foldlevel=4
-    autocmd Filetype html setlocal foldmethod=indent
-    autocmd Filetype scss setlocal foldmethod=indent foldlevel=4
-    autocmd Filetype handlebars setlocal foldmethod=indent foldlevel=20
-    autocmd Filetype javascript setlocal foldmethod=syntax foldlevel=4
-    autocmd Filetype javascript.jsx setlocal foldmethod=syntax foldlevel=4
+    " autocmd FileType json setlocal foldmethod=syntax
+    " autocmd Filetype python setlocal foldmethod=expr foldlevel=4
+    " autocmd Filetype html setlocal foldmethod=indent
+    " autocmd Filetype scss setlocal foldmethod=indent foldlevel=4
+    " autocmd Filetype handlebars setlocal foldmethod=indent foldlevel=20
+    " autocmd Filetype javascript setlocal foldmethod=syntax foldlevel=4
+    " autocmd Filetype javascript.jsx setlocal foldmethod=syntax foldlevel=4
 
 " }}}
 " {{{ Finishing Touches
@@ -495,10 +502,6 @@
 
 " }}}
 
-
 set shortmess+=c
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
 
 " vim: foldmethod=marker: foldlevel=0

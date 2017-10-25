@@ -31,9 +31,6 @@ alias x='exit'
 # Find external IP address
 alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
 
-# Tmux with reasonable colors
-alias tmux="TERM=screen-256color-bce tmux"
-
 # we always pass these to ls(1)
 LS_COMMON="-hBGlA"
 LS_LINUX_PARAMS="--color -F --show-control-chars --group-directories-first"
@@ -42,17 +39,19 @@ if [ "$(uname)" == "Linux" ]; then
     LS_COMMON="$LS_COMMON $LS_LINUX_PARAMS"
 fi
 
-# Use gls (from brew utils) if it exists
-if type "gls" &> /dev/null; then
+# ls priority: exa, then gls, then ls
+if [[ -n $(command -v exa) ]]; then
+    alias ls="command exa -l --group-directories-first --git"
+elif [[ -n $(command -v gls) ]]; then
     alias ls="command gls $LS_COMMON $LS_LINUX_PARAMS"
 else
     alias ls="command ls $LS_COMMON"
 fi
 
-alias ll="ls -l"
-alias la="ls -la"
-
-alias ag="rg"
-alias rg="rg --max-columns=1000 --smart-case"
+# Alias ag -> rg if ripgrep installed
+if [[ -n $(command -v rg) ]]; then
+    alias ag="rg"
+    alias rg="rg --max-columns=1000 --smart-case"
+fi
 
 # vim:syntax=sh

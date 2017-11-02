@@ -138,13 +138,13 @@ module.exports = {
 				test: /\.jsx?$/,
 				include: [path.resolve(__dirname)],
 				loader: 'babel-loader',
-				options: { presets: ['es2015'] },
+				options: { presets: ['env'] },
 			},
 			{
 				test: /\.scss$/,
 				include: [path.resolve(__dirname)],
-				loader: ExtractTextPlugin.extract({
-					loader: 'css-loader?importLoaders=1!sass-loader',
+				use: ExtractTextPlugin.extract({
+					use: 'css-loader?importLoaders=1!sass-loader',
 				}),
 			},
 		],

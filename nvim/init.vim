@@ -1,31 +1,32 @@
 " Settings {{{
 
-    set hidden                      " Allows changing buffers w/o outright closing them
+    set autochdir                   " Autoset working dir to current file's dir
     set autoindent                  " Copy the indentation from the previous line
-    set relativenumber number       " Show line numbers, make 'em relative to the current line
-    set tw=79                       " Width of document (used by gd)
-    set nowrap                      " Don't automatically wrap on load
-    set fo-=t                       " Don't wrap at 80 characters when typing
     set colorcolumn=80              " Visually mark col 80
+    set fo-=t                       " Don't wrap at 80 characters when typing
+    set hidden                      " Allows changing buffers w/o outright closing them
+    set ignorecase                  " Ignore case when searching
+    set matchtime=3                 " Time in tenths of seconds to show match
+    set mouse=a                     " Mouse support in iTerm et al
+    set nofoldenable                " Start without folds
+    set noshowmode                  " Hides --INSERT-- because lightline handles it
+    set nostartofline               " Cursor maintains position when switching buffers
+    set nowrap                      " Don't automatically wrap on load
+    set relativenumber number       " Show line numbers, make 'em relative to the current line
+    set shiftround                  " Rounds your tabs if you're on a weird interval, like 3 spaces in, will move it to 4 (instead of 7)
+    set shiftwidth=4                " Amount of whitespace to insert
+    set shortmess+=c
+    set showmatch                   " Highlight matching paren, brace, bracket
+    set smartcase                   " Ignore case if search pattern is lowercase
+    set softtabstop=4               " Fine-tunes amount of insert whitespace
+    set spellsuggest=best,10        " Spelling
+    set tabstop=4                   " Specifies width of tab character
+    set tw=79                       " Width of document (used by gd)
+    set undodir=~/.vim/tmp/undo/    " Dir for saving file changes
     set undofile                    " Undo history maintained across sessions
     set undolevels=1000             " Save last 1000 changes"
     set undoreload=10000            " Load last 10,000 changes?
-    set undodir=~/.vim/tmp/undo/    " Dir for saving file changes
-    set ignorecase                  " Ignore case when searching
-    set smartcase                   " Ignore case if search pattern is lowercase
-    set showmatch                   " Highlight matching paren, brace, bracket
-    set matchtime=3                 " Time in tenths of seconds to show match
-    set tabstop=4                   " Specifies width of tab character
-    set shiftwidth=4                " Amount of whitespace to insert
-    set softtabstop=4               " Fine-tunes amount of insert whitespace
-    set shiftround                  " Rounds your tabs if you're on a weird interval, like 3 spaces in, will move it to 4 (instead of 7)
-    set autochdir                   " Autoset working dir to current file's dir
     set wildmenu                    " Visual autocomplete for command menu
-    set spellsuggest=best,10        " Spelling
-    set mouse=a                     " Mouse support in iTerm et al
-    set nostartofline               " Cursor maintains position when switching buffers
-    set noshowmode                  " Hides --INSERT-- because lightline handles it
-	set nofoldenable
 
 " }}}
 " Directories {{{
@@ -48,30 +49,7 @@
     Plug 'mike-hearn/base16-vim-lightline'
 
     " Syntax
-    " Plug 'elzr/vim-json', { 'for': 'json' }
-    " Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
-    " Plug 'pangloss/vim-javascript'
-    " Plug 'othree/html5.vim', { 'for': 'html' }
-    " Plug 'sophacles/vim-bundle-mako', { 'for': 'html' }
-    " Plug 'tpope/vim-haml', { 'for': 'haml' }
-    " Plug 'ekalinin/Dockerfile.vim'
-    " Plug 'toyamarinyon/vim-swift'
-    " Plug 'vim-scripts/mako.vim', { 'for': 'html' }
-    " Plug 'mxw/vim-jsx', { 'for': [ 'javascript.jsx' ]}
-    " Plug 'mike-hearn/fountain.vim'
-    " Plug 'chr4/nginx.vim'
-    " Plug 'godlygeek/tabular'
-    " Plug 'plasticboy/vim-markdown'
-    " Plug 'elixir-lang/vim-elixir'
-    " Plug 'chase/vim-ansible-yaml'
-    " Plug 'joukevandermaas/vim-ember-hbs'
-    " Plug 'evidens/vim-twig'
-    " Plug 'leafgarland/typescript-vim'
-    " Plug 'cespare/vim-toml'
-    " Plug 'fatih/vim-go', { 'for': 'go' }
-    " Plug 'slashmili/alchemist.vim'
-    " Plug 'tomlion/vim-solidity'
-	Plug 'sheerun/vim-polyglot'
+    Plug 'sheerun/vim-polyglot'
 
     " IDE & Productivity Features
     Plug 'itchyny/lightline.vim'
@@ -83,7 +61,6 @@
     Plug 'tpope/vim-fugitive'    " Git management within vim
     Plug 'tpope/vim-unimpaired'  " Key bindings for vim-fugitive
     Plug 'tpope/vim-repeat'      " Repeatable events from pugins
-    " Plug 'davidhalter/jedi-vim'
     Plug 'airblade/vim-gitgutter'
     Plug 'vim-scripts/tinymode.vim'
     Plug 'sjl/gundo.vim', { 'on': 'GundoToggle' }
@@ -110,14 +87,14 @@
     Plug 'honza/vim-snippets'
     Plug 'tpope/vim-surround'
     Plug 'majutsushi/tagbar'
-	Plug 'junegunn/rainbow_parentheses.vim'
+    Plug 'junegunn/rainbow_parentheses.vim'
     Plug 'editorconfig/editorconfig-vim'
     Plug 'junegunn/vim-slash' " Un-highlights text if you navigate away from word
-	Plug 'ludovicchabant/vim-gutentags'
-	Plug 'tpope/vim-sleuth'
+    Plug 'ludovicchabant/vim-gutentags'
+    Plug 'tpope/vim-sleuth'
 
     " Completion
-	Plug 'roxma/nvim-completion-manager'
+    Plug 'roxma/nvim-completion-manager'
 
     call plug#end()
 " }}}
@@ -210,9 +187,6 @@
     " Easier jumping to beginning & end
     noremap H ^
     noremap L g_
-
-    " Get to console easier
-    nnoremap ; :
 
     " Quick delete entire line
     nnoremap D 0C<Esc>
@@ -340,11 +314,29 @@
     let g:ale_sign_error = 'x'
     let g:ale_sign_warning = '?'
 
-	let g:ale_linters = {
-	\   'go': ['go build'],
-	\}
+    let g:ale_linters = {
+                \   'go': ['go build'],
+                \}
 
-	" Buftabline --------------------------------------------------------------
+    let g:ale_fixers = {
+                \   'javascript': ['eslint', 'prettier'],
+                \}
+
+    let g:jsx_ext_required = 0
+
+
+    " Autoformat --------------------------------------------------------------
+    let g:formatters_python = ['yapf', 'autopep8']
+    let g:formatter_yapf_style = 'google'
+
+    let g:formatdef_prettier = '"prettier"'
+    let g:formatters_javascript = ['prettier', 'eslint']
+
+    let g:formatdef_prettierjson = '"prettier --parser=json"'
+    let g:formatters_json = ['prettierjson']
+
+
+    " Buftabline --------------------------------------------------------------
     let g:buftabline_numbers = 2
     let g:buftabline_indicators = 1
     let g:buftabline_separators = 1
@@ -405,9 +397,6 @@
     " gitgutter ---------------------------------------------------------------
     let g:gitgutter_max_signs = 1500
 
-	" gutentags ---------------------------------------------------------------
-	let g:gutentags_cache_dir = '.git'
-
     " jedi-vim ----------------------------------------------------------------
     let g:jedi#usages_command = "<leader>z"
     let g:jedi#popup_on_dot = 0
@@ -433,8 +422,8 @@
     let g:pymode_rope = 0
     let g:pymode_motion = 0
 
-	" Rainbow Parentheses -----------------------------------------------------
-	let g:rainbow_active = 0
+    " Rainbow Parentheses -----------------------------------------------------
+    let g:rainbow_active = 0
 
     " tinymode.vim - Buffer mappings ------------------------------------------
     call tinymode#EnterMap("bufferchange", "<Leader>m", "m")
@@ -471,7 +460,7 @@
     nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
 
     " Ultisnips.vim -----------------------------------------------------------
-	let g:UltiSnipsExpandTrigger="<c-t>"
+    let g:UltiSnipsExpandTrigger="<c-t>"
     let g:UltiSnipsJumpForwardTrigger="<c-b>"
     let g:UltiSnipsJumpBackwardTrigger="<c-z>"
     nnoremap <Leader>U :UltiSnipsEdit<CR>
@@ -486,13 +475,10 @@
     let g:is_posix = 1
 
     " Foldmethods
-    " autocmd FileType json setlocal foldmethod=syntax
-    " autocmd Filetype python setlocal foldmethod=expr foldlevel=4
-    " autocmd Filetype html setlocal foldmethod=indent
-    " autocmd Filetype scss setlocal foldmethod=indent foldlevel=4
-    " autocmd Filetype handlebars setlocal foldmethod=indent foldlevel=20
-    " autocmd Filetype javascript setlocal foldmethod=syntax foldlevel=4
-    " autocmd Filetype javascript.jsx setlocal foldmethod=syntax foldlevel=4
+    autocmd Filetype python setlocal foldmethod=expr
+    autocmd Filetype html,handlebars setlocal foldmethod=indent
+    autocmd Filetype scss setlocal foldmethod=syntax
+    autocmd Filetype javascript,javascript.jsx,json setlocal foldmethod=syntax
 
 " }}}
 " {{{ Finishing Touches
@@ -501,7 +487,5 @@
     hi VertSplit ctermbg=NONE guibg=NONE
 
 " }}}
-
-set shortmess+=c
 
 " vim: foldmethod=marker: foldlevel=0

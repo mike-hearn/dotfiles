@@ -351,4 +351,22 @@ gri() {
     git stash pop;
 }
 
+mkvirtualenv() {
+    if [ $# -eq 0 ]; then
+        python3 -m venv ~/.local/share/virtualenvs/$(basename $(pwd))
+        workon $(basename $(pwd))
+    else
+        python3 -m venv ~/.local/share/virtualenvs/$@
+        workon $@
+    fi
+}
+
+workon() {
+    if [ $# -eq 0 ]; then
+        source ~/.local/share/virtualenvs/$(basename $(pwd))/bin/activate
+    else
+        source ~/.local/share/virtualenvs/$@/bin/activate
+    fi
+}
+
 # vim: syntax=sh ts=4 sts=4 shiftwidth=4 expandtab

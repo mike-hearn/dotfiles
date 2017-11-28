@@ -70,16 +70,15 @@
     Plug 'mike-hearn/vim-buffer-history' " Keeps track of buffer history
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  }
     Plug 'junegunn/fzf.vim'
-    Plug 'ervandew/supertab' " Tab completion super-fied
+    " Plug 'ervandew/supertab' " Tab completion super-fied
     Plug 'tpope/vim-obsession' " Remember vim session state
     Plug 'christoomey/vim-tmux-navigator'
     Plug 'terryma/vim-multiple-cursors'
     Plug 'jiangmiao/auto-pairs'
-    Plug 'editorconfig/editorconfig-vim'
     Plug 'tmux-plugins/vim-tmux-focus-events' " For auto-reloading on focus
     Plug 'mattn/emmet-vim'
     Plug 'Chiel92/vim-autoformat' " Integrate yapf & other autoformatters
-    Plug 'fisadev/vim-isort' " Autosort python imports
+    " Plug 'fisadev/vim-isort' " Autosort python imports
     Plug 'python-mode/python-mode' " Better vim python handling
     Plug 'nathanaelkane/vim-indent-guides' " Show indent guides
     Plug 'w0rp/ale'
@@ -120,6 +119,7 @@
     hi GitGutterDelete ctermbg=18
     hi LineNr ctermbg=18
     hi Pmenu ctermbg=18
+    hi PmenuSel ctermfg=0 ctermbg=7
     hi QuickFixLine ctermbg=19
     hi StatusLineNC ctermbg=0
     hi TabLine ctermbg=18
@@ -308,8 +308,8 @@
 " Plugin Settings {{{
 
     " Ale ---------------------------------------------------------------------
-    highlight ALEErrorSign ctermbg=Red ctermfg=18
-    highlight ALEWarningSign ctermbg=Yellow ctermfg=18
+    highlight ALEErrorSign ctermbg=18 ctermfg=1
+    highlight ALEWarningSign ctermbg=18 ctermfg=3
 
     let g:ale_sign_error = 'x'
     let g:ale_sign_warning = '?'
@@ -416,11 +416,18 @@
     " NERDTree ----------------------------------------------------------------
     let NERDTreeIgnore = ['node_modules']
 
+
+    " nvim-completion-manager -------------------------------------------------
+    inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+    inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
     " python-mode -------------------------------------------------------------
     let g:pymode_warnings = 0
     let g:pymode_lint = 0
     let g:pymode_rope = 0
     let g:pymode_motion = 0
+    let g:pymode_options = 0
+    let g:pymode_indent = 0
 
     " Rainbow Parentheses -----------------------------------------------------
     let g:rainbow_active = 0
@@ -487,5 +494,6 @@
     hi VertSplit ctermbg=NONE guibg=NONE
 
 " }}}
+
 
 " vim: foldmethod=marker: foldlevel=0

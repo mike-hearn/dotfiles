@@ -12,13 +12,10 @@ trim_trailing_whitespace = true
 indent_style = space
 indent_size = 2
 
-# Files with four-space indents
+# Python
 [*.py]
 indent_style = space
 indent_size = 4
-
-# Python
-[*.py]
 max_line_length = 79
 
 # vim: syntax=dosini

@@ -6,6 +6,7 @@
     set fo-=t                       " Don't wrap at 80 characters when typing
     set hidden                      " Allows changing buffers w/o outright closing them
     set ignorecase                  " Ignore case when searching
+    set isk+=-                      " Makes '-' char part of a word for tags, searching, etc
     set matchtime=3                 " Time in tenths of seconds to show match
     set mouse=a                     " Mouse support in iTerm et al
     set nofoldenable                " Start without folds
@@ -359,13 +360,16 @@
     nnoremap <silent> <leader>c<space> :Commentary<CR>
     vnoremap <silent> <leader>c<space> :Commentary<CR>
 
+
     " CtrlP -------------------------------------------------------------------
     nmap <C-p> :Files<CR>
     nmap <Leader>s :Buffers<CR>
     nmap <Leader>f :FilesFromVimHistory<CR>
 
+
     " Editorconfig ------------------------------------------------------------
     let g:EditorConfig_core_mode = 'python_external'
+
 
     " FZF ---------------------------------------------------------------------
     let g:fzf_files_options =
@@ -379,23 +383,34 @@
         \   <bang>0
         \)
 
-	" For use with FZF's grep functionality to replicate :History
+
+    autocmd VimEnter * command! -bang -nargs=* Aga
+        \ call fzf#vim#grep(
+        \   'rg -uuuu --smart-case --column --max-columns=500  --glob=\!".git" --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+        \   <bang>0 ? fzf#vim#with_preview('up:60%')
+        \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+        \   <bang>0
+        \)
+
+    " For use with FZF's grep functionality to replicate :History
     " Read file history from ~/.vim_history rather than ':oldfiles' (see
     " WriteFileToHistory function for where each buffer is written to Vim
     " history)
-	if executable('tac')
-		command! -bang -nargs=* FilesFromVimHistory
-					\ call fzf#vim#grep('tac ~/.vim_history | cat -n | sort -uk2 | sort -nk1 | cut -f2- | sed "s/$/:1/"', 0)
-	else
-		command! -bang -nargs=* FilesFromVimHistory
-					\ call fzf#vim#grep('tail -r ~/.vim_history | cat -n | sort -uk2 | sort -nk1 | cut -f2- | sed "s/$/:1/"', 0)
-	endif
+    if executable('tac')
+        command! -bang -nargs=* FilesFromVimHistory
+                    \ call fzf#vim#grep('tac ~/.vim_history | cat -n | sort -uk2 | sort -nk1 | cut -f2- | sed "s/$/:1/"', 0)
+    else
+        command! -bang -nargs=* FilesFromVimHistory
+                    \ call fzf#vim#grep('tail -r ~/.vim_history | cat -n | sort -uk2 | sort -nk1 | cut -f2- | sed "s/$/:1/"', 0)
+    endif
 
     " Easymotion --------------------------------------------------------------
     map s <Plug>(easymotion-s)
 
+
     " gitgutter ---------------------------------------------------------------
     let g:gitgutter_max_signs = 1500
+
 
     " jedi-vim ----------------------------------------------------------------
     let g:jedi#usages_command = "<leader>z"
@@ -405,21 +420,27 @@
     map <Leader>b oimport ipdb<CR>ipdb.set_trace()  # BREAKPOINT<C-c>
     map <Leader>B Oimport ipdb<CR>ipdb.set_trace()  # BREAKPOINT<C-c>
 
-	" Lightline ---------------------------------------------------------------
+
+    " Lightline ---------------------------------------------------------------
     let g:lightline = {
       \ 'colorscheme': $COLORSCHEMELIGHTLINE,
       \ }
 
+
     " NERDCommenter -----------------------------------------------------------
     let g:NERDSpaceDelims=1
+
 
     " NERDTree ----------------------------------------------------------------
     let NERDTreeIgnore = ['node_modules']
 
 
     " nvim-completion-manager -------------------------------------------------
+    let g:cm_completeopt="menu,menuone,noinsert,noselect,preview"
+    au CompleteDone * pclose
     inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
     inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
 
     " python-mode -------------------------------------------------------------
     let g:pymode_warnings = 0
@@ -429,14 +450,17 @@
     let g:pymode_options = 0
     let g:pymode_indent = 0
 
+
     " Rainbow Parentheses -----------------------------------------------------
     let g:rainbow_active = 0
+
 
     " tinymode.vim - Buffer mappings ------------------------------------------
     call tinymode#EnterMap("bufferchange", "<Leader>m", "m")
     call tinymode#EnterMap("bufferchange", "<Leader>n", "n")
     call tinymode#Map("bufferchange", "m", "bn")
     call tinymode#Map("bufferchange", "n", "bp")
+
 
     " tinymode.vim - Tab mappings ---------------------------------------------
     call tinymode#EnterMap("tabchange", "<Leader>M", "M")
@@ -445,6 +469,7 @@
     call tinymode#EnterMap("tabchange", "<N", "N")
     call tinymode#Map("tabchange", "M", "tabnext")
     call tinymode#Map("tabchange", "N", "tabprevious")
+
 
     " tinymode.vimm - Window size mappings ------------------------------------
     call tinymode#EnterMap("winsize", "<C-W>+", "+")
@@ -456,8 +481,10 @@
     call tinymode#Map("winsize", ">", "3wincmd >")
     call tinymode#Map("winsize", "<", "3wincmd <")
 
+
     " vim-rooter --------------------------------------------------------------
     let g:rooter_silent_chdir = 1
+
 
     " vim-tmux-navigator ------------------------------------------------------
     let g:tmux_navigator_no_mappings = 1
@@ -465,6 +492,7 @@
     nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
     nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
     nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
+
 
     " Ultisnips.vim -----------------------------------------------------------
     let g:UltiSnipsExpandTrigger="<c-t>"
@@ -494,6 +522,7 @@
     hi VertSplit ctermbg=NONE guibg=NONE
 
 " }}}
+
 
 
 " vim: foldmethod=marker: foldlevel=0

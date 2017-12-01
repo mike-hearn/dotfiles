@@ -3,6 +3,9 @@
 # Bash
 ln -sf $(pwd)/bash/bash_profile $HOME/.profile
 
+# ctags
+ln -sf $(pwd)/ctags $HOME/.ctags.d
+
 # Bash colorscheme
 git clone https://github.com/chriskempson/base16-shell.git ~/.config/base16-shell 2> /dev/null
 

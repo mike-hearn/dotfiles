@@ -49,8 +49,12 @@
     Plug 'chriskempson/base16-vim'
     Plug 'mike-hearn/base16-vim-lightline'
 
-    " Syntax
+    " Syntax catch-all
     Plug 'sheerun/vim-polyglot'
+
+    " Language IDE plugins
+    Plug 'python-mode/python-mode'
+    Plug 'fatih/vim-go'
 
     " IDE & Productivity Features
     Plug 'itchyny/lightline.vim'
@@ -71,7 +75,6 @@
     Plug 'mike-hearn/vim-buffer-history' " Keeps track of buffer history
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  }
     Plug 'junegunn/fzf.vim'
-    " Plug 'ervandew/supertab' " Tab completion super-fied
     Plug 'tpope/vim-obsession' " Remember vim session state
     Plug 'christoomey/vim-tmux-navigator'
     Plug 'terryma/vim-multiple-cursors'
@@ -79,8 +82,7 @@
     Plug 'tmux-plugins/vim-tmux-focus-events' " For auto-reloading on focus
     Plug 'mattn/emmet-vim'
     Plug 'Chiel92/vim-autoformat' " Integrate yapf & other autoformatters
-    " Plug 'fisadev/vim-isort' " Autosort python imports
-    Plug 'python-mode/python-mode' " Better vim python handling
+    Plug 'fisadev/vim-isort', { 'on': ['Isort'] } " Autosort python imports
     Plug 'nathanaelkane/vim-indent-guides' " Show indent guides
     Plug 'w0rp/ale'
     Plug 'SirVer/ultisnips'
@@ -95,6 +97,7 @@
 
     " Completion
     Plug 'roxma/nvim-completion-manager'
+    Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}
 
     call plug#end()
 " }}}
@@ -210,7 +213,7 @@
     nnoremap <Leader>ja :BufferHistoryJumpTo 0<CR>
     nnoremap <Leader>js :BufferHistoryJumpTo 1<CR>
     nnoremap <Leader>jd :BufferHistoryJumpTo 2<CR>
-    nnoremap <Leader>jf :BufferHistorJumpTo 3<CR>
+    nnoremap <Leader>jf :BufferHistoryJumpTo 3<CR>
     nnoremap <Leader>jg :BufferHistoryJumpTo 4<CR>
     nnoremap <Leader>jh :BufferHistoryJumpTo 5<CR>
 
@@ -226,17 +229,16 @@
     nnoremap <space> za
     vnoremap <space> zf
     vnoremap <leader>za :call FoldAroundSelection()<CR>
-    nnoremap z0 :call RemoveAllFoldsAndResetFoldmethod()<CR>
-    nnoremap z) :set foldnestmax=2<CR>zA
-    nnoremap z1 :set foldnestmax=2<CR>zM
-    nnoremap z2 :set foldnestmax=2<CR>zMzr
-    nnoremap z3 :set foldnestmax=3<CR>zMzrzr
-    nnoremap z4 :set foldnestmax=4<CR>zMzrzrzr
-    nnoremap z5 :set foldnestmax=5<CR>zMzrzrzrzr
-    nnoremap z6 :set foldnestmax=6<CR>zMzrzrzrzrzr
-    nnoremap z7 :set foldnestmax=7<CR>zMzrzrzrzrzrzr
-    nnoremap z8 :set foldnestmax=8<CR>zMzrzrzrzrzrzrzr
-    nnoremap z9 :set foldnestmax=9<CR>zMzrzrzrzrzrzrzrzr
+    nnoremap z0 :call UnfoldAndRememberScrollPosition(0)<CR>
+    nnoremap z1 :call UnfoldAndRememberScrollPosition(1)<CR>
+    nnoremap z2 :call UnfoldAndRememberScrollPosition(2)<CR>
+    nnoremap z3 :call UnfoldAndRememberScrollPosition(3)<CR>
+    nnoremap z4 :call UnfoldAndRememberScrollPosition(4)<CR>
+    nnoremap z5 :call UnfoldAndRememberScrollPosition(5)<CR>
+    nnoremap z6 :call UnfoldAndRememberScrollPosition(6)<CR>
+    nnoremap z7 :call UnfoldAndRememberScrollPosition(7)<CR>
+    nnoremap z8 :call UnfoldAndRememberScrollPosition(8)<CR>
+    nnoremap z9 :call UnfoldAndRememberScrollPosition(9)<CR>
 
     " Window switching
     nnoremap <C-h> <C-w>h
@@ -432,14 +434,21 @@
 
 
     " NERDTree ----------------------------------------------------------------
-    let NERDTreeIgnore = ['node_modules']
+    let NERDTreeIgnore = [
+                \ 'node_modules',
+                \ '\.pyc$',
+                \ '__pycache__']
 
 
     " nvim-completion-manager -------------------------------------------------
     let g:cm_completeopt="menu,menuone,noinsert,noselect,preview"
+    let g:cm_matcher = {
+                \'module': 'cm_matchers.fuzzy_matcher',
+                \'case': 'smartcase'}
     au CompleteDone * pclose
     inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
     inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+    inoremap <expr> <C-g> <Plug>(cm_force_refresh)
 
 
     " python-mode -------------------------------------------------------------
@@ -511,7 +520,7 @@
 
     " Foldmethods
     autocmd Filetype python setlocal foldmethod=expr
-    autocmd Filetype html,handlebars setlocal foldmethod=indent
+    autocmd Filetype html,handlebars,html.handlebars setlocal foldmethod=indent
     autocmd Filetype scss setlocal foldmethod=syntax
     autocmd Filetype javascript,javascript.jsx,json setlocal foldmethod=syntax
 

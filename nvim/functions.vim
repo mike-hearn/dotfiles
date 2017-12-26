@@ -40,8 +40,8 @@ function! UnfoldAndRememberScrollPosition(foldlevel)
         normal zM
         set foldnestmax=2
         if (a:foldlevel - 1) > 0
-            execute "normal". (a:foldlevel - 1). "zr"
             execute "set foldnestmax=". a:foldlevel
+            execute "normal". (a:foldlevel - 1). "zr"
         endif
     endif
 

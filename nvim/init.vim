@@ -6,7 +6,7 @@
     set fo-=t                       " Don't wrap at 80 characters when typing
     set hidden                      " Allows changing buffers w/o outright closing them
     set ignorecase                  " Ignore case when searching
-    set isk+=-                      " Makes '-' char part of a word for tags, searching, etc
+    set iskeyword+=\-               " Makes '-' char part of a word for tags, searching, etc
     set matchtime=3                 " Time in tenths of seconds to show match
     set mouse=a                     " Mouse support in iTerm et al
     set nofoldenable                " Start without folds
@@ -54,6 +54,7 @@
 
     " Language IDE plugins
     Plug 'python-mode/python-mode'
+    Plug 'othree/csscomplete.vim'
     Plug 'fatih/vim-go'
 
     " IDE & Productivity Features
@@ -94,6 +95,7 @@
     Plug 'junegunn/vim-slash' " Un-highlights text if you navigate away from word
     Plug 'ludovicchabant/vim-gutentags'
     Plug 'tpope/vim-sleuth'
+    Plug 'junegunn/vim-peekaboo' " Peek into vim registers
 
     " Completion
     Plug 'roxma/nvim-completion-manager'
@@ -229,16 +231,16 @@
     nnoremap <space> za
     vnoremap <space> zf
     vnoremap <leader>za :call FoldAroundSelection()<CR>
-    nnoremap z0 :call UnfoldAndRememberScrollPosition(0)<CR>
-    nnoremap z1 :call UnfoldAndRememberScrollPosition(1)<CR>
-    nnoremap z2 :call UnfoldAndRememberScrollPosition(2)<CR>
-    nnoremap z3 :call UnfoldAndRememberScrollPosition(3)<CR>
-    nnoremap z4 :call UnfoldAndRememberScrollPosition(4)<CR>
-    nnoremap z5 :call UnfoldAndRememberScrollPosition(5)<CR>
-    nnoremap z6 :call UnfoldAndRememberScrollPosition(6)<CR>
-    nnoremap z7 :call UnfoldAndRememberScrollPosition(7)<CR>
-    nnoremap z8 :call UnfoldAndRememberScrollPosition(8)<CR>
-    nnoremap z9 :call UnfoldAndRememberScrollPosition(9)<CR>
+    nnoremap <silent> z0 :call UnfoldAndRememberScrollPosition(0)<CR>
+    nnoremap <silent> z1 :call UnfoldAndRememberScrollPosition(1)<CR>
+    nnoremap <silent> z2 :call UnfoldAndRememberScrollPosition(2)<CR>
+    nnoremap <silent> z3 :call UnfoldAndRememberScrollPosition(3)<CR>
+    nnoremap <silent> z4 :call UnfoldAndRememberScrollPosition(4)<CR>
+    nnoremap <silent> z5 :call UnfoldAndRememberScrollPosition(5)<CR>
+    nnoremap <silent> z6 :call UnfoldAndRememberScrollPosition(6)<CR>
+    nnoremap <silent> z7 :call UnfoldAndRememberScrollPosition(7)<CR>
+    nnoremap <silent> z8 :call UnfoldAndRememberScrollPosition(8)<CR>
+    nnoremap <silent> z9 :call UnfoldAndRememberScrollPosition(9)<CR>
 
     " Window switching
     nnoremap <C-h> <C-w>h
@@ -367,6 +369,7 @@
     nmap <C-p> :Files<CR>
     nmap <Leader>s :Buffers<CR>
     nmap <Leader>f :FilesFromVimHistory<CR>
+    nmap <Leader>t :Tags<CR>
 
 
     " Editorconfig ------------------------------------------------------------

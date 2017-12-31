@@ -10,11 +10,12 @@ PATH="${HOME}/Dropbox/bin:$PATH"
 PATH="$NPM_PACKAGES/bin:$PATH"
 PATH="/usr/local/bin:$PATH"
 
-# Put ~/bin first on PATH
+# Put ~/bin and ~/.bin first on PATH
 [ -d "$HOME/bin" ] && PATH="$HOME/bin:$PATH"
+[ -d "$HOME/.bin" ] && PATH="$HOME/.bin:$PATH"
 
 # Yarn support
-# PATH="$PATH:$HOME/.yarn/bin"
+PATH="$PATH:$HOME/.yarn/bin"
 
 # Rustup support
 [ -d $HOME/.cargo/bin ] && PATH="$HOME/.cargo/bin:$PATH"

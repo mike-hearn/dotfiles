@@ -1,7 +1,12 @@
 #!/usr/bin/env /bin/bash
 
+# Initial mkdir
+mkdir -p $HOME/.bin
+
 # Bash
 ln -sf $(pwd)/bash/bash_profile $HOME/.profile
+cp ./bash/scripts/rerun.sh $HOME/.bin/rerun && chmod +x $HOME/.bin/rerun
+
 
 # ctags
 ln -sf $(pwd)/ctags $HOME/.ctags.d

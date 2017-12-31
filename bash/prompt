@@ -6,10 +6,6 @@
 source $(dotfiles_location)/bash/scripts/git-prompt.sh
 
 # Create horizontal line to fill bash prompt
-function parse_git_branch {
-    PS_LINE=`printf -- '─%.0s' {1..400}`
-    PS_FILL=${PS_LINE:0:$COLUMNS}
-}
 
 # Find and print the active virtual environment
 function virtualenv_info(){
@@ -73,7 +69,6 @@ else
 fi;
 
 
-PS_TIME="\[\033[\$((COLUMNS-12))G\]   \[\033[0;31m\][\t]"
 
 # Prompt variables
 VENV="\$(virtualenv_info)";
@@ -84,11 +79,11 @@ PROMPT_BEFORE+="${base_white}@";
 PROMPT_BEFORE+="${hostStyle}\h"; # host
 PROMPT_BEFORE+="${base_white}:";
 PROMPT_BEFORE+="${base_blue}\w"; # working directory full path
-PROMPT_AFTER="${PS_TIME}\n${base_reset}\$ "
+PROMPT_AFTER="\n${base_reset}\$ "
 PROMPT_FORMAT=" ${base_white}on %s   "; # working directory full path
 
 # Prompt command
-PROMPT_COMMAND='__git_ps1 "$PROMPT_BEFORE" "$PROMPT_AFTER" "$PROMPT_FORMAT"; parse_git_branch'
+PROMPT_COMMAND='__git_ps1 "$PROMPT_BEFORE" "$PROMPT_AFTER" "$PROMPT_FORMAT";'
 
 # Git prompt features (read ~/.git-prompt.sh for reference)
 export GIT_PS1_SHOWDIRTYSTATE="true"

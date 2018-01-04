@@ -280,7 +280,7 @@ function deshake() {
 }
 
 function decimate() {
-    ffmpeg -i "$1" -vf mpdecimate=hi=64*24 -vsync 2 -crf 16 -y "$1.decimated.mp4"
+    ffmpeg -i "$1" -vf mpdecimate=hi=64*24 -an -vsync 2 -crf 16 -y "$1.decimated.mp4"
 }
 
 

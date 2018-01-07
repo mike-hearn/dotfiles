@@ -1,30 +1,32 @@
 #!/usr/bin/env bash
 
 # We want the various sbins on the path along with /usr/local/bin
-PATH="$PATH:/usr/local/sbin:/usr/sbin:/sbin"
+[ -d "/usr/local/sbin" ] && PATH="$PATH:/usr/local/sbin"
+[ -d "/usr/sbin" ] && PATH="$PATH:/usr/sbin"
+[ -d "/sbin" ] && PATH="$PATH:/sbin"
 
-# I have a synced dropbox path, so why not
-PATH="${HOME}/Dropbox/bin:$PATH"
+# bin folder in dropbox for synced executables/scripts
+[ -d "$HOME/Dropbox/bin" ] && PATH="$HOME/Dropbox/bin:$PATH"
 
-# NPM global stuff
-PATH="$NPM_PACKAGES/bin:$PATH"
-PATH="/usr/local/bin:$PATH"
+# npm/yarn/node bin directories
+[ -d "$NPM_PACKAGES/bin" ] && PATH="$NPM_PACKAGES/bin:$PATH"
+[ -d "$HOME/.yarn/bin" ] && PATH="$HOME/.yarn/bin:$PATH"
 
-# Put ~/bin and ~/.bin first on PATH
-[ -d "$HOME/bin" ] && PATH="$HOME/bin:$PATH"
-[ -d "$HOME/.bin" ] && PATH="$HOME/.bin:$PATH"
-
-# Yarn support
-PATH="$PATH:$HOME/.yarn/bin"
+# macos user python site-packages support
+[ -d "$HOME/Library/Python/2.7/bin" ] && PATH="$HOME/Library/Python/2.7/bin:$PATH"
+[ -d "$HOME/Library/Python/3.5/bin" ] && PATH="$HOME/Library/Python/3.5/bin:$PATH"
+[ -d "$HOME/Library/Python/3.6/bin" ] && PATH="$HOME/Library/Python/3.6/bin:$PATH"
 
 # Rustup support
-[ -d $HOME/.cargo/bin ] && PATH="$HOME/.cargo/bin:$PATH"
+[ -d "$HOME/.cargo/bin" ] && PATH="$HOME/.cargo/bin:$PATH"
 
 # Go support
-[ -d $HOME/.go/bin ] && PATH="$HOME/.go/bin:$PATH"
+[ -d "$HOME/.go/bin" ] && PATH="$HOME/.go/bin:$PATH"
 
-# Python local bin support
-[ -d $HOME/.local/bin ] && PATH="$HOME/.local/bin:$PATH"
+# various local `bin` directories
+[ -d "$HOME/bin" ] && PATH="$HOME/bin:$PATH"
+[ -d "$HOME/.bin" ] && PATH="$HOME/.bin:$PATH"
+[ -d "$HOME/.local/bin" ] && PATH="$HOME/.local/bin"
 
 # Final export
 export PATH

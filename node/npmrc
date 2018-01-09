@@ -1,3 +1,2 @@
-prefix = ${NPM_PACKAGES}
 sass_binary_cache=/tmp/.node-sass
 npm_config_tmp=/tmp

@@ -1,0 +1,13 @@
+name: publisher
+root: ~/Repos/Work/publisher
+
+windows:
+  - server:
+      layout: even-horizontal
+      panes:
+        - pipenv shell ./manage.py runserver 0.0.0.0:18000
+        - pipenv shell ./manage.py shell_plus
+  - editor: pipenv shell nvim $(cat ~/.vim_history | grep $(git rev-parse --show-toplevel) | tail -n 1)
+
+  - bash: pipenv shell
+

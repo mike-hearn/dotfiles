@@ -7,7 +7,6 @@ mkdir -p $HOME/.bin
 ln -sf $(pwd)/bash/bash_profile $HOME/.profile
 cp ./bash/scripts/rerun.sh $HOME/.bin/rerun && chmod +x $HOME/.bin/rerun
 
-
 # ctags
 ln -sf $(pwd)/ctags $HOME/.ctags.d
 
@@ -21,14 +20,20 @@ ln -sf $(pwd)/node/eslintrc $HOME/.eslintrc
 ln -sf $(pwd)/node/stylelintrc $HOME/.stylelintrc
 
 # Tmux
-ln -sf $(pwd)/tmux/tmux.conf $HOME/.tmux.conf
 if [ ! -d $HOME/.tmux/plugins ]; then
     mkdir -p $HOME/.tmux/plugins
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
+ln -sf $(pwd)/tmux/tmux.conf $HOME/.tmux.conf
+ln -sf $(pwd)/tmux/restartsession.sh $HOME/.tmux/restartsession.sh
+ln -sf $(pwd)/tmux/choosesession.sh $HOME/.tmux/choosesession.sh
+
+# Tmuxinator
+ln -sf $(pwd)/tmuxinator $HOME/.tmuxinator
 
 # Vim
 mkdir -p $HOME/.vim
+mkdir -p $HOME/.vim/tmp/undo $HOME/.vim/tmp/backup $HOME/.vim/tmp/swap
 ln -sf $(pwd)/vim/vimrc $HOME/.vimrc
 ln -sf $(pwd)/vim/UltiSnips $HOME/.vim/
 ln -sf $(pwd)/vim/UltiSnips $HOME/.config/nvim/

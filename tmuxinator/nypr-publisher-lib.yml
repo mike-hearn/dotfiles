@@ -1,0 +1,14 @@
+name: nypr-publisher-lib
+root: ~/Repos/Work/nypr-publisher-lib
+
+on_project_first_start: git clone git@github.com:nypublicradio/nypr-publisher-lib.git ~/Repos/Work/nypr-publisher-lib
+
+on_project_start: git fetch --all > /dev/null
+
+windows:
+  - editor:
+      layout: even-horizontal
+      panes:
+        - nvim $(cat ~/.vim_history | grep $(git rev-parse --show-toplevel) | tail -n 1)
+        -
+

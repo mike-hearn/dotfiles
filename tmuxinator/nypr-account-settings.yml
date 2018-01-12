@@ -1,0 +1,32 @@
+# ~/.tmuxinator/nypr-account-settings.yml
+
+name: nypr-account-settings
+root: ~/Repos/Work/nypr-account-settings
+
+on_project_first_start: git clone git@github.com:nypublicradio/nypr-account-settings.git ~/Repos/Work/nypr-account-settings
+
+on_project_start: git fetch --all > /dev/null
+
+pre_window:
+  - nvm use 6
+
+on_project_stop: touch /tmp/itworked
+
+windows:
+  - server:
+      layout: even-horizontal
+      panes:
+        - server:
+          - yarn
+          - yarn link
+          - bower install
+          # - yarn link nypr-ui
+          - ember s --port=4238
+        - shell:
+          -
+  - editor:
+      layout: even-horizontal
+      panes:
+        - nvim $(cat ~/.vim_history | grep $(git rev-parse --show-toplevel) | tail -n 1)
+        -
+

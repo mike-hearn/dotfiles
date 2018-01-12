@@ -1,0 +1,22 @@
+name: wnyc-studios-web-client
+root: ~/Repos/Work/wnyc-studios-web-client
+
+on_project_first_start: git clone git@github.com:nypublicradio/wnyc-studios-web-client.git ~/Repos/Work/wnyc-studios-web-client
+
+on_project_start: git fetch --all > /dev/null
+
+windows:
+  - server:
+      layout: even-horizontal
+      panes:
+        - server:
+          - yarn
+          - ember s --port=4201 --proxy=http://desktop.mikehearn.com:18000
+        - shell:
+          -
+  - editor:
+      layout: even-horizontal
+      panes:
+        - nvim $(cat ~/.vim_history | grep $(git rev-parse --show-toplevel) | tail -n 1)
+        -
+

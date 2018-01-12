@@ -1,0 +1,35 @@
+name: wnyc-web-client
+root: ~/Repos/Work/wnyc-web-client
+
+on_project_first_start: git clone git@github.com:nypublicradio/wnyc-web-client.git ~/Repos/Work/wnyc-web-client
+
+on_project_start: git fetch --all > /dev/null
+
+pre_window:
+  - nvm use 6
+
+on_project_stop:
+  - yarn unlink nypr-account-settings
+  - yarn unlink nypr-ui
+
+windows:
+  - server:
+      layout: even-horizontal
+      panes:
+        - server:
+          # - trash node_modules > /dev/null
+          # - trash bower_components > /dev/null
+          - yarn
+          - bower install
+          - grunt modernizr:dist
+          # - yarn link nypr-account-settings
+          # - yarn link nypr-ui
+          - ember s --port=4200
+        - shell:
+          -
+  - editor:
+      layout: even-horizontal
+      panes:
+        - nvim $(cat ~/.vim_history | grep $(git rev-parse --show-toplevel) | tail -n 1)
+        -
+

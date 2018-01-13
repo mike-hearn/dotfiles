@@ -333,7 +333,7 @@ gh() {
 
 tn() {
     local GITROOT=$(git rev-parse --show-toplevel 2> /dev/null)
-    tmux rename-session -t "$(tmux display-message -p '#{session_id}')" "$(basename ${GITROOT:-$(basename $(pwd))}  | sed 's/[ -_\.]/-/g')"
+    tmux rename-session -t "$(tmux display-message -p '#{session_name}')" "$(basename ${GITROOT:-$(basename $(pwd))}  | sed 's/[-_\. ]/-/g')"
 }
 
 setcolorscheme() {

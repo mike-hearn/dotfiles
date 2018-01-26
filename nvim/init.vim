@@ -46,60 +46,62 @@
     Plug 'tpope/vim-sensible'
 
     " Themes
+    let base16colorspace=256
     Plug 'chriskempson/base16-vim'
     Plug 'mike-hearn/base16-vim-lightline'
 
-    " Syntax catch-all
+    " Languages & IDE plugins
     Plug 'sheerun/vim-polyglot'
-
-    " Language IDE plugins
     Plug 'python-mode/python-mode'
     Plug 'othree/csscomplete.vim'
     Plug 'fatih/vim-go'
 
+    " Linters/Formatters/Checkers
+    Plug 'w0rp/ale'
+    Plug 'tell-k/vim-autopep8'
+    Plug 'prettier/vim-prettier'
+
     " IDE & Productivity Features
-    Plug 'itchyny/lightline.vim'
-    Plug 'ap/vim-buftabline'
-    Plug 'Lokaltog/vim-easymotion'
-    Plug 'tpope/vim-commentary'
-    Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
-    Plug 'Xuyuanp/nerdtree-git-plugin'
-    Plug 'tpope/vim-fugitive'    " Git management within vim
-    Plug 'tpope/vim-unimpaired'  " Key bindings for vim-fugitive
-    Plug 'tpope/vim-repeat'      " Repeatable events from pugins
-    Plug 'airblade/vim-gitgutter'
-    Plug 'vim-scripts/tinymode.vim'
-    Plug 'sjl/gundo.vim', { 'on': 'GundoToggle' }
+    Plug 'itchyny/lightline.vim' " Lightweight powerline-esque bar at bottom of window
+    Plug 'ap/vim-buftabline' " List buffers at top of vim window
+    Plug 'Lokaltog/vim-easymotion' " Quickly jump to specific character on screen
+    Plug 'tpope/vim-commentary' " Comment stuff out with gcc
+    Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] } " Sidebar file explorer (c+\)
+    Plug 'Xuyuanp/nerdtree-git-plugin' " Show file git status in nerdtree
+    Plug 'tpope/vim-fugitive' " Git management within vim
+    Plug 'tpope/vim-unimpaired' " Key bindings for vim-fugitive
+    Plug 'tpope/vim-repeat' " Repeatable events from pugins
+    Plug 'airblade/vim-gitgutter' " Show which lines have been edited from git working version
+    Plug 'vim-scripts/tinymode.vim' " Allows for repetitve shortcuts w/o typing prefix key, e.g. ^W++- instead of ^W+^W+^W-
+    Plug 'sjl/gundo.vim', { 'on': 'GundoToggle' } " Tracks undo history like a git tree
     Plug 'vim-scripts/BufOnly.vim' " Close all buffers except open
-    Plug 'airblade/vim-rooter' " Sets the pwd to git root (and makes me hit enter a lot)
-    Plug 'teranex/jk-jumps.vim' " Adds a 'jump' when using, eg, 10j to move
+    Plug 'airblade/vim-rooter' " Sets the pwd to git root
+    Plug 'teranex/jk-jumps.vim' " Adds a 'jump' when using, eg, 10j to move, useful for c+o/c+i navigation
     Plug 'mike-hearn/vim-buffer-history' " Keeps track of buffer history
-    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  }
-    Plug 'junegunn/fzf.vim'
+    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  } " Installs fzf if not already installed
+    Plug 'junegunn/fzf.vim' " My favorite fuzzy search
     Plug 'tpope/vim-obsession' " Remember vim session state
-    Plug 'christoomey/vim-tmux-navigator'
-    Plug 'terryma/vim-multiple-cursors'
-    Plug 'jiangmiao/auto-pairs'
+    Plug 'christoomey/vim-tmux-navigator' " Treats vim splits as tmux panes, allowing same shortcuts
+    Plug 'jiangmiao/auto-pairs' " Completes the pair for ( and { and [ etc
     Plug 'tmux-plugins/vim-tmux-focus-events' " For auto-reloading on focus
-    Plug 'mattn/emmet-vim'
+    Plug 'mattn/emmet-vim' " Shortcuts to quickly scaffold html
     Plug 'Chiel92/vim-autoformat' " Integrate yapf & other autoformatters
     Plug 'fisadev/vim-isort', { 'on': ['Isort'] } " Autosort python imports
     Plug 'nathanaelkane/vim-indent-guides' " Show indent guides
-    Plug 'w0rp/ale'
-    Plug 'SirVer/ultisnips'
-    Plug 'honza/vim-snippets'
-    Plug 'tpope/vim-surround'
-    Plug 'majutsushi/tagbar'
-    Plug 'junegunn/rainbow_parentheses.vim'
-    Plug 'editorconfig/editorconfig-vim'
+    Plug 'SirVer/ultisnips' " My custom snippets for code reuse
+    Plug 'honza/vim-snippets' " Community custom snippets
+    Plug 'tpope/vim-surround' " Shortcuts to modify characters/code around an object, eg add quotes on a string
+    Plug 'majutsushi/tagbar' " Shows tags in sidebar
+    Plug 'junegunn/rainbow_parentheses.vim' " Colors matching parentheses for easier parsing
+    Plug 'editorconfig/editorconfig-vim' " Imports editorconfig file
     Plug 'junegunn/vim-slash' " Un-highlights text if you navigate away from word
-    Plug 'ludovicchabant/vim-gutentags'
-    Plug 'tpope/vim-sleuth'
+    Plug 'ludovicchabant/vim-gutentags' " Updates tags file on each file change
+    Plug 'tpope/vim-sleuth' " Basically triggers :noh once you move your cursor off a highlighted word
     Plug 'junegunn/vim-peekaboo' " Peek into vim registers
 
     " Completion
-    Plug 'roxma/nvim-completion-manager'
-    Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}
+    Plug 'roxma/nvim-completion-manager' " My favorite completion engine
+    Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}  " Integrate ncm with tern for JS completion
 
     call plug#end()
 " }}}
@@ -325,6 +327,8 @@
 
     let g:ale_fixers = {
                 \   'javascript': ['eslint', 'prettier'],
+                \   'scss': ['prettier'],
+                \   'python': ['autopep8', 'yapf'],
                 \}
 
     let g:jsx_ext_required = 0

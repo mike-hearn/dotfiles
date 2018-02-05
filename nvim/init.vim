@@ -109,7 +109,9 @@
 
     syntax enable
     set background=dark
-    colorscheme $COLORSCHEMEVIM
+    let cs = $BASE16_THEME
+    let csunderscores = substitute(cs, '-', '_', 'g')
+    execute "colorscheme ".cs
 
     " base16 overrides
     hi ColorColumn ctermbg=18
@@ -230,7 +232,7 @@
     nnoremap Q gqap
 
     " Code folding
-    nnoremap <space> za
+    nnoremap <space> zA
     vnoremap <space> zf
     vnoremap <leader>za :call FoldAroundSelection()<CR>
     nnoremap <silent> z0 :call UnfoldAndRememberScrollPosition(0)<CR>
@@ -345,6 +347,12 @@
     let g:formatters_json = ['prettierjson']
 
 
+    " Autopairs ---------------------------------------------------------------
+
+    " Mapping meta+p to its special character
+    map π :call AutoPairsToggle()<CR>
+
+
     " Buftabline --------------------------------------------------------------
     let g:buftabline_numbers = 2
     let g:buftabline_indicators = 1
@@ -432,7 +440,7 @@
 
     " Lightline ---------------------------------------------------------------
     let g:lightline = {
-      \ 'colorscheme': $COLORSCHEMELIGHTLINE,
+      \ 'colorscheme': csunderscores,
       \ }
 
 

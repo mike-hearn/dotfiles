@@ -63,15 +63,5 @@ esac
 # bash colorscheme
 BASE16_SHELL=$HOME/.config/base16-shell/
 [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
-if [ -f ~/.config/bash/colorscheme ]; then
-    export COLORSCHEME=$(cat ~/.config/bash/colorscheme)
-
-else
-    export COLORSCHEME="base16_solarized-dark"  # Bash uses underscores (except "-dark")
-fi
-export COLORSCHEMEVIM=$(echo $COLORSCHEME | sed s/_/\-/g)  # vim uses dashes
-export COLORSCHEMELIGHTLINE=$(echo $COLORSCHEME | sed s/\-/_/g)  # vim uses dashes
-eval $COLORSCHEME
-
 
 # vim: syntax=sh ts=4 sts=4 shiftwidth=4 expandtab

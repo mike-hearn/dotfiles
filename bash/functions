@@ -336,15 +336,6 @@ tn() {
     tmux rename-session -t "$(tmux display-message -p '#{session_name}')" "$(basename ${GITROOT:-$(basename $(pwd))}  | sed 's/[-_\. ]/-/g')"
 }
 
-setcolorscheme() {
-    export COLORSCHEME=$1  # Bash uses underscores (except "-dark")
-    export COLORSCHEMEVIM=$(echo $COLORSCHEME | sed s/_/\-/g)  # vim uses dashes
-    export COLORSCHEMELIGHTLINE=$(echo $COLORSCHEME | sed s/\-/_/g)  # vim uses dashes
-    mkdir -p $HOME/.config/bash
-    echo $COLORSCHEME > $HOME/.config/bash/colorscheme
-    eval $COLORSCHEME
-}
-
 gri() {
     git stash save --include-untracked;
     git rebase -i $1;

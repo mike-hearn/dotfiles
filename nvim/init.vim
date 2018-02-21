@@ -28,6 +28,7 @@
     set undolevels=1000             " Save last 1000 changes"
     set undoreload=10000            " Load last 10,000 changes?
     set wildmenu                    " Visual autocomplete for command menu
+    set cursorcolumn                " Vertical line marks cursor placement
 
 " }}}
 " Directories {{{
@@ -87,7 +88,6 @@
     Plug 'mattn/emmet-vim' " Shortcuts to quickly scaffold html
     Plug 'Chiel92/vim-autoformat' " Integrate yapf & other autoformatters
     Plug 'fisadev/vim-isort', { 'on': ['Isort'] } " Autosort python imports
-    Plug 'nathanaelkane/vim-indent-guides' " Show indent guides
     Plug 'SirVer/ultisnips' " My custom snippets for code reuse
     Plug 'honza/vim-snippets' " Community custom snippets
     Plug 'tpope/vim-surround' " Shortcuts to modify characters/code around an object, eg add quotes on a string
@@ -98,6 +98,7 @@
     Plug 'ludovicchabant/vim-gutentags' " Updates tags file on each file change
     Plug 'tpope/vim-sleuth' " Basically triggers :noh once you move your cursor off a highlighted word
     Plug 'junegunn/vim-peekaboo' " Peek into vim registers
+    Plug 'Yggdroot/indentLine'   " Adds vertical line to clearly show indent levels
 
     " Completion
     Plug 'roxma/nvim-completion-manager' " My favorite completion engine
@@ -429,6 +430,11 @@
     let g:gitgutter_max_signs = 1500
 
 
+    " IndentLine
+    let g:indentLine_color_term = 18
+    let g:indentLine_char = '│'
+
+
     " jedi-vim ----------------------------------------------------------------
     let g:jedi#usages_command = "<leader>z"
     let g:jedi#popup_on_dot = 0
@@ -546,7 +552,5 @@
     hi VertSplit ctermbg=NONE guibg=NONE
 
 " }}}
-
-
 
 " vim: foldmethod=marker: foldlevel=0

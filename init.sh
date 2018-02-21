@@ -8,7 +8,7 @@ ln -sf $(pwd)/bash/bash_profile $HOME/.profile
 cp ./bash/scripts/rerun.sh $HOME/.bin/rerun && chmod +x $HOME/.bin/rerun
 
 # ctags
-ln -sf $(pwd)/ctags $HOME/.ctags.d
+ln -sfT $(pwd)/ctags $HOME/.ctags.d
 
 # Bash colorscheme
 git clone https://github.com/chriskempson/base16-shell.git ~/.config/base16-shell 2> /dev/null
@@ -29,7 +29,7 @@ ln -sf $(pwd)/tmux/restartsession.sh $HOME/.tmux/restartsession.sh
 ln -sf $(pwd)/tmux/choosesession.sh $HOME/.tmux/choosesession.sh
 
 # Tmuxinator
-ln -sf $(pwd)/tmuxinator $HOME/.tmuxinator
+ln -sfT $(pwd)/tmuxinator $HOME/.tmuxinator
 
 # Vim
 mkdir -p $HOME/.vim

@@ -24,6 +24,9 @@
 # Go support
 [ -d "$HOME/.go/bin" ] && PATH="$HOME/.go/bin:$PATH"
 
+# Linuxbrew, if we're using the local package manager
+[ -d "$HOME/.linuxbrew/bin" ] && PATH="$HOME/.linuxbrew/bin:$PATH"
+
 # various local `bin` directories
 [ -d "$HOME/bin" ] && PATH="$HOME/bin:$PATH"
 [ -d "$HOME/.bin" ] && PATH="$HOME/.bin:$PATH"

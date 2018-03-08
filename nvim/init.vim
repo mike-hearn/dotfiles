@@ -331,14 +331,14 @@
     let g:ale_fixers = {
                 \   'javascript': ['eslint', 'prettier'],
                 \   'scss': ['prettier'],
-                \   'python': ['autopep8', 'yapf'],
+                \   'python': ['autopep8', 'yapf', 'isort'],
                 \}
 
     let g:jsx_ext_required = 0
 
 
     " Autoformat --------------------------------------------------------------
-    let g:formatters_python = ['yapf', 'autopep8']
+    let g:formatters_python = ['autopep8', 'yapf']
     let g:formatter_yapf_style = 'google'
 
     let g:formatdef_prettier = '"prettier"'
@@ -430,7 +430,7 @@
     let g:gitgutter_max_signs = 1500
 
 
-    " IndentLine
+    " IndentLine -------------------------------------------------------------
     let g:indentLine_color_term = 18
     let g:indentLine_char = '│'
 

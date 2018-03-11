@@ -26,6 +26,7 @@
 
 # Linuxbrew, if we're using the local package manager
 [ -d "$HOME/.linuxbrew/bin" ] && PATH="$HOME/.linuxbrew/bin:$PATH"
+[ -d "/home/linuxbrew/.linuxbrew/bin" ] && PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 
 # various local `bin` directories
 [ -d "$HOME/bin" ] && PATH="$HOME/bin:$PATH"

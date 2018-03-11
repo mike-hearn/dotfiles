@@ -286,7 +286,7 @@ function decimate() {
 
 # Quick find
 function f () {
-    find . -iname "*$1*"
+    rg --files --hidden 2> /dev/null | rg "$@"
 }
 
 # cd to directory, or if file, to containing dir

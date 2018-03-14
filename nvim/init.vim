@@ -111,8 +111,13 @@
     syntax enable
     set background=dark
     let cs = $BASE16_THEME
-    let csunderscores = substitute(cs, '-', '_', 'g')
-    execute "colorscheme ".cs
+    try
+        execute "colorscheme ".cs
+        let csunderscores = substitute(cs, '-', '_', 'g')
+    catch
+        execute "colorscheme base16-".cs
+        let csunderscores = "base16_".substitute(cs, '-', '_', 'g')
+    endtry
 
     " base16 overrides
     hi ColorColumn ctermbg=18
@@ -446,8 +451,8 @@
 
     " Lightline ---------------------------------------------------------------
     let g:lightline = {
-      \ 'colorscheme': csunderscores,
-      \ }
+    \ 'colorscheme': csunderscores,
+    \ }
 
 
     " NERDCommenter -----------------------------------------------------------

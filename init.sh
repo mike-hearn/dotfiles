@@ -1,5 +1,20 @@
 #!/usr/bin/env /bin/bash
 
+shopt -s expand_aliases
+
+# Machine specific setup
+if [ "$(uname)" == "Darwin" ]; then
+    alias lnd="ln -sfF"
+
+    # If gnu ln is installed on MacOS, use that
+    if [ -x "$(command -v gln)" ]; then
+        unalias lnd
+        alias lnd="gln -sfT"
+    fi
+elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+    alias lnd="ln -sfT"
+fi
+
 # Initial mkdir
 mkdir -p $HOME/.bin
 
@@ -8,7 +23,7 @@ ln -sf $(pwd)/bash/bash_profile $HOME/.profile
 cp ./bash/scripts/rerun.sh $HOME/.bin/rerun && chmod +x $HOME/.bin/rerun
 
 # ctags
-ln -sfT $(pwd)/ctags $HOME/.ctags.d
+lnd $(pwd)/ctags $HOME/.ctags.d
 
 # Bash colorscheme
 git clone https://github.com/chriskempson/base16-shell.git ~/.config/base16-shell 2> /dev/null
@@ -29,7 +44,7 @@ ln -sf $(pwd)/tmux/restartsession.sh $HOME/.tmux/restartsession.sh
 ln -sf $(pwd)/tmux/choosesession.sh $HOME/.tmux/choosesession.sh
 
 # Tmuxinator
-ln -sfT $(pwd)/tmuxinator $HOME/.tmuxinator
+lnd $(pwd)/tmuxinator $HOME/.tmuxinator
 
 # Vim
 mkdir -p $HOME/.vim
@@ -52,3 +67,5 @@ ln -sf $(pwd)/editorconfig/editorconfig $HOME/.editorconfig
 ln -sf $(pwd)/git/gitconfig $HOME/.gitconfig
 ln -sf $(pwd)/git/gitignore_global $HOME/.gitignore_global
 
+# Cleanup
+unalias lnd

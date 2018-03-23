@@ -4,7 +4,7 @@ shopt -s expand_aliases
 
 # Machine specific setup
 if [ "$(uname)" == "Darwin" ]; then
-    alias lnd="ln -sfF"
+    alias lnd="ln -sf"
 
     # If gnu ln is installed on MacOS, use that
     if [ -x "$(command -v gln)" ]; then

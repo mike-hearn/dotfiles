@@ -27,6 +27,7 @@
 # Linuxbrew, if we're using the local package manager
 [ -d "$HOME/.linuxbrew/bin" ] && PATH="$HOME/.linuxbrew/bin:$PATH"
 [ -d "/home/linuxbrew/.linuxbrew/bin" ] && PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+[ -d "/home/linuxbrew/.linuxbrew/Homebrew/Library/Homebrew/vendor/portable-ruby/2.3.3/bin:" ] && PATH="/home/linuxbrew/.linuxbrew/Homebrew/Library/Homebrew/vendor/portable-ruby/2.3.3/bin:$PATH"
 
 # various local `bin` directories
 [ -d "$HOME/bin" ] && PATH="$HOME/bin:$PATH"

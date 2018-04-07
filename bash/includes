@@ -1,17 +1,12 @@
 #!/usr/bin/env bash
 
-# Add tab completion for many Bash commands
-# [ -f /usr/local/etc/bash_completion  ] && . /usr/local/etc/bash_completion
-
 # Autojump
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 [ -f /etc/profile.d/autojump.sh ] && . /etc/profile.d/autojump.sh
 
-# ~/.shenv is used as a machine specific ~/.bashrc
-[ -r ~/.bash_env ] && . ~/.bash_env
-
-# Load those secrets, if they exist
-if [ -e $HOME/.secrets ]; then source $HOME/.secrets; fi
+# environment specific settings & secrets
+[ -f $HOME/.bash_env ] && . $HOME/.bash_env
+[ -f /etc/profile.d/autojump.sh ] && . /etc/profile.d/autojump.sh
 
 # FZF
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
@@ -28,8 +23,8 @@ _fzf_compgen_path() {
         "$1"
 }
 
-if [ -f ~/.git-completion.bash  ]; then
-    . ~/.git-completion.bash
-fi
+# completions
+[ -f $HOME/.git-completion.bash  ] && . $HOME/.git-completion.bash
+[ -f /usr/local/etc/bash_completion  ] && . /usr/local/etc/bash_completion
 
 # vim: syntax=sh ts=4 sts=4 shiftwidth=4 expandtab

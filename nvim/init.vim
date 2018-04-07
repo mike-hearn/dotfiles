@@ -238,7 +238,7 @@
     nnoremap Q gqap
 
     " Code folding
-    nnoremap <space> zA
+    nnoremap <space> za
     vnoremap <space> zf
     vnoremap <leader>za :call FoldAroundSelection()<CR>
     nnoremap <silent> z0 :call UnfoldAndRememberScrollPosition(0)<CR>

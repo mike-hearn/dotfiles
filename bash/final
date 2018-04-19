@@ -9,6 +9,4 @@ reset="\e[0m"
 source $(dotfiles_location)/bash/scripts/bash-preexec.sh
 preexec() { clear; printf "${boldwhite}$ $1\n\n${reset}"; }
 
-[ -f /usr/local/etc/bash_completion  ] && . /usr/local/etc/bash_completion
-
 # vim: syntax=sh ts=4 sts=4 shiftwidth=4 expandtab

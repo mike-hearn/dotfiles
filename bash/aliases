@@ -16,6 +16,7 @@ alias get="git "
 alias gci="git ci"
 alias gbr="git for-each-ref --sort=-committerdate refs/remotes/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'"
 alias grb="git for-each-ref --sort=-committerdate refs/remotes/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'"
+alias gps="git stash save --include-untracked; git pull; git stash pop;"
 alias pull="git pull"
 alias recent="git for-each-ref --sort=-committerdate"
 alias recentdate="git for-each-ref --sort=-committerdate refs/heads/ --format='%(refname) %(committerdate) %(authorname)' | sed 's/refs\/heads\///g'"
@@ -48,11 +49,11 @@ fi
 
 # nvm is super slow
 NODEBINARIES="node npm ember yarn nvm"
-alias load_nvm='export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh"  ] && . "$NVM_DIR/nvm.sh"'
-alias nvm="unalias $NODEBINARIES; load_nvm; nvm"
-alias node="unalias $NODEBINARIES; load_nvm; node"
-alias npm="unalias $NODEBINARIES; load_nvm; npm"
-alias yarn="unalias $NODEBINARIES; load_nvm; yarn"
-alias ember="unalias $NODEBINARIES; load_nvm; ember"
+alias load_nvm='export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh"  ] && . "$NVM_DIR/nvm.sh"; [ -s "/usr/local/opt/nvm/nvm.sh"  ] && . "/usr/local/opt/nvm/nvm.sh"; nvm use 2> /dev/null'
+alias nvm="unalias $NODEBINARIES 2> /dev/null; load_nvm 2> /dev/null; nvm"
+alias node="unalias $NODEBINARIES 2> /dev/null; load_nvm 2> /dev/null; node"
+alias npm="unalias $NODEBINARIES 2> /dev/null; load_nvm 2> /dev/null; npm"
+alias yarn="unalias $NODEBINARIES 2> /dev/null; load_nvm 2> /dev/null; yarn"
+alias ember="unalias $NODEBINARIES 2> /dev/null; load_nvm 2> /dev/null; ember"
 
 # vim:syntax=sh

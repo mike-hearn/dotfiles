@@ -28,7 +28,6 @@
     set undolevels=1000             " Save last 1000 changes"
     set undoreload=10000            " Load last 10,000 changes?
     set wildmenu                    " Visual autocomplete for command menu
-    set cursorcolumn                " Vertical line marks cursor placement
 
 " }}}
 " Directories {{{

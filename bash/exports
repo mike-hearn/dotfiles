@@ -28,15 +28,10 @@ shopt -s cmdhist
 export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
 
 # Prefer US English and use UTF-8, unless OSX, then C to fix sed
-if [ "$(uname)" == "Darwin" ]; then
-    export LC_CTYPE=C
-    export LANG=C
-else
-    export LANG='en_US.UTF-8';
-    export LANGUAGE="en"
-    export LC_ALL='en_US.UTF-8';
-    export LC_CTYPE="en_US.UTF-8"
-fi
+export LANG='en_US.UTF-8';
+export LANGUAGE="en"
+export LC_ALL='en_US.UTF-8';
+export LC_CTYPE="en_US.UTF-8"
 
 # always use PASSIVE mode ftp
 export FTP_PASSIVE=1

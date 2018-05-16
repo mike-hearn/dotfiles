@@ -100,8 +100,16 @@
     Plug 'Yggdroot/indentLine'   " Adds vertical line to clearly show indent levels
 
     " Completion
-    Plug 'roxma/nvim-completion-manager' " My favorite completion engine
-    Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}  " Integrate ncm with tern for JS completion
+    if has('nvim')
+        Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+        Plug 'mhartington/nvim-typescript',
+    else
+        Plug 'Shougo/deoplete.nvim'
+        Plug 'roxma/nvim-yarp'
+        Plug 'roxma/vim-hug-neovim-rpc'
+    endif
+    let g:deoplete#enable_at_startup = 1
+
 
     call plug#end()
 " }}}
@@ -476,6 +484,10 @@
     inoremap <expr> <C-g> <Plug>(cm_force_refresh)
 
 
+    " nvim-typescript --------------------------------------------------------
+    let g:nvim_typescript#javascript_support = 1
+
+
     " python-mode -------------------------------------------------------------
     let g:pymode_warnings = 0
     let g:pymode_lint = 0
@@ -556,5 +568,9 @@
     hi VertSplit ctermbg=NONE guibg=NONE
 
 " }}}
+
+let g:nvim_typescript#type_info_on_hold = 1
+let g:nvim_typescript#signature_complete = 1
+let g:nvim_typescript#default_mappings = 1
 
 " vim: foldmethod=marker: foldlevel=0

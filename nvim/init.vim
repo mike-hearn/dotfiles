@@ -53,12 +53,12 @@
     " Languages & IDE plugins
     Plug 'sheerun/vim-polyglot'
     Plug 'python-mode/python-mode'
-    Plug 'othree/csscomplete.vim'
     Plug 'fatih/vim-go'
 
     " Linters/Formatters/Checkers
     Plug 'w0rp/ale'
     Plug 'tell-k/vim-autopep8'
+    Plug 'ambv/black'
     Plug 'prettier/vim-prettier'
 
     " IDE & Productivity Features
@@ -94,21 +94,19 @@
     Plug 'junegunn/rainbow_parentheses.vim' " Colors matching parentheses for easier parsing
     Plug 'editorconfig/editorconfig-vim' " Imports editorconfig file
     Plug 'junegunn/vim-slash' " Un-highlights text if you navigate away from word
-    Plug 'ludovicchabant/vim-gutentags' " Updates tags file on each file change
     Plug 'tpope/vim-sleuth' " Basically triggers :noh once you move your cursor off a highlighted word
     Plug 'junegunn/vim-peekaboo' " Peek into vim registers
     Plug 'Yggdroot/indentLine'   " Adds vertical line to clearly show indent levels
 
     " Completion
-    if has('nvim')
-        Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-        Plug 'mhartington/nvim-typescript',
-    else
-        Plug 'Shougo/deoplete.nvim'
-        Plug 'roxma/nvim-yarp'
-        Plug 'roxma/vim-hug-neovim-rpc'
-    endif
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    Plug 'zchee/deoplete-jedi'
+    Plug 'zchee/deoplete-go', { 'do': 'make'}
+    " Plug 'zchee/deoplete-docker'
+    Plug 'mhartington/nvim-typescript'
+    Plug 'Shougo/echodoc.vim'
     let g:deoplete#enable_at_startup = 1
+    let g:echodoc#enable_at_startup = 1
 
 
     call plug#end()
@@ -127,6 +125,8 @@
     endtry
 
     " base16 overrides
+    hi ALEError cterm=underline ctermfg=red
+    hi ALEWarning cterm=underline ctermfg=yellow
     hi ColorColumn ctermbg=18
     hi CursorLine ctermbg=18
     hi CursorLineNr ctermbg=18
@@ -485,7 +485,12 @@
 
 
     " nvim-typescript --------------------------------------------------------
+    let g:min_pattern_length = 0
+    let g:nvim_typescript#default_mappings = 0
     let g:nvim_typescript#javascript_support = 1
+    let g:nvim_typescript#max_completion_detail = 100
+    let g:nvim_typescript#signature_complete = 1
+    let g:nvim_typescript#type_info_on_hold = 1
 
 
     " python-mode -------------------------------------------------------------
@@ -559,7 +564,11 @@
     autocmd Filetype python setlocal foldmethod=expr
     autocmd Filetype html,handlebars,html.handlebars setlocal foldmethod=indent
     autocmd Filetype scss setlocal foldmethod=syntax
-    autocmd Filetype javascript,javascript.jsx,json setlocal foldmethod=syntax
+    augroup filetype_javascript
+        autocmd Filetype javascript,javascript.jsx,json setlocal foldmethod=syntax
+        autocmd Filetype javascript,javascript.jsx,json map <c-]> :TSDef<CR>
+    augroup END
+    autocmd Filetype yaml setlocal foldmethod=indent
 
 " }}}
 " {{{ Finishing Touches
@@ -569,8 +578,5 @@
 
 " }}}
 
-let g:nvim_typescript#type_info_on_hold = 1
-let g:nvim_typescript#signature_complete = 1
-let g:nvim_typescript#default_mappings = 1
 
 " vim: foldmethod=marker: foldlevel=0

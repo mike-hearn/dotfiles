@@ -52,6 +52,7 @@
 
     " Languages & IDE plugins
     Plug 'sheerun/vim-polyglot'
+    Plug 'davidhalter/jedi-vim'
     Plug 'python-mode/python-mode'
     Plug 'fatih/vim-go'
 
@@ -448,12 +449,11 @@
 
 
     " jedi-vim ----------------------------------------------------------------
-    let g:jedi#usages_command = "<leader>z"
-    let g:jedi#popup_on_dot = 0
     let g:jedi#popup_select_first = 0
     let g:jedi#use_tabs_not_buffers = 0
-    map <Leader>b oimport ipdb<CR>ipdb.set_trace()  # BREAKPOINT<C-c>
-    map <Leader>B Oimport ipdb<CR>ipdb.set_trace()  # BREAKPOINT<C-c>
+    let g:jedi#goto_command = "<C-]>"
+    let g:jedi#completions_enabled = 0
+    " let g:jedi#popup_on_dot = 0
 
 
     " Lightline ---------------------------------------------------------------
@@ -577,6 +577,7 @@
     hi VertSplit ctermbg=NONE guibg=NONE
 
 " }}}
+
 
 
 " vim: foldmethod=marker: foldlevel=0

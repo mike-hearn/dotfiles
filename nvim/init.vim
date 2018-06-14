@@ -60,7 +60,8 @@
     Plug 'w0rp/ale'
     Plug 'tell-k/vim-autopep8'
     Plug 'ambv/black'
-    Plug 'prettier/vim-prettier'
+    Plug 'prettier/vim-prettier', { 'do': 'yarn install', 'for': ['javascript', 'javascript.jsx', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue'] }
+
 
     " IDE & Productivity Features
     Plug 'itchyny/lightline.vim' " Lightweight powerline-esque bar at bottom of window
@@ -104,7 +105,7 @@
     Plug 'zchee/deoplete-jedi'
     Plug 'zchee/deoplete-go', { 'do': 'make'}
     " Plug 'zchee/deoplete-docker'
-    Plug 'mhartington/nvim-typescript'
+    Plug 'mhartington/nvim-typescript', { 'do': './install.sh' }
     Plug 'Shougo/echodoc.vim'
     let g:deoplete#enable_at_startup = 1
     let g:echodoc#enable_at_startup = 1
@@ -127,7 +128,9 @@
 
     " base16 overrides
     hi ALEError cterm=underline ctermfg=red
+    hi ALEErrorSign ctermbg=18 ctermfg=1
     hi ALEWarning cterm=underline ctermfg=yellow
+    hi ALEWarningSign ctermbg=18 ctermfg=3
     hi ColorColumn ctermbg=18
     hi CursorLine ctermbg=18
     hi CursorLineNr ctermbg=18
@@ -331,23 +334,28 @@
 " Plugin Settings {{{
 
     " Ale ---------------------------------------------------------------------
-    highlight ALEErrorSign ctermbg=18 ctermfg=1
-    highlight ALEWarningSign ctermbg=18 ctermfg=3
+    let g:ale_sign_error = '✖'
+    let g:ale_sign_warning = '·'
 
-    let g:ale_sign_error = 'x'
-    let g:ale_sign_warning = '?'
-
+    " ALELint settings
     let g:ale_linters = {
                 \   'go': ['go build'],
+                \   'css': ['stylelint'],
+                \   'scss': ['stylelint'],
                 \}
 
+    " ALEFix settings
     let g:ale_fixers = {
                 \   'javascript': ['eslint', 'prettier'],
-                \   'scss': ['prettier'],
-                \   'python': ['autopep8', 'yapf', 'isort'],
+                \   'css': ['stylelint', 'prettier'],
+                \   'scss': ['stylelint', 'prettier', 'remove_trailing_lines'],
+                \   'python': ['isort', 'black'],
                 \}
 
     let g:jsx_ext_required = 0
+
+    nnoremap [e :ALEPrev<CR>
+    nnoremap ]e :ALENext<CR>
 
 
     " Autoformat --------------------------------------------------------------
@@ -452,8 +460,11 @@
     let g:jedi#popup_select_first = 0
     let g:jedi#use_tabs_not_buffers = 0
     let g:jedi#goto_command = "<C-]>"
+    let g:jedi#usages_command = ""
     let g:jedi#completions_enabled = 0
-    " let g:jedi#popup_on_dot = 0
+
+    command! -bang JediUsage  call jedi#usages()
+    command! -bang JediRename call jedi#rename()
 
 
     " Lightline ---------------------------------------------------------------
@@ -500,6 +511,7 @@
     let g:pymode_motion = 0
     let g:pymode_options = 0
     let g:pymode_indent = 0
+    let g:pymode_breakpoint_bind = ''
 
 
     " Rainbow Parentheses -----------------------------------------------------
@@ -561,13 +573,18 @@
     let g:is_posix = 1
 
     " Foldmethods
-    autocmd Filetype python setlocal foldmethod=expr
-    autocmd Filetype html,handlebars,html.handlebars setlocal foldmethod=indent
-    autocmd Filetype scss setlocal foldmethod=syntax
+    augroup filetype_python
+        autocmd Filetype python setlocal foldmethod=expr
+        autocmd Filetype python nnoremap <leader>b oimport ipdb<CR>ipdb.set_trace()  # XXX BREAKPOINT<esc>
+        autocmd Filetype python nnoremap <leader>B Oimport ipdb<CR>ipdb.set_trace()  # XXX BREAKPOINT<esc>
+    augroup END
     augroup filetype_javascript
         autocmd Filetype javascript,javascript.jsx,json setlocal foldmethod=syntax
         autocmd Filetype javascript,javascript.jsx,json map <c-]> :TSDef<CR>
     augroup END
+
+    autocmd Filetype html,handlebars,html.handlebars setlocal foldmethod=indent
+    autocmd Filetype scss,css setlocal foldmethod=syntax
     autocmd Filetype yaml setlocal foldmethod=indent
 
 " }}}
@@ -577,7 +594,5 @@
     hi VertSplit ctermbg=NONE guibg=NONE
 
 " }}}
-
-
 
 " vim: foldmethod=marker: foldlevel=0

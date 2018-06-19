@@ -56,6 +56,7 @@
     Plug 'python-mode/python-mode'
     Plug 'fatih/vim-go'
     Plug 'jceb/vim-orgmode'
+    Plug 'tpope/vim-speeddating'  " Required by orgmode
 
     " Linters/Formatters/Checkers
     Plug 'w0rp/ale'

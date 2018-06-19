@@ -55,6 +55,7 @@
     Plug 'davidhalter/jedi-vim'
     Plug 'python-mode/python-mode'
     Plug 'fatih/vim-go'
+    Plug 'jceb/vim-orgmode'
 
     " Linters/Formatters/Checkers
     Plug 'w0rp/ale'
@@ -101,12 +102,11 @@
     Plug 'Yggdroot/indentLine'   " Adds vertical line to clearly show indent levels
 
     " Completion
+    Plug 'mhartington/nvim-typescript', { 'do': './install.sh' }
+    Plug 'Shougo/echodoc.vim'
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'zchee/deoplete-jedi'
     Plug 'zchee/deoplete-go', { 'do': 'make'}
-    " Plug 'zchee/deoplete-docker'
-    Plug 'mhartington/nvim-typescript', { 'do': './install.sh' }
-    Plug 'Shougo/echodoc.vim'
     let g:deoplete#enable_at_startup = 1
     let g:echodoc#enable_at_startup = 1
 

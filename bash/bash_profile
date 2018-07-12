@@ -11,7 +11,7 @@ dotfiles_location() {
     git -C $dotfiles_dir rev-parse --show-toplevel
 }
 
-for file in $(dotfiles_location)/bash/{initial,path,prompt,exports,aliases,functions,includes,extra,final}; do
+for file in $(dotfiles_location)/bash/{initial,exports,path,prompt,aliases,functions,includes,extra,final}; do
     [ -r "$file"  ] && [ -f "$file"  ] && source "$file";
 done;
 unset file;

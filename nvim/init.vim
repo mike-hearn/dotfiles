@@ -52,16 +52,17 @@
 
     " Languages & IDE plugins
     Plug 'sheerun/vim-polyglot'
-    Plug 'davidhalter/jedi-vim'
-    Plug 'python-mode/python-mode'
-    Plug 'fatih/vim-go'
+    Plug 'davidhalter/jedi-vim', { 'for': 'python'}
+    Plug 'python-mode/python-mode', { 'for': 'python'}
+    Plug 'fatih/vim-go', {'for': 'go'}
     Plug 'jceb/vim-orgmode'
     Plug 'tpope/vim-speeddating'  " Required by orgmode
+    Plug 'ternjs/tern_for_vim'
 
     " Linters/Formatters/Checkers
     Plug 'w0rp/ale'
-    Plug 'tell-k/vim-autopep8'
-    Plug 'ambv/black'
+    Plug 'tell-k/vim-autopep8', { 'for': 'python'}
+    Plug 'ambv/black', { 'for': 'python'}
     Plug 'prettier/vim-prettier', { 'do': 'yarn install', 'for': ['javascript', 'javascript.jsx', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue'] }
 
 
@@ -103,11 +104,12 @@
     Plug 'Yggdroot/indentLine'   " Adds vertical line to clearly show indent levels
 
     " Completion
-    Plug 'mhartington/nvim-typescript', { 'do': './install.sh' }
+    Plug 'mhartington/nvim-typescript'
     Plug 'Shougo/echodoc.vim'
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'zchee/deoplete-jedi'
     Plug 'zchee/deoplete-go', { 'do': 'make'}
+    Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
     let g:deoplete#enable_at_startup = 1
     let g:echodoc#enable_at_startup = 1
 
@@ -202,6 +204,7 @@
 " }}}
 " Mappings {{{
     let g:mapleader = ","
+    let maplocalleader = "\\"
 
     " Easy escaping
     inoremap jj <ESC>
@@ -401,7 +404,7 @@
 
 
     " CtrlP -------------------------------------------------------------------
-    nmap <C-p> :Files<CR>
+    nmap <C-p> :GFiles<CR>
     nmap <Leader>s :Buffers<CR>
     nmap <Leader>f :FilesFromVimHistory<CR>
     nmap <Leader>t :Tags<CR>
@@ -496,13 +499,12 @@
     inoremap <expr> <C-g> <Plug>(cm_force_refresh)
 
 
-    " nvim-typescript --------------------------------------------------------
-    let g:min_pattern_length = 0
-    let g:nvim_typescript#default_mappings = 0
+    " nvim-typescript ---------------------------------------------------------
     let g:nvim_typescript#javascript_support = 1
-    let g:nvim_typescript#max_completion_detail = 100
-    let g:nvim_typescript#signature_complete = 1
-    let g:nvim_typescript#type_info_on_hold = 1
+
+
+    " org mode ----------------------------------------------------------------
+    let g:org_agenda_files = ['~/Dropbox/org/*.org']
 
 
     " python-mode -------------------------------------------------------------
@@ -587,6 +589,7 @@
     autocmd Filetype html,handlebars,html.handlebars setlocal foldmethod=indent
     autocmd Filetype scss,css setlocal foldmethod=syntax
     autocmd Filetype yaml setlocal foldmethod=indent
+    autocmd FileType help :on
 
 " }}}
 " {{{ Finishing Touches

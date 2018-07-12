@@ -1,4 +1,5 @@
 {
-  "extends": "stylelint-config-standard"
+  "extends":
+    "/home/mikehearn/.config/yarn/global/node_modules/stylelint-config-recommended",
+  ignoreAtRules: ["function", "if", "include"]
 }
-

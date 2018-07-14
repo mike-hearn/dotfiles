@@ -360,4 +360,14 @@ workon() {
     fi
 }
 
+concatt() {
+    rm /tmp/concatfiles.txt 2> /dev/null
+    for var in "$@"
+    do
+        echo file \'$var\' >> /tmp/concatfiles.txt
+    done
+    ffmpeg -f concat -safe 0 -i /tmp/concatfiles.txt -c copy -y "$1.concat.mp4"
+    # rm /tmp/concatfiles.txt 2> /dev/null
+}
+
 # vim: syntax=sh ts=4 sts=4 shiftwidth=4 expandtab

@@ -1,22 +1,37 @@
 autoload -U add-zsh-hook
 
 load-nvmrc() {
-  if [[ -f .nvmrc ]] && type 'nvm' 2> /dev/null | grep -q 'not found'; then
+  if [[ -f .nvmrc ]]; then
     unset NPM_CONFIG_PREFIX &> /dev/null
     export NVM_DIR="$HOME/.nvm"
     . "$NVM_DIR"/nvm.sh
-    [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
-    nvm use &> /dev/null
+    nvm use
   fi
 }
 
-force-load-nvmrc() {
-  unset NPM_CONFIG_PREFIX &> /dev/null
+# Defer initialization of nvm until nvm, node or a node-dependent command is
+# run. Ensure this block is only run once if .bashrc gets sourced multiple times
+# by checking whether __init_nvm is a function.
+if [ -s "$HOME/.nvm/nvm.sh" ] && [ ! "$(whence -w __init_nvm)" = function ]; then
   export NVM_DIR="$HOME/.nvm"
-  . "$NVM_DIR"/nvm.sh
-  [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
-  nvm use &> /dev/null
-}
-
-add-zsh-hook chpwd  load-nvmrc
-add-zsh-hook precmd load-nvmrc
+  declare -a __node_commands=(
+    'nvm'
+    'node'
+    'npm'
+    'yarn'
+    'gulp'
+    'grunt'
+    'webpack'
+    'topgun'
+    'ember'
+  )
+  function __init_nvm() {
+    for i in "${__node_commands[@]}"; do unalias $i; done
+    . "$NVM_DIR"/nvm.sh
+    unset __node_commands
+    unset -f __init_nvm
+    add-zsh-hook chpwd load-nvmrc
+    load-nvmrc
+  }
+  for i in "${__node_commands[@]}"; do alias $i='__init_nvm && '$i; done
+fi

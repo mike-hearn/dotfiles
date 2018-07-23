@@ -1,3 +1,27 @@
+" Initial load config {{{
+    " vim-plug directory
+    if !empty(glob("~/.config/nvim/env.vim"))
+        source ~/.config/nvim/env.vim
+    endif
+
+    " set/create backup directories
+    set backupdir=~/.vim/tmp/backup
+    set directory=~/.vim/tmp/swap
+    set undodir=~/.vim/tmp/undo
+
+    if !isdirectory(expand(&backupdir))
+        call mkdir(expand(&backupdir), "p")
+    endif
+
+    if !isdirectory(expand(&directory))
+        call mkdir(expand(&directory), "p")
+    endif
+
+    if !isdirectory(expand(&undodir))
+        call mkdir(expand(&undodir), "p")
+    endif
+
+" }}}
 " Settings {{{
 
     set autochdir                   " Autoset working dir to current file's dir
@@ -23,7 +47,6 @@
     set spellsuggest=best,10        " Spelling
     set tabstop=4                   " Specifies width of tab character
     set tw=79                       " Width of document (used by gd)
-    set undodir=~/.vim/tmp/undo/    " Dir for saving file changes
     set undofile                    " Undo history maintained across sessions
     set undolevels=1000             " Save last 1000 changes"
     set undoreload=10000            " Load last 10,000 changes?
@@ -32,8 +55,6 @@
 " }}}
 " Directories {{{
 
-    set backupdir=~/.vim/tmp/backup/
-    set directory=~/.vim/tmp/swap/
     set backup
     set noswapfile
 
@@ -404,7 +425,7 @@
 
 
     " CtrlP -------------------------------------------------------------------
-    nmap <C-p> :GFiles<CR>
+    nmap <C-p> :Files<CR>
     nmap <Leader>s :Buffers<CR>
     nmap <Leader>f :FilesFromVimHistory<CR>
     nmap <Leader>t :Tags<CR>

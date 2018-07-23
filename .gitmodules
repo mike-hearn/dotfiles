@@ -1,3 +1,9 @@
 [submodule "zsh/.oh-my-zsh/custom/plugins/pure"]
 	path = zsh/.oh-my-zsh/custom/plugins/pure
 	url = https://github.com/sindresorhus/pure.git
+[submodule "base16/.config/base16-shell"]
+	path = base16/.config/base16-shell
+	url = https://github.com/chriskempson/base16-shell.git
+[submodule "tmux/.tmux/plugins/tpm"]
+	path = tmux/.tmux/plugins/tpm
+	url = https://github.com/tmux-plugins/tpm

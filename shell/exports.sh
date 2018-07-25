@@ -53,6 +53,7 @@ export FIGNORE="~:CVS:#:.pyc:.swp:.swa:apache-solr-*"
 # golang
 export GOPATH=~/.go
 
-# locales to fix sed
+# npm global path to allow global packages w/o sudo
+export NPM_CONFIG_PREFIX=~/.npm-global
 
 # vim: syntax=sh ts=4 sts=4 shiftwidth=4 expandtab

@@ -312,7 +312,12 @@
 
     " Vertically split the current & alternative buffer
     nnoremap <leader>v :b #<CR>:vsp #<CR>
-    nnoremap <leader>V zzmt:vsp %<CR>'tzz
+    function! SplitAndMaintainPosition()
+        let l:winview = winsaveview()
+        :vsp %
+        call winrestview(l:winview)
+    endfunc
+    nnoremap <leader>V :call SplitAndMaintainPosition()<CR>
 
     " Toggle between standard and relative line numbers
     function! NumberToggle()

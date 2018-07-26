@@ -3,7 +3,7 @@
 # Two-line, full-width prompt based on:
 # https://gist.github.com/mkottman/1936195
 
-source $(dotfiles_location)/bash/scripts/git-prompt.sh
+source git-prompt.sh
 
 # Create horizontal line to fill bash prompt
 

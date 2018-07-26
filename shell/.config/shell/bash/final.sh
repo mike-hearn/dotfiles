@@ -6,7 +6,7 @@
 # Clear screen before every new command
 boldwhite="\e[1;37m"
 reset="\e[0m"
-source $(dotfiles_location)/bash/scripts/bash-preexec.sh
+source bash-preexec.sh
 preexec() { clear; printf "${boldwhite}$ $1\n\n${reset}"; }
 
 # vim: syntax=sh ts=4 sts=4 shiftwidth=4 expandtab

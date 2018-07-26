@@ -38,7 +38,6 @@ if [[ -n $(command -v exa) ]]; then
     alias la="command exa -la --group-directories-first --git"
 else
     alias ls="command ls -la"
-    alias ls="command ls -la"
 fi
 
 # Alias ag -> rg if ripgrep installed
@@ -46,5 +45,3 @@ if [[ -n $(command -v rg) ]]; then
     alias ag="rg"
     alias rg="rg --max-columns=1000 --smart-case"
 fi
-
-# vim:syntax=sh

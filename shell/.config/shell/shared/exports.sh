@@ -2,7 +2,7 @@
 
 # Make vim the default editor.
 set -o vi # Default editor is now VIM
-export EDITOR=vim
+export EDITOR=nvim
 
 # PAGER
 if [ -n "$(command -v less)" ]; then
@@ -32,23 +32,6 @@ export LANG='en_US.UTF-8';
 export LANGUAGE="en"
 export LC_ALL='en_US.UTF-8';
 export LC_CTYPE="en_US.UTF-8"
-
-# always use PASSIVE mode ftp
-export FTP_PASSIVE=1
-
-# Highlight section titles in manual pages.
-export LESS_TERMCAP_md="${yellow}";
-
-# Don’t clear the screen after quitting a manual page.
-export MANPAGER='less -X';
-
-# Still NPM; unset manpath so we can inherit from /etc/manpath via the
-# `manpath` command
-unset MANPATH # delete if you already modified MANPATH elsewhere in your config
-export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
-
-# ignore backups, CVS directories, python bytecode, vim swap files
-export FIGNORE="~:CVS:#:.pyc:.swp:.swa:apache-solr-*"
 
 # golang
 export GOPATH=~/.go

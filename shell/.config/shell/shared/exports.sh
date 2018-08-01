@@ -17,16 +17,6 @@ export PAGER MANPAGER
 # Make Python use UTF-8 encoding for output to stdin, stdout, and stderr.
 export PYTHONIOENCODING='UTF-8';
 
-# Bash history
-export HISTFILESIZE=100000
-export HISTSIZE=500000
-export HISTIGNORE="&:[ ]*:exit:bg:fg:history:clear"  # Don't record some commands
-export HISTTIMEFORMAT='%F %T '
-export HISTCONTROL="erasedups:ignoreboth"
-shopt -s histappend                     # append to history, don't overwrite it
-shopt -s cmdhist
-export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
-
 # Prefer US English and use UTF-8, unless OSX, then C to fix sed
 export LANG='en_US.UTF-8';
 export LANGUAGE="en"

@@ -10,7 +10,7 @@
 
 # npm/yarn/node bin directories
 [ -d "$NPM_PACKAGES/bin" ] && [ ! -z "${NPM_PACKAGES}" ] && PATH="$NPM_PACKAGES/bin:$PATH"
-[ -d "$NPM_CONFIG_PREFIX" ] && PATH="$NPM_CONFIG_PREFIX:$PATH"
+[ -d "$NPM_CONFIG_PREFIX/bin" ] && [ ! -z "${NPM_CONFIG_PREFIX}" ] && PATH="$NPM_CONFIG_PREFIX/bin:$PATH"
 [ -d "$HOME/.yarn/bin" ] && PATH="$HOME/.yarn/bin:$PATH"
 [ -d "$HOME/.config/yarn/global/node_modules/.bin" ] && PATH="$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 

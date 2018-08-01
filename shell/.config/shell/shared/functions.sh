@@ -7,7 +7,7 @@ function mkd() {
 
 # Change working directory to the top-most Finder window location
 function cdf() { # short for `cdfinder`
-    cd "$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')";
+    cd $(dirname $@)
 }
 
 # Create a .tar.gz archive, using `zopfli`, `pigz` or `gzip` for compression
@@ -367,7 +367,19 @@ concatt() {
         echo file \'$var\' >> /tmp/concatfiles.txt
     done
     ffmpeg -f concat -safe 0 -i /tmp/concatfiles.txt -c copy -y "$1.concat.mp4"
-    # rm /tmp/concatfiles.txt 2> /dev/null
+    rm /tmp/concatfiles.txt 2> /dev/null
+}
+
+gitdir() {
+    git rev-parse --show-toplevel
+}
+
+basegitdir() {
+    basename $(git rev-parse --show-toplevel)
+}
+
+dirtonum() {
+	echo $(basename $(git rev-parse --show-toplevel) | md5sum | sed 's/[a-f]//g' | cut -c1-3)
 }
 
 # vim: syntax=sh ts=4 sts=4 shiftwidth=4 expandtab

@@ -44,5 +44,8 @@ _fzf_compgen_dir() {
 
 export LESS="-R --quit-if-one-screen"
 
+for f in ~/.config/shell/shared/*; do . "$f"; done
 for f in ~/.config/shell/apps/*; do . "$f"; done
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

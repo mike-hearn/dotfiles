@@ -13,7 +13,7 @@ esac
 
 export FZF_CTRL_R_OPTS='--sort'
 export FZF_CTRL_T_COMMAND='fd --hidden --no-ignore'
-export FZF_DEFAULT_COMMAND='sort -u <(fd) <(fd --hidden .env) <(git ls-files) <(git ls-files --others)'
+export FZF_DEFAULT_COMMAND='sort -u <(fd) <(fd --hidden --no-ignore --max-depth 1 --type=f .env) <(git ls-files) <(git ls-files --others --exclude-standard)'
 
 _fzf_compgen_path() {
     command rg --files --no-ignore --hidden --color=never \

@@ -2,6 +2,7 @@
 
 source ~/.config/shell/bash/initial.sh
 source ~/.config/shell/bash/prompt.sh
+source ~/.config/shell/bash/exports.sh
 
 for f in ~/.config/shell/shared/*; do . "$f"; done
 for f in ~/.config/shell/apps/*; do . "$f"; done

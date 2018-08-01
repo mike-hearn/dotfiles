@@ -109,7 +109,7 @@
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  } " Installs fzf if not already installed
     Plug 'junegunn/fzf.vim' " My favorite fuzzy search
     Plug 'tpope/vim-obsession' " Remember vim session state
-    Plug 'christoomey/vim-tmux-navigator' " Treats vim splits as tmux panes, allowing same shortcuts
+    Plug 'christoomey/vim-tmux-navigator', { 'branch': 'indicator' } " Treats vim splits as tmux panes, allowing same shortcuts
     Plug 'jiangmiao/auto-pairs' " Completes the pair for ( and { and [ etc
     Plug 'tmux-plugins/vim-tmux-focus-events' " For auto-reloading on focus
     Plug 'mattn/emmet-vim' " Shortcuts to quickly scaffold html
@@ -315,11 +315,13 @@
     " Vertically split the current & alternative buffer
     nnoremap <leader>v :b #<CR>:vsp #<CR>
     function! SplitAndMaintainPosition()
+        only
         let l:winview = winsaveview()
         :vsp %
         call winrestview(l:winview)
     endfunc
     nnoremap <leader>V :call SplitAndMaintainPosition()<CR>
+    nnoremap <leader>S :call ShiftSplitAndLock()<CR>
 
     " Toggle between standard and relative line numbers
     function! NumberToggle()
@@ -611,7 +613,7 @@
     augroup END
     augroup filetype_javascript
         autocmd Filetype javascript,javascript.jsx,json setlocal foldmethod=syntax
-        autocmd Filetype javascript,javascript.jsx,json map <c-]> :TSDef<CR>
+        autocmd Filetype javascript,javascript.jsx,json map <c-]> m':TSDef<CR>
     augroup END
 
     autocmd Filetype html,handlebars,html.handlebars setlocal foldmethod=indent

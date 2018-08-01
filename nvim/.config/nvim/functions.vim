@@ -54,3 +54,17 @@ function! UnfoldAndRememberScrollPosition(foldlevel)
     endif
 
 endfunction
+
+function! ShiftSplitAndLock()
+    " When a pane is split in two, this will shift the right page a full page
+    " view, and scrollbind the two panes, so double the length is visible
+    only
+    vsplit
+    set noscrollbind
+    wincmd w
+    set noscrollbind
+    execute "normal! \<C-F>"
+    set scrollbind
+    wincmd w
+    set scrollbind
+endfunction

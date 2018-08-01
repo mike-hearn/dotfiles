@@ -68,3 +68,34 @@ function! ShiftSplitAndLock()
     wincmd w
     set scrollbind
 endfunction
+
+function! TriShiftSplitAndLock()
+    " When a pane is split in two, this will shift the right page a full page
+    " view, and scrollbind the two panes, so double the length is visible
+
+    " First window
+    only
+    set noscrollbind
+    let current_win = winnr()
+    vsplit
+    wincmd l
+
+    " Second window
+    set noscrollbind
+    execute "normal! \<C-F>"
+    vsplit
+    wincmd l
+
+    " Third window
+    set noscrollbind
+    execute "normal! \<C-F>"
+    set scrollbind
+
+    wincmd h
+    set noscrollbind
+    set scrollbind
+
+    wincmd h
+    set noscrollbind
+    set scrollbind
+endfunction

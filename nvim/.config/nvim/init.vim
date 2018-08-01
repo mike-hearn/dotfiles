@@ -322,6 +322,7 @@
     endfunc
     nnoremap <leader>V :call SplitAndMaintainPosition()<CR>
     nnoremap <leader>S :call ShiftSplitAndLock()<CR>
+    nnoremap <leader>D :call TriShiftSplitAndLock()<CR>
 
     " Toggle between standard and relative line numbers
     function! NumberToggle()

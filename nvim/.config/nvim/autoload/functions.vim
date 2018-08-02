@@ -1,4 +1,35 @@
-" User functions file for Neovim
+" Writes current full file path to ~/.vim_history unless it is part of a
+" plugin (hence the check for ///, e.g. fugitive:///...)
+function! functions#WriteFileToHistory()
+    if expand('%:p') !~ "\/\/\/"
+        call system('touch ~/.vim_history')
+        call system('echo '.shellescape(expand('%:p')).' >> ~/.vim_history')
+    endif
+endfunction
+
+
+" Save current view settings on a per-window, per-buffer basis.
+function! functions#AutoSaveWinView()
+    if !exists("w:SavedBufView")
+        let w:SavedBufView = {}
+    endif
+    let w:SavedBufView[bufnr("%")] = winsaveview()
+endfunction
+
+
+" Restore current view settings.
+function! functions#AutoRestoreWinView()
+    let buf = bufnr("%")
+    if exists("w:SavedBufView") && has_key(w:SavedBufView, buf)
+        let v = winsaveview()
+        let atStartOfFile = v.lnum == 1 && v.col == 0
+        if atStartOfFile && !&diff
+            call winrestview(w:SavedBufView[buf])
+        endif
+        unlet w:SavedBufView[buf]
+    endif
+endfunction
+
 
 function! functions#FoldAroundSelection()
     if !exists("b:originalfoldmethod")
@@ -55,6 +86,13 @@ function! functions#UnfoldAndRememberScrollPosition(foldlevel)
 
 endfunction
 
+function! functions#SplitAndMaintainPosition()
+    only
+    let l:winview = winsaveview()
+    :vsp %
+    call winrestview(l:winview)
+endfunc
+
 function! functions#ShiftSplitAndLock()
     " When a pane is split in two, this will shift the right page a full page
     " view, and scrollbind the two panes, so double the length is visible
@@ -98,3 +136,14 @@ function! functions#TriShiftSplitAndLock()
     set noscrollbind
     set scrollbind
 endfunction
+
+
+" Toggle between standard and relative line numbers
+function! functions#NumberToggle()
+    if(&relativenumber == 1)
+        set norelativenumber
+        set number
+    else
+        set relativenumber
+    endif
+endfunc

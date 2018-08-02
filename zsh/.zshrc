@@ -1,11 +1,11 @@
-fpath=( "$HOME/.oh-my-zsh/custom/functions" $fpath )
+ZSH_THEME=""
+ZSH_CUSTOM="$HOME/.config/shell/zsh"
+
+fpath=( "$ZSH_CUSTOM/functions" $fpath )
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
-ZSH_THEME=""
-
-ZSH_CUSTOM="$HOME/.config/shell/zsh"
 
 plugins=(
   autojump

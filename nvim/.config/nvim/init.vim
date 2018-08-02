@@ -139,15 +139,6 @@
 
     call plug#end()
 " }}}
-" {{{ Functions
-
-    " When switching buffers, preserve window view.
-    if v:version >= 700
-        autocmd BufLeave * call functions#AutoSaveWinView()
-        autocmd BufEnter * call functions#AutoRestoreWinView()
-    endif
-
-" }}}
 " Mappings {{{
     let g:mapleader = ","
     let maplocalleader = "\\"
@@ -281,6 +272,12 @@
 
     " Bash/sh
     let g:is_posix = 1
+
+    " When switching buffers, preserve window view.
+    if v:version >= 700
+        autocmd BufLeave * call functions#AutoSaveWinView()
+        autocmd BufEnter * call functions#AutoRestoreWinView()
+    endif
 
 " }}}
 

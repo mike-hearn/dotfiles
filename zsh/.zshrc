@@ -5,6 +5,8 @@ export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME=""
 
+ZSH_CUSTOM="$HOME/.config/shell/zsh"
+
 plugins=(
   autojump
   custom-aliases
@@ -22,8 +24,6 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
-
-source $HOME/.config/shell/shared/*
 
 autoload -U promptinit; promptinit
 prompt pure
@@ -46,6 +46,7 @@ export LESS="-R --quit-if-one-screen"
 
 for f in ~/.config/shell/shared/*; do . "$f"; done
 for f in ~/.config/shell/apps/*; do . "$f"; done
+for f in ~/.config/shell/zsh/**/*.zsh; do . "$f"; done
 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

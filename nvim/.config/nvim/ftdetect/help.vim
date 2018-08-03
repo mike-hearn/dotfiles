@@ -1,1 +1,0 @@
-autocmd FileType help :on

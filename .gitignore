@@ -1,3 +1,4 @@
 extra
 tmux/.tmux/plugins/
 .netrwhist
+.stignore

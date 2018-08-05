@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+nvim $(\
+    grep --text $(git rev-parse --show-toplevel) ~/.vim_history | \
+    tail -n 1
+)

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+basename \
+    $(git rev-parse --show-toplevel) | \
+    md5sum | \
+    sed 's/[a-f]//g' | \
+    cut -c1-3

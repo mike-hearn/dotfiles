@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Git
-alias gs="git status "
+alias gs=$'git -c color.ui=always status --short --branch | python -c \'import sys, re; \ order = {"A ":1," M":3,"??":2,"##":0}; ansi_re = re.compile(r"\x1b[^m]*m");\ print "".join(sorted(sys.stdin.readlines(),cmp=lambda x,y: \ cmp(order.get(ansi_re.sub("", x)[0:2],0), order.get(ansi_re.sub("", y)[0:2],0))))\' '
 alias ga="git add "
 alias gaa="git add --all"
 alias gb="git branch "

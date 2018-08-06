@@ -9,12 +9,10 @@ export ZSH="$HOME/.oh-my-zsh"
 
 plugins=(
   autojump
-  custom-aliases
   django
   docker
   docker-compose
   git
-  gitaliases
   npm
   nvmfast
   pure
@@ -46,7 +44,6 @@ export LESS="-R --quit-if-one-screen"
 
 for f in ~/.config/shell/shared/*; do . "$f"; done
 for f in ~/.config/shell/apps/*; do . "$f"; done
-for f in ~/.config/shell/zsh/**/*.zsh; do . "$f"; done
 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

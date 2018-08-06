@@ -5,12 +5,10 @@ on_project_first_start: git clone git@github.com:nypublicradio/wnyc-web-client.g
 
 on_project_start: git fetch --all > /dev/null
 
-pre_window:
-  - nvm use 6
-
 on_project_stop:
-  - yarn unlink nypr-account-settings
-  - yarn unlink nypr-ui
+  - yarn unlink nypr-account-settings > /dev/null
+  - yarn unlink nypr-ui > /dev/null
+  - docker kill wnyc-web-client > /dev/null
 
 windows:
   - server:
@@ -20,16 +18,15 @@ windows:
           # - trash node_modules > /dev/null
           # - trash bower_components > /dev/null
           - yarn
-          - bower install
           - grunt modernizr:dist
-          # - yarn link nypr-account-settings
+          - yarn link nypr-account-settings
           # - yarn link nypr-ui
-          - ember s --port=4200
+          - dockerize-directory.sh npx ember s --port=4200
         - shell:
           -
   - editor:
       layout: even-horizontal
       panes:
-        - nvim $(cat ~/.vim_history | grep $(git rev-parse --show-toplevel) | tail -n 1)
+        - recently-edited
         -
 

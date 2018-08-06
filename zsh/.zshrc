@@ -1,3 +1,5 @@
+SHELL=/bin/zsh
+
 ZSH_THEME=""
 ZSH_CUSTOM="$HOME/.config/shell/zsh"
 

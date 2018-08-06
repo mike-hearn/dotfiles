@@ -382,4 +382,17 @@ dirtonum() {
 	echo $(basename $(git rev-parse --show-toplevel) | md5sum | sed 's/[a-f]//g' | cut -c1-3)
 }
 
+codesearch() {
+rg \
+    --no-line-number \
+    --no-filename \
+    --color=never \
+    "$@" | \
+    grep -v Omitted | \
+    sort -f | \
+    uniq -c | \
+    sort -k 1nr -k 2f | \
+    head -n 10
+}
+
 # vim: syntax=sh ts=4 sts=4 shiftwidth=4 expandtab

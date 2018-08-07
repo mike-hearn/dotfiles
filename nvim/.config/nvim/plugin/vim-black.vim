@@ -1,1 +1,1 @@
-let g:black_linelength = 80
+let g:black_linelength = 79

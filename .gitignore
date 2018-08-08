@@ -3,3 +3,4 @@ tmux/.tmux/plugins/
 .netrwhist
 .stignore
 .stfolder
+.npmrc

@@ -1,0 +1,11 @@
+name: newpub
+root: ~/Repos/Mine/newpub
+
+
+windows:
+  - server:
+    - docker-compose up
+  - editor:
+    - recently-edited
+  - todo:
+    - nvim .git/TODO.org

@@ -182,5 +182,17 @@ export default Model.extend({
 });
 endsnippet
 # }}}
+# {{{ Cypress Snippets
+snippet cypresstest "Cypress test" b
+describe('$0', function() {
+	beforeEach(() => {
+		cy.visit('/');
+	});
+	it('Initial test', function() {
+		cy.get('body');
+	});
+});
+endsnippet
+# }}}
 
 # vim: foldmethod=marker: foldlevel=0

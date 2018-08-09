@@ -7,6 +7,7 @@ dirtonum() {
 	echo $(basename $(git rev-parse --show-toplevel) | md5sum | sed 's/[a-f]//g' | cut -c1-3)
 }
 
+docker kill "$projectname" > /dev/null
 docker run \
     --cap-add=SYS_ADMIN \
     --expose=${RUN_IN_DOCKER_PORT:-4200} \

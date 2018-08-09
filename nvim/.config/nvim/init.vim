@@ -128,18 +128,14 @@
     Plug 'Yggdroot/indentLine'   " Adds vertical line to clearly show indent levels
 
     " Completion
-    function! BuildYCM(info)
-        " info is a dictionary with 3 fields
-        " - name:   name of the plugin
-        " - status: 'installed', 'updated', or 'unchanged'
-        " - force:  set on PlugInstall! or PlugUpdate!
-        if a:info.status == 'installed' || a:info.force
-            !./install.py
-        endif
-    endfunction
-
-    Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
-
+    Plug 'mhartington/nvim-typescript', {
+                \ 'do': 'bash ~/.local/share/nvim/plugged/nvim-typescript/install.sh',
+                \ 'for': ['javascript', 'javascript.jsx', 'typescript'] }
+    Plug 'Shougo/echodoc.vim'
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    Plug 'zchee/deoplete-jedi'
+    Plug 'zchee/deoplete-go', { 'do': 'make'}
+    Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 
     call plug#end()
 " }}}

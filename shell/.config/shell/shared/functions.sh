@@ -378,10 +378,6 @@ basegitdir() {
     basename $(git rev-parse --show-toplevel)
 }
 
-dirtonum() {
-	echo $(basename $(git rev-parse --show-toplevel) | md5sum | sed 's/[a-f]//g' | cut -c1-3)
-}
-
 codesearch() {
 rg \
     --no-line-number \

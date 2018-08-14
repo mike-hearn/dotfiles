@@ -383,12 +383,12 @@ rg \
     --no-line-number \
     --no-filename \
     --color=never \
-    "$@" | \
+    "$1" | \
     grep -v Omitted | \
     sort -f | \
     uniq -c | \
     sort -k 1nr -k 2f | \
-    head -n 10
+    head -n ${2:-10}
 }
 
 # vim: syntax=sh ts=4 sts=4 shiftwidth=4 expandtab

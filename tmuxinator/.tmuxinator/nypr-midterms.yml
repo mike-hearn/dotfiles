@@ -1,0 +1,24 @@
+name: nypr-midterms
+root: ~/Repos/Work/nypr-midterms
+
+on_project_start:
+  - git fetch --all > /dev/null
+  - docker kill nypr-midterms > /dev/null
+
+windows:
+  - server:
+      layout: even-horizontal
+      panes:
+        - server:
+          - tmux rename-window port-4$(dirtonum)
+          - yarn
+          - yarn link nypr-ui
+          - dockerize-directory.sh npx ember s
+        - shell:
+          -
+  - editor:
+      layout: even-horizontal
+      panes:
+        - recently-edited
+        -
+

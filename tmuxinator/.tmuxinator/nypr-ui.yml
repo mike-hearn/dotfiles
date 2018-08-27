@@ -3,13 +3,12 @@ root: ~/Repos/Work/nypr-ui
 
 on_project_start: git fetch --all > /dev/null
 
-pre_window:
-  - nvm use 6
-
 windows:
   - main:
     - trash node_modules
     - yarn
-    - yarn link
-  - editor: nvim $(cat ~/.vim_history | grep $(git rev-parse --show-toplevel) | tail -n 1)
+    - yarn link 2> /dev/null
+    - bower install
+    - dockerize-directory.sh npx ember s
+  - editor: recently-edited
 

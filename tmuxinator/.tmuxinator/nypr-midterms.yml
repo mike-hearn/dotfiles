@@ -1,6 +1,8 @@
 name: nypr-midterms
 root: ~/Repos/Work/nypr-midterms
 
+on_project_first_start: git clone git@github.com:nypublicradio/wnyc-web-client.git ~/Repos/Work/nypr-midterms
+
 on_project_start:
   - git fetch --all > /dev/null
   - docker kill nypr-midterms > /dev/null
@@ -13,7 +15,11 @@ windows:
           - tmux rename-window port-4$(dirtonum)
           - yarn
           - yarn link nypr-ui
-          - dockerize-directory.sh npx ember s
+          - |
+            while true;
+            do yarn;
+            dockerize-directory.sh npx ember s --live-reload-port=49$(dirtonum);
+            done;
         - shell:
           -
   - editor:
@@ -21,4 +27,6 @@ windows:
       panes:
         - recently-edited
         -
+  - tests:
+      - while true; yarn; do DISPLAY=:1.0 npx ember test --serve; done
 

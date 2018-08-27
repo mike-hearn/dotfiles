@@ -73,7 +73,7 @@
     Plug 'chriskempson/base16-vim'
     Plug 'mike-hearn/base16-vim-lightline'
 
-    " Languages & IDE plugins
+    " Syntax & IDE plugins
     Plug 'sheerun/vim-polyglot'
     Plug 'davidhalter/jedi-vim', { 'for': 'python' }
     Plug 'python-mode/python-mode', { 'for': 'python' }
@@ -81,6 +81,7 @@
     Plug 'jceb/vim-orgmode'
     Plug 'tpope/vim-speeddating'  " Required by orgmode
     Plug 'ternjs/tern_for_vim'
+    Plug 'HerringtonDarkholme/yats.vim'
 
     " Linters/Formatters/Checkers
     Plug 'w0rp/ale'
@@ -126,18 +127,31 @@
     Plug 'tpope/vim-sleuth' " Basically triggers :noh once you move your cursor off a highlighted word
     Plug 'junegunn/vim-peekaboo' " Peek into vim registers
     Plug 'Yggdroot/indentLine'   " Adds vertical line to clearly show indent levels
+    Plug 'jsfaint/gen_tags.vim'  " Generate tags
 
     " Completion
+    Plug 'roxma/nvim-yarp'
+    Plug 'ncm2/ncm2'
+    Plug 'ncm2/ncm2-bufword'
+    Plug 'ncm2/ncm2-tmux'
+    Plug 'ncm2/ncm2-path'
+    Plug 'ncm2/ncm2-tagprefix'
+    Plug 'ncm2/ncm2-ultisnips'
     Plug 'mhartington/nvim-typescript', {
-                \ 'do': 'bash ~/.local/share/nvim/plugged/nvim-typescript/install.sh',
-                \ 'for': ['javascript', 'javascript.jsx', 'typescript'] }
-    Plug 'Shougo/echodoc.vim'
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    Plug 'zchee/deoplete-jedi'
-    Plug 'zchee/deoplete-go', { 'do': 'make'}
-    Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+                \ 'do': './install.sh',
+                \ 'for': ['typescript', 'javascript', 'javascript.jsx']}
+    Plug 'ncm2/ncm2-jedi', {'for': ['python']}
+    Plug 'ncm2/ncm2-cssomni', {'for': ['css', 'scss', 'sass']}
+    Plug 'ncm2/ncm2-go', {'for': ['go']}
+    Plug 'ncm2/ncm2-vim', {'for': ['vim']}
+    Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
+    Plug 'autozimu/LanguageClient-neovim', {
+                \ 'branch': 'next',
+                \ 'do': 'bash install.sh',
+                \ }
 
     call plug#end()
+
 " }}}
 " Mappings {{{
     let g:mapleader = ","

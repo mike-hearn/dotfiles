@@ -1,0 +1,30 @@
+snippet tmuxinatorconfig "Tmuxinator Boilerplate" b
+name: $1
+root: ~/Repos/Work/$1
+
+on_project_start:
+	- git fetch --all > /dev/null
+	- docker kill $1 > /dev/null
+
+windows:
+	- server:
+			layout: even-horizontal
+			panes:
+				- server:
+					- tmux rename-window port-$(dirtonum)
+					- yarn
+					- |
+						while true;
+						do yarn;
+						dockerize-directory.sh npx ember s --live-reload-port=49$(dirtonum);
+						done;
+				- shell:
+					-
+	- editor:
+			layout: even-horizontal
+			panes:
+				- recently-edited
+				-
+	- tests:
+			- while true; yarn; do DISPLAY=:1.0 npx ember test --serve; done
+endsnippet

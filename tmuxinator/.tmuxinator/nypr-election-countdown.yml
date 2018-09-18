@@ -1,21 +1,17 @@
-name: nypr-midterms
-root: ~/Repos/Work/nypr-midterms
-
-on_project_first_start: git clone git@github.com:nypublicradio/wnyc-web-client.git ~/Repos/Work/nypr-midterms
+name: nypr-election-countdown
+root: ~/Repos/Work/nypr-election-countdown
 
 on_project_start:
   - git fetch --all > /dev/null
-  - docker kill nypr-midterms > /dev/null
+  - docker kill nypr-election-countdown > /dev/null
 
 windows:
   - server:
       layout: even-horizontal
       panes:
         - server:
-          - tmux rename-window port-4$(dirtonum)
+          - tmux rename-window port-$(dirtonum)
           - rm -rf node_modules; yarn
-          - yarn link nypr-election-countdown
-          - yarn link nypr-ui
           - |
             while true;
             do yarn;
@@ -30,4 +26,3 @@ windows:
         -
   - tests:
       - while true; yarn; do DISPLAY=:1.0 npx ember test --serve; done
-

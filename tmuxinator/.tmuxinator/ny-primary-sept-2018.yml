@@ -1,0 +1,30 @@
+name: ny-primary-sept-2018
+root: ~/Repos/Work/ny-primary-2018
+
+on_project_start:
+  - git fetch --all > /dev/null
+  - docker kill ny-primary-2018 > /dev/null
+
+windows:
+  - server:
+      layout: even-horizontal
+      panes:
+        - server:
+          - tmux rename-window port-$(dirtonum)
+          - yarn
+          - |
+            while true;
+            do yarn;
+            dockerize-directory.sh npx ember s --live-reload-port=49$(dirtonum);
+            done;
+        - shell:
+          -
+  - editor:
+      layout: even-horizontal
+      panes:
+        - recently-edited
+        -
+  - tests:
+      - while true; do DISPLAY=:1.0 npx ember test --serve; done
+  - lazygit:
+      - lazygit

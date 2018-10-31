@@ -61,6 +61,11 @@ set undolevels=1000             " Save last 1000 changes"
 set undoreload=10000            " Load last 10,000 changes?
 set wildmenu                    " Visual autocomplete for command menu
 
+" Set python to homebrew version
+let homebrew_prefix=systemlist("brew --prefix")[0]
+let g:python_host_prog=homebrew_prefix . "/bin/python"
+let g:python3_host_prog=homebrew_prefix . "/bin/python3"
+
 " ========================================================================= }}}
 
 " Mappings {{{ ································································
@@ -754,6 +759,8 @@ autocmd FileType handlebars,html,html.handlebars imap <buffer> <expr> <tab> emme
 autocmd FileType html.handlebars setlocal foldmethod=indent
 autocmd FileType javascript,javascript.jsx,json setlocal foldmethod=syntax
 autocmd FileType javascript,javascript.jsx,json map <buffer> <c-]> m':TSDef<CR>
+autocmd FileType javascript,javascript.jsx,json nnoremap <buffer> <leader>b odebugger;<esc>k
+autocmd FileType javascript,javascript.jsx,json nnoremap <buffer> <leader>B Odebugger;<esc>j
 " }}}
 " {{{ JSON
 autocmd FileType json setlocal foldmethod=syntax
@@ -777,5 +784,7 @@ autocmd FileType yaml setlocal foldmethod=indent
 " }}}
 
 " }}}
+
+
 
 " vim: foldmethod=marker: foldlevel=0

@@ -24,6 +24,7 @@ docker run \
     --rm \
     --tty \
     --volume $(pwd)/../:$(pwd)/../ \
+    --volume $HOME/.config/yarn/:$HOME/.config/yarn \
     --workdir=$(pwd) \
     fedora-node-8 \
     $commands

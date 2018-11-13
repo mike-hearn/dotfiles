@@ -354,86 +354,86 @@ endfunc
     " Start with sensible defaults
     Plug 'tpope/vim-sensible'
 
-    " Themes
+    " " Themes
     Plug 'chriskempson/base16-vim'
     Plug 'mike-hearn/base16-vim-lightline'
+    Plug 'ryanoasis/vim-devicons'
 
-    " Syntax & IDE plugins
+    " " Syntax & IDE plugins
     Plug 'sheerun/vim-polyglot'
-    Plug 'davidhalter/jedi-vim', { 'for': 'python' }
-    Plug 'python-mode/python-mode', { 'for': 'python' }
+    " Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+    " Plug 'python-mode/python-mode', { 'for': 'python' }
     Plug 'fatih/vim-go', { 'for': 'go' }
-    Plug 'jceb/vim-orgmode'
-    Plug 'tpope/vim-speeddating'  " Required by orgmode
-    Plug 'ternjs/tern_for_vim'
-    Plug 'HerringtonDarkholme/yats.vim'
+    " Plug 'jceb/vim-orgmode'
+    " Plug 'tpope/vim-speeddating'  " Required by orgmode
 
-    " Linters/Formatters/Checkers
+    " " Linters/Formatters/Checkers
     Plug 'w0rp/ale'
-    Plug 'tell-k/vim-autopep8', { 'for': 'python' }
-    Plug 'ambv/black', { 'for': 'python' }
+    " Plug 'tell-k/vim-autopep8', { 'for': 'python' }
+    " Plug 'ambv/black', { 'for': 'python' }
     Plug 'prettier/vim-prettier', {
                 \'do': 'yarn install',
                 \'for': ['javascript', 'javascript.jsx', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue'] }
 
-    " IDE & Productivity Features
+    " " IDE & Productivity Features
     Plug 'itchyny/lightline.vim' " Lightweight powerline-esque bar at bottom of window
     Plug 'ap/vim-buftabline' " List buffers at top of vim window
-    Plug 'Lokaltog/vim-easymotion' " Quickly jump to specific character on screen
+    " Plug 'Lokaltog/vim-easymotion' " Quickly jump to specific character on screen
     Plug 'tpope/vim-commentary' " Comment stuff out with gcc
     Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] } " Sidebar file explorer (c+\)
-    Plug 'Xuyuanp/nerdtree-git-plugin' " Show file git status in nerdtree
+    " Plug 'Xuyuanp/nerdtree-git-plugin' " Show file git status in nerdtree
     Plug 'tpope/vim-fugitive' " Git management within vim
     Plug 'tpope/vim-unimpaired' " Key bindings for vim-fugitive
-    Plug 'tpope/vim-repeat' " Repeatable events from pugins
+    " Plug 'tpope/vim-repeat' " Repeatable events from pugins
     Plug 'airblade/vim-gitgutter' " Show which lines have been edited from git working version
     Plug 'vim-scripts/tinymode.vim' " Allows for repetitve shortcuts w/o typing prefix key, e.g. ^W++- instead of ^W+^W+^W-
-    Plug 'sjl/gundo.vim', { 'on': 'GundoToggle' } " Tracks undo history like a git tree
+    " Plug 'sjl/gundo.vim', { 'on': 'GundoToggle' } " Tracks undo history like a git tree
     Plug 'vim-scripts/BufOnly.vim' " Close all buffers except open
     Plug 'airblade/vim-rooter' " Sets the pwd to git root
     Plug 'teranex/jk-jumps.vim' " Adds a 'jump' when using, eg, 10j to move, useful for c+o/c+i navigation
     Plug 'mike-hearn/vim-buffer-history' " Keeps track of buffer history
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  } " Installs fzf if not already installed
     Plug 'junegunn/fzf.vim' " My favorite fuzzy search
-    Plug 'tpope/vim-obsession' " Remember vim session state
+    " Plug 'tpope/vim-obsession' " Remember vim session state
     Plug 'christoomey/vim-tmux-navigator', { 'branch': 'indicator' } " Treats vim splits as tmux panes, allowing same shortcuts
-    Plug 'jiangmiao/auto-pairs' " Completes the pair for ( and { and [ etc
+    " Plug 'jiangmiao/auto-pairs' " Completes the pair for ( and { and [ etc
     Plug 'tmux-plugins/vim-tmux-focus-events' " For auto-reloading on focus
-    Plug 'mattn/emmet-vim' " Shortcuts to quickly scaffold html
-    Plug 'Chiel92/vim-autoformat' " Integrate yapf & other autoformatters
-    Plug 'fisadev/vim-isort', { 'on': ['Isort'] } " Autosort python imports
+    " Plug 'mattn/emmet-vim' " Shortcuts to quickly scaffold html
+    " Plug 'Chiel92/vim-autoformat' " Integrate yapf & other autoformatters
+    " Plug 'fisadev/vim-isort', { 'on': ['Isort'] } " Autosort python imports
     Plug 'SirVer/ultisnips' " My custom snippets for code reuse
     Plug 'honza/vim-snippets' " Community custom snippets
     Plug 'tpope/vim-surround' " Shortcuts to modify characters/code around an object, eg add quotes on a string
-    Plug 'majutsushi/tagbar' " Shows tags in sidebar
-    Plug 'junegunn/rainbow_parentheses.vim' " Colors matching parentheses for easier parsing
+    " Plug 'majutsushi/tagbar' " Shows tags in sidebar
+    " Plug 'junegunn/rainbow_parentheses.vim' " Colors matching parentheses for easier parsing
     Plug 'editorconfig/editorconfig-vim' " Imports editorconfig file
     Plug 'junegunn/vim-slash' " Un-highlights text if you navigate away from word
     Plug 'tpope/vim-sleuth' " Basically triggers :noh once you move your cursor off a highlighted word
-    Plug 'junegunn/vim-peekaboo' " Peek into vim registers
-    Plug 'Yggdroot/indentLine'   " Adds vertical line to clearly show indent levels
+    " Plug 'junegunn/vim-peekaboo' " Peek into vim registers
+    " Plug 'Yggdroot/indentLine'   " Adds vertical line to clearly show indent levels
     Plug 'tpope/vim-tbone'  " Adds tmux commands to vim, specifically copying into tmux clipboard
 
-    " Completion
-    Plug 'roxma/nvim-yarp'
-    Plug 'ncm2/ncm2'
-    Plug 'ncm2/ncm2-bufword'
-    Plug 'ncm2/ncm2-tmux'
-    Plug 'ncm2/ncm2-path'
-    Plug 'ncm2/ncm2-tagprefix'
-    Plug 'ncm2/ncm2-ultisnips'
-    Plug 'mhartington/nvim-typescript', {
-                \ 'do': './install.sh',
-                \ 'for': ['typescript', 'javascript', 'javascript.jsx']}
-    Plug 'ncm2/ncm2-jedi', {'for': ['python']}
-    Plug 'ncm2/ncm2-cssomni', {'for': ['css', 'scss', 'sass']}
-    Plug 'ncm2/ncm2-go', {'for': ['go']}
-    Plug 'ncm2/ncm2-vim', {'for': ['vim']}
-    Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
-    Plug 'autozimu/LanguageClient-neovim', {
-                \ 'branch': 'next',
-                \ 'do': 'bash install.sh',
-                \ }
+    " " Completion
+    " " Plug 'roxma/nvim-yarp'
+    " " Plug 'ncm2/ncm2'
+    " " Plug 'ncm2/ncm2-bufword'
+    " " Plug 'ncm2/ncm2-tmux'
+    " " Plug 'ncm2/ncm2-path'
+    " " Plug 'ncm2/ncm2-tagprefix'
+    " " Plug 'ncm2/ncm2-ultisnips'
+    " " Plug 'mhartington/nvim-typescript', {
+    " "             \ 'do': './install.sh',
+    " "             \ 'for': ['typescript', 'javascript', 'javascript.jsx']}
+    " " Plug 'ncm2/ncm2-jedi', {'for': ['python']}
+    " " Plug 'ncm2/ncm2-cssomni', {'for': ['css', 'scss', 'sass']}
+    " " Plug 'ncm2/ncm2-go', {'for': ['go']}
+    " " Plug 'ncm2/ncm2-vim', {'for': ['vim']}
+    " " Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
+    " " Plug 'autozimu/LanguageClient-neovim', {
+    " "             \ 'branch': 'next',
+    " "             \ 'do': 'bash install.sh',
+    " "             \ }
+    Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 
     call plug#end()
 
@@ -456,6 +456,7 @@ let g:ale_linters = {
 let g:ale_fixers = {
             \   'javascript': ['eslint', 'prettier'],
             \   'html': ['tidy'],
+            \   'go': ['gofmt'],
             \   'css': ['stylelint', 'prettier'],
             \   'scss': ['stylelint', 'prettier', 'remove_trailing_lines'],
             \   'python': ['isort', 'black'],
@@ -629,8 +630,8 @@ let g:NERDTreeGitStatusIndicatorMap = {
 set completeopt=noinsert,menuone,noselect
 set shortmess+=c
 
-autocmd TextChangedI * call ncm2#auto_trigger()
-autocmd BufEnter * call ncm2#enable_for_buffer()
+" autocmd TextChangedI * call ncm2#auto_trigger()
+" autocmd BufEnter * call ncm2#enable_for_buffer()
 
 inoremap <c-c> <ESC>
 inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
@@ -753,7 +754,6 @@ autocmd FileType go setlocal foldmethod=syntax
 " }}}
 " {{{ HTML/Handlebars/Mustache
 autocmd FileType handlebars,html,html.handlebars setlocal foldmethod=indent
-autocmd FileType handlebars,html,html.handlebars imap <buffer> <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
 " }}}
 " {{{ Javascript/JSX
 autocmd FileType html.handlebars setlocal foldmethod=indent
@@ -785,6 +785,75 @@ autocmd FileType yaml setlocal foldmethod=indent
 
 " }}}
 
+" Use tab for trigger completion with characters ahead and navigate.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
+" Use <c-space> for trigger completion.
+inoremap <silent><expr> <c-k> coc#refresh()
+
+" Use <C-x><C-o> to complete 'word', 'emoji' and 'include' sources
+imap <silent> <C-x><C-o> <Plug>(coc-complete-custom)
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <cr> for confirm completion.
+" Coc only does snippet and additional edit on confirm.
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" Use `[c` and `]c` for navigate diagnostics
+nmap <silent> [c <Plug>(coc-diagnostic-prev)
+nmap <silent> ]c <Plug>(coc-diagnostic-next)
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K for show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if &filetype == 'vim'
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Show signature help while editing
+autocmd CursorHoldI * silent! call CocAction('showSignatureHelp')
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocAction('highlight')
+
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
+
+" Use `:Format` for format current buffer
+command! -nargs=0 Format :call CocAction('format')
+
+" Use `:Fold` for fold current buffer
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+
+" Add diagnostic info for https://github.com/itchyny/lightline.vim
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'cocstatus': 'coc#status'
+      \ },
+      \ }
 
 " vim: foldmethod=marker: foldlevel=0

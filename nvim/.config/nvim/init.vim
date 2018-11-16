@@ -361,79 +361,49 @@ endfunc
 
     " " Syntax & IDE plugins
     Plug 'sheerun/vim-polyglot'
-    " Plug 'davidhalter/jedi-vim', { 'for': 'python' }
-    " Plug 'python-mode/python-mode', { 'for': 'python' }
     Plug 'fatih/vim-go', { 'for': 'go' }
-    " Plug 'jceb/vim-orgmode'
-    " Plug 'tpope/vim-speeddating'  " Required by orgmode
+    Plug 'jceb/vim-orgmode'
+    Plug 'tpope/vim-speeddating', { 'for': 'org'}  " Required by orgmode
 
     " " Linters/Formatters/Checkers
     Plug 'w0rp/ale'
-    " Plug 'tell-k/vim-autopep8', { 'for': 'python' }
-    " Plug 'ambv/black', { 'for': 'python' }
-    Plug 'prettier/vim-prettier', {
-                \'do': 'yarn install',
-                \'for': ['javascript', 'javascript.jsx', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue'] }
+    Plug 'prettier/vim-prettier', {'do': 'yarn install'}
 
     " " IDE & Productivity Features
     Plug 'itchyny/lightline.vim' " Lightweight powerline-esque bar at bottom of window
     Plug 'ap/vim-buftabline' " List buffers at top of vim window
-    " Plug 'Lokaltog/vim-easymotion' " Quickly jump to specific character on screen
     Plug 'tpope/vim-commentary' " Comment stuff out with gcc
     Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] } " Sidebar file explorer (c+\)
-    " Plug 'Xuyuanp/nerdtree-git-plugin' " Show file git status in nerdtree
+    Plug 'Xuyuanp/nerdtree-git-plugin' " Show file git status in nerdtree
     Plug 'tpope/vim-fugitive' " Git management within vim
     Plug 'tpope/vim-unimpaired' " Key bindings for vim-fugitive
-    " Plug 'tpope/vim-repeat' " Repeatable events from pugins
+    Plug 'tpope/vim-repeat' " Repeatable events from plugins
     Plug 'airblade/vim-gitgutter' " Show which lines have been edited from git working version
     Plug 'vim-scripts/tinymode.vim' " Allows for repetitve shortcuts w/o typing prefix key, e.g. ^W++- instead of ^W+^W+^W-
-    " Plug 'sjl/gundo.vim', { 'on': 'GundoToggle' } " Tracks undo history like a git tree
+    Plug 'sjl/gundo.vim', { 'on': 'GundoToggle' } " Tracks undo history like a git tree
     Plug 'vim-scripts/BufOnly.vim' " Close all buffers except open
     Plug 'airblade/vim-rooter' " Sets the pwd to git root
     Plug 'teranex/jk-jumps.vim' " Adds a 'jump' when using, eg, 10j to move, useful for c+o/c+i navigation
     Plug 'mike-hearn/vim-buffer-history' " Keeps track of buffer history
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  } " Installs fzf if not already installed
     Plug 'junegunn/fzf.vim' " My favorite fuzzy search
-    " Plug 'tpope/vim-obsession' " Remember vim session state
+    Plug 'tpope/vim-obsession' " Remember vim session state
     Plug 'christoomey/vim-tmux-navigator', { 'branch': 'indicator' } " Treats vim splits as tmux panes, allowing same shortcuts
-    " Plug 'jiangmiao/auto-pairs' " Completes the pair for ( and { and [ etc
+    Plug 'jiangmiao/auto-pairs' " Completes the pair for ( and { and [ etc
     Plug 'tmux-plugins/vim-tmux-focus-events' " For auto-reloading on focus
-    " Plug 'mattn/emmet-vim' " Shortcuts to quickly scaffold html
-    " Plug 'Chiel92/vim-autoformat' " Integrate yapf & other autoformatters
-    " Plug 'fisadev/vim-isort', { 'on': ['Isort'] } " Autosort python imports
+    Plug 'mattn/emmet-vim' " Shortcuts to quickly scaffold html
+    Plug 'fisadev/vim-isort', { 'on': ['Isort'] } " Autosort python imports
     Plug 'SirVer/ultisnips' " My custom snippets for code reuse
     Plug 'honza/vim-snippets' " Community custom snippets
     Plug 'tpope/vim-surround' " Shortcuts to modify characters/code around an object, eg add quotes on a string
-    " Plug 'majutsushi/tagbar' " Shows tags in sidebar
-    " Plug 'junegunn/rainbow_parentheses.vim' " Colors matching parentheses for easier parsing
     Plug 'editorconfig/editorconfig-vim' " Imports editorconfig file
     Plug 'junegunn/vim-slash' " Un-highlights text if you navigate away from word
     Plug 'tpope/vim-sleuth' " Basically triggers :noh once you move your cursor off a highlighted word
-    " Plug 'junegunn/vim-peekaboo' " Peek into vim registers
-    " Plug 'Yggdroot/indentLine'   " Adds vertical line to clearly show indent levels
     Plug 'tpope/vim-tbone'  " Adds tmux commands to vim, specifically copying into tmux clipboard
 
     " " Completion
-    " " Plug 'roxma/nvim-yarp'
-    " " Plug 'ncm2/ncm2'
-    " " Plug 'ncm2/ncm2-bufword'
-    " " Plug 'ncm2/ncm2-tmux'
-    " " Plug 'ncm2/ncm2-path'
-    " " Plug 'ncm2/ncm2-tagprefix'
-    " " Plug 'ncm2/ncm2-ultisnips'
-    " " Plug 'mhartington/nvim-typescript', {
-    " "             \ 'do': './install.sh',
-    " "             \ 'for': ['typescript', 'javascript', 'javascript.jsx']}
-    " " Plug 'ncm2/ncm2-jedi', {'for': ['python']}
-    " " Plug 'ncm2/ncm2-cssomni', {'for': ['css', 'scss', 'sass']}
-    " " Plug 'ncm2/ncm2-go', {'for': ['go']}
-    " " Plug 'ncm2/ncm2-vim', {'for': ['vim']}
-    " " Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
-    " " Plug 'autozimu/LanguageClient-neovim', {
-    " "             \ 'branch': 'next',
-    " "             \ 'do': 'bash install.sh',
-    " "             \ }
     Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+    Plug 'Shougo/denite.nvim'
 
     call plug#end()
 
@@ -499,6 +469,10 @@ hi ALEError cterm=underline ctermfg=red
 hi ALEErrorSign ctermbg=18 ctermfg=1
 hi ALEWarning cterm=underline ctermfg=yellow
 hi ALEWarningSign ctermbg=18 ctermfg=3
+hi CocErrorSign ctermfg=red ctermbg=18
+hi CocHintSign ctermfg=green ctermbg=18
+hi CocInfoSign ctermfg=yellow ctermbg=18
+hi CocWarningSign ctermfg=yellow ctermbg=18
 hi ColorColumn ctermbg=18
 hi CursorLine ctermbg=18
 hi CursorLineNr ctermbg=18

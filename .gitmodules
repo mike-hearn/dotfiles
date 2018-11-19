@@ -10,3 +10,6 @@
 [submodule "shell/.config/shell/zsh/plugins/pure"]
 	path = shell/.config/shell/zsh/plugins/pure
 	url = https://github.com/sindresorhus/pure.git
+[submodule "shell/.config/shell/zsh/themes/spaceship-prompt"]
+	path = shell/.config/shell/zsh/themes/spaceship-prompt
+	url = https://github.com/denysdovhan/spaceship-prompt.git

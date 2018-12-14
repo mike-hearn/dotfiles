@@ -357,13 +357,14 @@ endfunc
     " " Themes
     Plug 'chriskempson/base16-vim'
     Plug 'mike-hearn/base16-vim-lightline'
-    Plug 'ryanoasis/vim-devicons'
 
     " " Syntax & IDE plugins
     Plug 'sheerun/vim-polyglot'
     Plug 'fatih/vim-go', { 'for': 'go' }
     Plug 'jceb/vim-orgmode'
     Plug 'tpope/vim-speeddating', { 'for': 'org'}  " Required by orgmode
+    Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+    Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
 
     " " Linters/Formatters/Checkers
     Plug 'w0rp/ale'
@@ -400,10 +401,22 @@ endfunc
     Plug 'junegunn/vim-slash' " Un-highlights text if you navigate away from word
     Plug 'tpope/vim-sleuth' " Basically triggers :noh once you move your cursor off a highlighted word
     Plug 'tpope/vim-tbone'  " Adds tmux commands to vim, specifically copying into tmux clipboard
+    Plug 'Konfekt/FastFold' " Speeds up folding, supposedly
+    Plug 'ludovicchabant/vim-gutentags' " Automatically creates tags file
 
-    " " Completion
-    Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
-    Plug 'Shougo/denite.nvim'
+    " Completion
+    Plug 'autozimu/LanguageClient-neovim', {
+                \ 'branch': 'next',
+                \ 'do': 'bash install.sh',
+                \ }
+    Plug 'Shougo/echodoc.vim'
+    Plug 'ncm2/ncm2'
+    Plug 'roxma/nvim-yarp'
+    Plug 'ncm2/ncm2-bufword'
+    Plug 'ncm2/ncm2-tmux'
+    Plug 'ncm2/ncm2-path'
+    Plug 'ncm2/ncm2-ultisnips'
+    Plug 'ncm2/ncm2-tagprefix'
 
     call plug#end()
 
@@ -420,6 +433,7 @@ let g:ale_linters = {
             \   'go': ['go build'],
             \   'css': ['stylelint'],
             \   'scss': ['stylelint'],
+            \   'python': ['pylint']
             \}
 
 " ALEFix settings
@@ -500,6 +514,8 @@ hi Visual ctermbg=19
 
 autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 " }}}
+" {{{ coc.nvim
+" }}}
 " {{{ CtrlP
 " Mapping meta+p to its special character
 nmap <C-p> :Files<CR>
@@ -558,6 +574,9 @@ let g:gitgutter_sign_added = '┃'
 let g:gitgutter_sign_modified = '┃'
 let g:gitgutter_sign_removed = '┃'
 " }}}
+" {{{ Gutentags
+let g:gutentags_ctags_tagfile = '.git/tags'
+" }}}
 " {{{ Indentline
 let g:indentLine_color_term = 18
 let g:indentLine_char = '│'
@@ -577,30 +596,9 @@ let g:lightline = {
             \ 'colorscheme': csunderscores,
             \ }
 " }}}
-" {{{ NERDCommenter
-let g:NERDSpaceDelims=1
-" }}}
-" {{{ NERDTree
-let NERDTreeIgnore = [
-            \ 'node_modules',
-            \ '\.pyc$',
-            \ '__pycache__']
-
-let g:NERDTreeGitStatusIndicatorMap = {
-            \ 'Modified'  : '✹',
-            \ 'Staged'    : '✚',
-            \ 'Untracked' : '✭',
-            \ 'Renamed'   : '➜',
-            \ 'Unmerged'  : '═',
-            \ 'Deleted'   : '✖',
-            \ 'Dirty'     : '✗',
-            \ 'Clean'     : '✔︎',
-            \ 'Ignored'   : '',
-            \ 'Unknown'   : '?'
-            \ }
-" }}}
 " {{{ ncm2 (nvim-completion-manager)
-" TODO: Do I need these? Should they go somewhere else?
+autocmd BufEnter * call ncm2#enable_for_buffer()
+
 set completeopt=noinsert,menuone,noselect
 set shortmess+=c
 
@@ -629,16 +627,51 @@ endfunction
 inoremap <C-k> <esc>:call TemporarilySetPopupToZero()<CR>
 autocmd InsertLeave * let g:ncm2#complete_length=[[1,3],[7,2],[9,1]]
 " }}}
+" {{{ NERDCommenter
+let g:NERDSpaceDelims=1
+" }}}
+" {{{ NERDTree
+let NERDTreeIgnore = [
+            \ 'node_modules',
+            \ '\.pyc$',
+            \ '__pycache__']
+
+let g:NERDTreeGitStatusIndicatorMap = {
+            \ 'Modified'  : '✹',
+            \ 'Staged'    : '✚',
+            \ 'Untracked' : '✭',
+            \ 'Renamed'   : '➜',
+            \ 'Unmerged'  : '═',
+            \ 'Deleted'   : '✖',
+            \ 'Dirty'     : '✗',
+            \ 'Clean'     : '✔︎',
+            \ 'Ignored'   : '',
+            \ 'Unknown'   : '?'
+            \ }
+" }}}
 " {{{ nvim-language-client
 let g:LanguageClient_serverCommands = {
-    \ 'handlebars': ['html-languageserver', '--stdio'],
-    \ 'html': ['html-languageserver', '--stdio'],
-    \ 'html.handlebars': ['html-languageserver', '--stdio'],
-    \ 'scss': ['css-languageserver', '--stdio'],
-    \ 'sass': ['css-languageserver', '--stdio'],
-    \ 'css': ['css-languageserver', '--stdio'],
-    \ 'python': ['pyls'],
-    \ }
+            \ 'css': ['css-languageserver', '--stdio'],
+            \ 'handlebars': ['html-languageserver', '--stdio'],
+            \ 'html': ['html-languageserver', '--stdio'],
+            \ 'html.handlebars': ['html-languageserver', '--stdio'],
+            \ 'javascript': ['typescript-language-server', '--stdio'],
+            \ 'javascript.jsx': ['typescript-language-server', '--stdio'],
+            \ 'python': ['pyls'],
+            \ 'sass': ['css-languageserver', '--stdio'],
+            \ 'scss': ['css-languageserver', '--stdio'],
+            \ 'typescript': ['typescript-language-server', '--stdio'],
+            \ }
+
+function LC_maps()
+    if has_key(g:LanguageClient_serverCommands, &filetype)
+        nnoremap <buffer> <silent> K :call LanguageClient#textDocument_hover()<cr>
+        nnoremap <buffer> <silent> gd :call LanguageClient#textDocument_definition()<CR>
+        nnoremap <buffer> <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+    endif
+endfunction
+
+autocmd FileType * call LC_maps()
 " }}}
 " {{{ nvim-typescript
 let g:nvim_typescript#javascript_support = 1
@@ -758,76 +791,5 @@ autocmd FileType yaml setlocal foldmethod=indent
 " }}}
 
 " }}}
-
-" Use tab for trigger completion with characters ahead and navigate.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-" Use <c-space> for trigger completion.
-inoremap <silent><expr> <c-k> coc#refresh()
-
-" Use <C-x><C-o> to complete 'word', 'emoji' and 'include' sources
-imap <silent> <C-x><C-o> <Plug>(coc-complete-custom)
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-" Use <cr> for confirm completion.
-" Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-
-" Use `[c` and `]c` for navigate diagnostics
-nmap <silent> [c <Plug>(coc-diagnostic-prev)
-nmap <silent> ]c <Plug>(coc-diagnostic-next)
-
-" Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" Use K for show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-  if &filetype == 'vim'
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
-" Show signature help while editing
-autocmd CursorHoldI * silent! call CocAction('showSignatureHelp')
-
-" Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocAction('highlight')
-
-" Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
-
-" Use `:Format` for format current buffer
-command! -nargs=0 Format :call CocAction('format')
-
-" Use `:Fold` for fold current buffer
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-
-
-" Add diagnostic info for https://github.com/itchyny/lightline.vim
-let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'cocstatus': 'coc#status'
-      \ },
-      \ }
 
 " vim: foldmethod=marker: foldlevel=0

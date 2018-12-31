@@ -426,6 +426,8 @@ endfunction
 
     " " Syntax & IDE plugins
     Plug 'sheerun/vim-polyglot'
+    Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
+    Plug 'posva/vim-vue'
     Plug 'fatih/vim-go', { 'for': 'go' }
     Plug 'jceb/vim-orgmode'
     Plug 'tpope/vim-speeddating', { 'for': 'org'}  " Required by orgmode
@@ -475,7 +477,6 @@ endfunction
                 \ 'branch': 'next',
                 \ 'do': 'bash install.sh',
                 \ }
-    Plug 'Shougo/echodoc.vim'
     Plug 'ncm2/ncm2'
     Plug 'roxma/nvim-yarp'
     Plug 'ncm2/ncm2-bufword'
@@ -483,6 +484,7 @@ endfunction
     Plug 'ncm2/ncm2-path'
     Plug 'ncm2/ncm2-ultisnips'
     Plug 'ncm2/ncm2-tagprefix'
+    Plug 'ncm2/ncm2-jedi'
 
     call plug#end()
 
@@ -499,7 +501,8 @@ let g:ale_linters = {
             \   'go': ['go build'],
             \   'css': ['stylelint'],
             \   'scss': ['stylelint'],
-            \   'python': ['pylint']
+            \   'python': ['pylint'],
+            \   'vue': ['vls']
             \}
 
 " ALEFix settings
@@ -582,6 +585,7 @@ hi Visual ctermbg=19
 autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 " }}}
 " {{{ coc.nvim
+
 " }}}
 " {{{ CtrlP
 " Mapping meta+p to its special character

@@ -427,7 +427,7 @@ endfunction
     " " Syntax & IDE plugins
     Plug 'sheerun/vim-polyglot'
     Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
-    Plug 'posva/vim-vue'
+    Plug 'posva/vim-vue', {'for': 'vue'}
     Plug 'fatih/vim-go', { 'for': 'go' }
     Plug 'jceb/vim-orgmode'
     Plug 'tpope/vim-speeddating', { 'for': 'org'}  " Required by orgmode
@@ -485,6 +485,7 @@ endfunction
     Plug 'ncm2/ncm2-ultisnips'
     Plug 'ncm2/ncm2-tagprefix'
     Plug 'ncm2/ncm2-jedi'
+    Plug 'ncm2/ncm2-vim' | Plug 'Shougo/neco-vim'
 
     call plug#end()
 

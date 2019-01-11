@@ -426,7 +426,6 @@ endfunction
 
     " " Syntax & IDE plugins
     Plug 'sheerun/vim-polyglot'
-    Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
     Plug 'posva/vim-vue'
     Plug 'fatih/vim-go', { 'for': 'go' }
     Plug 'jceb/vim-orgmode'
@@ -473,18 +472,7 @@ endfunction
     Plug 'ludovicchabant/vim-gutentags' " Automatically creates tags file
 
     " Completion
-    Plug 'autozimu/LanguageClient-neovim', {
-                \ 'branch': 'next',
-                \ 'do': 'bash install.sh',
-                \ }
-    Plug 'ncm2/ncm2'
-    Plug 'roxma/nvim-yarp'
-    Plug 'ncm2/ncm2-bufword'
-    Plug 'ncm2/ncm2-tmux'
-    Plug 'ncm2/ncm2-path'
-    Plug 'ncm2/ncm2-ultisnips'
-    Plug 'ncm2/ncm2-tagprefix'
-    Plug 'ncm2/ncm2-jedi'
+    Plug 'Valloric/YouCompleteMe', { 'do': './install.py --all' }
 
     call plug#end()
 
@@ -636,35 +624,35 @@ let g:lightline = {
             \ }
 " }}}
 " {{{ ncm2 (nvim-completion-manager)
-autocmd BufEnter * call ncm2#enable_for_buffer()
-
-set completeopt=noinsert,menuone,noselect
-set shortmess+=c
-
-" autocmd TextChangedI * call ncm2#auto_trigger()
 " autocmd BufEnter * call ncm2#enable_for_buffer()
 
-inoremap <c-c> <ESC>
-inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+" set completeopt=noinsert,menuone,noselect
+" set shortmess+=c
+
+" " autocmd TextChangedI * call ncm2#auto_trigger()
+" " autocmd BufEnter * call ncm2#enable_for_buffer()
+
+" inoremap <c-c> <ESC>
+" inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 
 
-" This function, paired with the below mapping, make C-n load all high priority
-" (priority 9) completions before any characters are typed. The autocmd
-" InsertLeave command then returns the popup back to 1 character.
-let g:ncm2#complete_length=[[1,3],[7,2],[9,1]]
-function! TemporarilySetPopupToZero()
-    let g:ncm2#complete_length=[[1,3],[7,2],[9,0]]
-    if len(getline('.')) == 0
-        execute "normal \"_ddk"
-        call feedkeys('o', 'n')
-    else
-        call feedkeys('a', 'n')
-    endif
-endfunction
-inoremap <C-k> <esc>:call TemporarilySetPopupToZero()<CR>
-autocmd InsertLeave * let g:ncm2#complete_length=[[1,3],[7,2],[9,1]]
+" " This function, paired with the below mapping, make C-n load all high priority
+" " (priority 9) completions before any characters are typed. The autocmd
+" " InsertLeave command then returns the popup back to 1 character.
+" let g:ncm2#complete_length=[[1,3],[7,2],[9,1]]
+" function! TemporarilySetPopupToZero()
+"     let g:ncm2#complete_length=[[1,3],[7,2],[9,0]]
+"     if len(getline('.')) == 0
+"         execute "normal \"_ddk"
+"         call feedkeys('o', 'n')
+"     else
+"         call feedkeys('a', 'n')
+"     endif
+" endfunction
+" inoremap <C-k> <esc>:call TemporarilySetPopupToZero()<CR>
+" autocmd InsertLeave * let g:ncm2#complete_length=[[1,3],[7,2],[9,1]]
 " }}}
 " {{{ NERDCommenter
 let g:NERDSpaceDelims=1
@@ -712,9 +700,6 @@ function LC_maps()
 endfunction
 
 autocmd FileType * call LC_maps()
-" }}}
-" {{{ nvim-typescript
-let g:nvim_typescript#javascript_support = 1
 " }}}
 " {{{ org-mode
 let g:org_agenda_files = ['~/Dropbox/org/*.org']
@@ -775,6 +760,12 @@ nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
 nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
 nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
 nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
+" }}}
+" {{{ YouCompleteMe (ycm)
+let g:ycm_key_invoke_completion = '<C-k>'
+let g:ycm_semantic_triggers =  {
+            \   'python': ['re!^.*import\s'],
+            \ }
 " }}}
 
 " }}}

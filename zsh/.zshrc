@@ -16,6 +16,7 @@ plugins=(
   git
   npm
   nvmfast
+  pyenv
   ssh-agent
   vi-mode
   yarn
@@ -58,3 +59,4 @@ SPACESHIP_PACKAGE_SHOW=false
 SPACESHIP_VI_MODE_SHOW=false
 
 
+fpath=($fpath "/home/mikehearn/.zfunctions")

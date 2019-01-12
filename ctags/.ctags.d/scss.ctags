@@ -1,0 +1,27 @@
+--langdef=SCSS
+--langmap=SCSS:.scss
+
+--exclude=min
+--exclude=vendor
+--exclude=\*.min.\*
+--exclude=\*.map
+--exclude=\*.swp
+--exclude=\*.bak
+--exclude=tags
+--exclude=node_modules
+--exclude=bower_components
+--exclude=test
+--exclude=tests
+--exclude=tmp
+--exclude=vendor
+--exclude=dist
+--exclude=package*.json
+
+--regex-SCSS=/^[ \t]*\.([A-Za-z0-9_-]+)/.\1/c,class,classes/
+--regex-SCSS=/^[ \t]*\.([A-Za-z0-9_-]+)/\1/c,class,classes/
+--regex-SCSS=/^[ \t]*#([A-Za-z0-9_-]+)/#\1/i,id,ids/
+--regex-SCSS=/^[ \t]*(([A-Za-z0-9_-]+[ \t\n,]+)+)\{/\1/t,tag,tags/
+--regex-SCSS=/^[ \t]*@media\s+([A-Za-z0-9_-]+)/\1/m,media,medias/
+--regex-SCSS=/^[ \t]*\$([A-Za-z0-9_-]+)/\1/v,var,variables/
+--regex-SCSS=/^[ \t]*@mixin\s+([A-Za-z0-9_-]+)/\1/x,mixin,mixins/
+

@@ -472,7 +472,7 @@ endfunction
     Plug 'ludovicchabant/vim-gutentags' " Automatically creates tags file
 
     " Completion
-    Plug 'Valloric/YouCompleteMe', { 'do': './install.py --all' }
+    Plug 'Valloric/YouCompleteMe', { 'do': './install.py --go-completer --ts-completer' }
 
     call plug#end()
 
@@ -603,6 +603,7 @@ let g:gitgutter_sign_removed = '┃'
 " }}}
 " {{{ Gutentags
 let g:gutentags_ctags_tagfile = '.git/tags'
+let g:gutentags_ctags_extra_args = ['--fields=+l', '--tag-relative=yes']
 " }}}
 " {{{ Indentline
 let g:indentLine_color_term = 18
@@ -611,7 +612,6 @@ let g:indentLine_char = '│'
 " {{{ jedi
 let g:jedi#popup_select_first = 0
 let g:jedi#use_tabs_not_buffers = 0
-let g:jedi#goto_command = "<C-]>"
 let g:jedi#usages_command = ""
 let g:jedi#completions_enabled = 0
 
@@ -763,8 +763,12 @@ nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
 " }}}
 " {{{ YouCompleteMe (ycm)
 let g:ycm_key_invoke_completion = '<C-k>'
+let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_semantic_triggers =  {
             \   'python': ['re!^.*import\s'],
+            \   'go': ['re!...'],
+            \   'css': ['re!  .', ': '],
+            \   'scss': ['re!  .', ': '],
             \ }
 " }}}
 
@@ -831,7 +835,6 @@ autocmd FileType handlebars,html,html.handlebars setlocal foldmethod=indent
 " {{{ Javascript/JSX
 autocmd FileType html.handlebars setlocal foldmethod=indent
 autocmd FileType javascript,javascript.jsx,json setlocal foldmethod=syntax
-autocmd FileType javascript,javascript.jsx,json map <buffer> <c-]> m':TSDef<CR>
 autocmd FileType javascript,javascript.jsx,json nnoremap <buffer> <leader>b odebugger;<esc>k
 autocmd FileType javascript,javascript.jsx,json nnoremap <buffer> <leader>B Odebugger;<esc>j
 " }}}

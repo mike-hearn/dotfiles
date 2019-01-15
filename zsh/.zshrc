@@ -13,6 +13,7 @@ plugins=(
   django
   docker
   docker-compose
+  fzf
   git
   npm
   nvmfast

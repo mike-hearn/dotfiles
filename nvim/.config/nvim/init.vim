@@ -456,7 +456,7 @@ endfunction
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  } " Installs fzf if not already installed
     Plug 'junegunn/fzf.vim' " My favorite fuzzy search
     Plug 'tpope/vim-obsession' " Remember vim session state
-    Plug 'christoomey/vim-tmux-navigator', { 'branch': 'indicator' } " Treats vim splits as tmux panes, allowing same shortcuts
+    Plug 'christoomey/vim-tmux-navigator' " Treats vim splits as tmux panes, allowing same shortcuts
     Plug 'jiangmiao/auto-pairs' " Completes the pair for ( and { and [ etc
     Plug 'tmux-plugins/vim-tmux-focus-events' " For auto-reloading on focus
     Plug 'mattn/emmet-vim' " Shortcuts to quickly scaffold html

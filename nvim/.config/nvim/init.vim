@@ -1,5 +1,6 @@
 " Initial load config {{{ ·····················································
 
+
 " Install vim-plug on first load
 if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
     silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
@@ -472,7 +473,10 @@ endfunction
     Plug 'ludovicchabant/vim-gutentags' " Automatically creates tags file
 
     " Completion
-    Plug 'Valloric/YouCompleteMe', { 'do': './install.py --go-completer --ts-completer' }
+    Plug 'Shougo/neco-vim'
+    Plug 'neoclide/coc-neco'
+    Plug 'neoclide/coc.nvim', {'tag': '*', 'do': 'yarn install', 'for': ['json', 'lua', 'vim', 'vue']}
+    Plug 'Valloric/YouCompleteMe', { 'do': './install.py --go-completer --ts-completer'}
 
     call plug#end()
 
@@ -540,7 +544,28 @@ endtry
 
 autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 " }}}
-" {{{ coc.nvim
+" {{{ Completion (YouCompleteMe/ycm, coc.nvim, ncm2)
+
+" YouCompleteMe
+let g:ycm_key_invoke_completion = '<C-k>'
+let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_semantic_triggers =  {
+            \   'python': ['re!^.*import\s'],
+            \   'go': ['re!...'],
+            \   'css': ['re!  .', ': '],
+            \   'scss': ['re!  .', ': '],
+            \ }
+let g:ycm_filetype_blacklist = {
+            \ 'json': 1,
+            \ 'lua': 1,
+            \ 'vim': 1,
+            \ 'vue': 1,
+            \ }
+
+" coc.nvim run on vim, lua files
+autocmd InsertEnter *.json,*.vim,*.lua,*.vue execute "silent! CocEnable"
+autocmd InsertLeave *.json,*.vim,*.lua,*.vue execute "silent! CocDisable"
+inoremap <c-c> <ESC>
 
 " }}}
 " {{{ CtrlP
@@ -761,16 +786,6 @@ nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
 nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
 nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
 " }}}
-" {{{ YouCompleteMe (ycm)
-let g:ycm_key_invoke_completion = '<C-k>'
-let g:ycm_collect_identifiers_from_tags_files = 1
-let g:ycm_semantic_triggers =  {
-            \   'python': ['re!^.*import\s'],
-            \   'go': ['re!...'],
-            \   'css': ['re!  .', ': '],
-            \   'scss': ['re!  .', ': '],
-            \ }
-" }}}
 
 " }}}
 
@@ -861,4 +876,4 @@ autocmd FileType yaml setlocal foldmethod=indent
 
 " }}}
 
-" vim: foldmethod=marker: foldlevel=0
+" vim: foldmethod=marker: foldlevel=0: foldenable

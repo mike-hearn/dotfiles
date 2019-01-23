@@ -3,5 +3,11 @@
   "coc.preferences.diagnostic.warningSign": "·",
   "coc.preferences.diagnostic.errorSign": "✖",
   "coc.preferences.diagnostic.hintSign": "·",
-  "coc.preferences.diagnostic.infoSign": "·"
+  "coc.preferences.diagnostic.infoSign": "·",
+  "languageserver": {
+    "lua": {
+      "command": "lua-lsp",
+      "filetypes": ["lua"]
+    }
+  }
 }

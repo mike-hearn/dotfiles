@@ -13,6 +13,8 @@ stow -t $HOME base16
 stow -t $HOME ctags
 stow -t $HOME editorconfig
 stow -t $HOME git
+stow -t $HOME hammerspoon
+stow -t $HOME karabiner
 stow -t $HOME kitty
 stow -t $HOME node
 stow -t $HOME nvim

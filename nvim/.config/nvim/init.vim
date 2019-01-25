@@ -183,6 +183,29 @@ vnoremap <leader>f y:Ag <C-R>0<CR>
 " C-i now incremeents, because C-a is tmux prefix
 nmap <leader>i <C-a>
 
+" Map c-] to go to definition
+function! GoToDefinition()
+    let l:originalpos = getpos('.')
+    let l:newlinepos = getpos('.')
+
+    if l:originalpos == l:newlinepos
+        silent execute "YcmCompleter GoTo"
+        let l:newlinepos = getpos('.')
+    endif
+
+    if l:originalpos == l:newlinepos
+        silent execute "normal \<Plug>(coc-definition)"
+        let l:newlinepos = getpos('.')
+    endif
+
+    if l:originalpos == l:newlinepos
+        silent execute "normal! g\<c-]>"
+        let l:newlinepos = getpos('.')
+    endif
+endfunction
+nnoremap <silent> <c-]> :call GoToDefinition()<CR>
+
+
 " }}}
 
 " {{{ Functions ·······························································

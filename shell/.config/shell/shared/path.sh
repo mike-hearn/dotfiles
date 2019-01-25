@@ -33,6 +33,8 @@ ADDPATH="$HOME/Library/Python/3.7/bin" \
     && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
 ADDPATH="$HOME/.pyenv/shims" \
     && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
+ADDPATH="$HOME/.poetry/bin" \
+    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
 
 # Rustup support
 ADDPATH="$HOME/.cargo/bin" \

@@ -576,7 +576,7 @@ autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 let g:ycm_key_invoke_completion = '<C-k>'
 let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_semantic_triggers =  {
-            \   'python': ['re!^.*import\s'],
+            \   'python': ['re!^.*import\s', 're!^.*import\s\w*,\s'],
             \   'go': ['re!...'],
             \   'css': ['re!  .', ': '],
             \   'scss': ['re!  .', ': '],

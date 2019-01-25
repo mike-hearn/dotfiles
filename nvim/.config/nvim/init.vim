@@ -189,18 +189,22 @@ function! GoToDefinition()
     let l:newlinepos = getpos('.')
 
     if l:originalpos == l:newlinepos
-        silent execute "YcmCompleter GoTo"
+        silent! execute "YcmCompleter GoTo"
         let l:newlinepos = getpos('.')
     endif
 
     if l:originalpos == l:newlinepos
-        silent execute "normal \<Plug>(coc-definition)"
+        silent! call CocActionAsync('jumpDefinition')
         let l:newlinepos = getpos('.')
     endif
 
     if l:originalpos == l:newlinepos
-        silent execute "normal! g\<c-]>"
+        silent! execute "normal g\<c-]>"
         let l:newlinepos = getpos('.')
+    endif
+
+    if l:originalpos == l:newlinepos
+        echo "No definition found."
     endif
 endfunction
 nnoremap <silent> <c-]> :call GoToDefinition()<CR>
@@ -499,7 +503,13 @@ endfunction
     " Completion
     Plug 'Shougo/neco-vim'
     Plug 'neoclide/coc-neco'
-    Plug 'neoclide/coc.nvim', {'tag': '*', 'do': 'yarn install', 'for': ['json', 'lua', 'vim', 'vue']}
+    Plug 'neoclide/coc.nvim', {'tag': '*', 'do': 'yarn install', 'for': [
+                \ 'json',
+                \ 'html',
+                \ 'lua',
+                \ 'vim',
+                \ 'vue',
+                \]}
     Plug 'Valloric/YouCompleteMe', { 'do': './install.py --go-completer --ts-completer'}
 
     call plug#end()
@@ -583,14 +593,15 @@ let g:ycm_semantic_triggers =  {
             \ }
 let g:ycm_filetype_blacklist = {
             \ 'json': 1,
+            \ 'html': 1,
             \ 'lua': 1,
             \ 'vim': 1,
             \ 'vue': 1,
             \ }
 
 " coc.nvim run on vim, lua files
-autocmd InsertEnter *.json,*.vim,*.lua,*.vue execute "silent! CocEnable"
-autocmd InsertLeave *.json,*.vim,*.lua,*.vue execute "silent! CocDisable"
+autocmd InsertEnter *.html,*.json,*.lua,*.vim,*.vue execute "silent! CocEnable"
+autocmd InsertLeave *.html,*.json,*.lua,*.vim,*.vue execute "silent! CocDisable"
 inoremap <c-c> <ESC>
 
 " }}}

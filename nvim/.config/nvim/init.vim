@@ -523,7 +523,8 @@ let g:ale_linters = {
 " ALEFix settings
 let g:ale_fixers = {
             \   'javascript': ['eslint', 'prettier'],
-            \   'html': ['tidy'],
+            \   'html.handlebars': ['prettier'],
+            \   'html': ['prettier'],
             \   'go': ['gofmt'],
             \   'css': ['stylelint', 'prettier'],
             \   'scss': ['stylelint', 'prettier', 'remove_trailing_lines'],
@@ -532,6 +533,7 @@ let g:ale_fixers = {
             \}
 
 let g:ale_python_black_options = '--line-length=80'
+autocmd FileType html.handlebars let b:ale_javascript_prettier_options = '--parser=glimmer'
 
 let g:jsx_ext_required = 0
 " }}}

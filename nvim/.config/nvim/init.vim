@@ -452,6 +452,7 @@ endfunction
     Plug 'sheerun/vim-polyglot'
     Plug 'posva/vim-vue', {'for': 'vue'}
     Plug 'fatih/vim-go', { 'for': 'go' }
+    Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
     Plug 'jceb/vim-orgmode'
     Plug 'tpope/vim-speeddating', { 'for': 'org'}  " Required by orgmode
     Plug 'davidhalter/jedi-vim', { 'for': 'python' }

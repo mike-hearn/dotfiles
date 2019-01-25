@@ -726,31 +726,6 @@ let g:NERDTreeGitStatusIndicatorMap = {
             \ 'Unknown'   : '?'
             \ }
 " }}}
-" {{{ nvim-language-client
-let g:LanguageClient_serverCommands = {
-            \ 'css': ['css-languageserver', '--stdio'],
-            \ 'handlebars': ['html-languageserver', '--stdio'],
-            \ 'html': ['html-languageserver', '--stdio'],
-            \ 'html.handlebars': ['html-languageserver', '--stdio'],
-            \ 'javascript': ['typescript-language-server', '--stdio'],
-            \ 'javascript.jsx': ['typescript-language-server', '--stdio'],
-            \ 'python': ['pyls'],
-            \ 'sass': ['css-languageserver', '--stdio'],
-            \ 'scss': ['css-languageserver', '--stdio'],
-            \ 'typescript': ['typescript-language-server', '--stdio'],
-            \ 'vue': ['vls'],
-            \ }
-
-function LC_maps()
-    if has_key(g:LanguageClient_serverCommands, &filetype)
-        nnoremap <buffer> <silent> K :call LanguageClient#textDocument_hover()<cr>
-        nnoremap <buffer> <silent> gd :call LanguageClient#textDocument_definition()<CR>
-        nnoremap <buffer> <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
-    endif
-endfunction
-
-autocmd FileType * call LC_maps()
-" }}}
 " {{{ org-mode
 let g:org_agenda_files = ['~/Dropbox/org/*.org']
 " }}}

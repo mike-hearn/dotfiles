@@ -448,11 +448,11 @@ endfunction
     " Start with sensible defaults
     Plug 'tpope/vim-sensible'
 
-    " " Themes
+    " Themes
     Plug 'chriskempson/base16-vim'
     Plug 'mike-hearn/base16-vim-lightline'
 
-    " " Syntax & IDE plugins
+    " Syntax & IDE plugins
     Plug 'sheerun/vim-polyglot'
     Plug 'posva/vim-vue', {'for': 'vue'}
     Plug 'fatih/vim-go', { 'for': 'go' }
@@ -461,17 +461,17 @@ endfunction
     Plug 'tpope/vim-speeddating', { 'for': 'org'}  " Required by orgmode
     Plug 'davidhalter/jedi-vim', { 'for': 'python' }
     Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
+    Plug 'ekalinin/Dockerfile.vim', { 'for': ['Dockerfile', 'docker-compose'] }
 
-    " " Linters/Formatters/Checkers
+    " Linters/Formatters/Checkers
     Plug 'w0rp/ale'
     Plug 'prettier/vim-prettier', {'do': 'yarn install'}
 
-    " " IDE & Productivity Features
+    " IDE & Productivity Features
     Plug 'itchyny/lightline.vim' " Lightweight powerline-esque bar at bottom of window
     Plug 'ap/vim-buftabline' " List buffers at top of vim window
     Plug 'tpope/vim-commentary' " Comment stuff out with gcc
     Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] } " Sidebar file explorer (c+\)
-    Plug 'Xuyuanp/nerdtree-git-plugin' " Show file git status in nerdtree
     Plug 'tpope/vim-fugitive' " Git management within vim
     Plug 'tpope/vim-unimpaired' " Key bindings for vim-fugitive
     Plug 'tpope/vim-repeat' " Repeatable events from plugins
@@ -499,17 +499,13 @@ endfunction
     Plug 'tpope/vim-tbone'  " Adds tmux commands to vim, specifically copying into tmux clipboard
     Plug 'Konfekt/FastFold' " Speeds up folding, supposedly
     Plug 'ludovicchabant/vim-gutentags' " Automatically creates tags file
+    Plug 'ryanoasis/vim-devicons'
+    Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
     " Completion
     Plug 'Shougo/neco-vim'
     Plug 'neoclide/coc-neco'
-    Plug 'neoclide/coc.nvim', {'tag': '*', 'do': 'yarn install', 'for': [
-                \ 'json',
-                \ 'html',
-                \ 'lua',
-                \ 'vim',
-                \ 'vue',
-                \]}
+    Plug 'neoclide/coc.nvim', {'tag': '*', 'do': 'yarn install', 'on': 'CocEnable'}
     Plug 'Valloric/YouCompleteMe', { 'do': './install.py --go-completer --ts-completer'}
 
     call plug#end()
@@ -534,6 +530,7 @@ let g:ale_linters = {
 " ALEFix settings
 let g:ale_fixers = {
             \   'javascript': ['eslint', 'prettier'],
+            \   'json': ['prettier'],
             \   'html.handlebars': ['prettier'],
             \   'html': ['prettier'],
             \   'go': ['gofmt'],
@@ -591,18 +588,18 @@ let g:ycm_semantic_triggers =  {
             \   'css': ['re!  .', ': '],
             \   'scss': ['re!  .', ': '],
             \ }
-let g:ycm_filetype_blacklist = {
-            \ 'json': 1,
-            \ 'html': 1,
-            \ 'lua': 1,
-            \ 'vim': 1,
-            \ 'vue': 1,
-            \ }
 
-" coc.nvim run on vim, lua files
-autocmd InsertEnter *.html,*.json,*.lua,*.vim,*.vue execute "silent! CocEnable"
-autocmd InsertLeave *.html,*.json,*.lua,*.vim,*.vue execute "silent! CocDisable"
-inoremap <c-c> <ESC>
+" coc.nvim run only on certain files
+let g:coc_whitelisted_files = '*.html,*.json,*.lua,*.vim,*.vue,Dockerfile'
+
+let g:ycm_filetype_blacklist = {}
+for f in split(g:coc_whitelisted_files, '\*\W*\|,\W*')
+    let g:ycm_filetype_blacklist[f] = 1
+endfor
+execute 'autocmd BufNew,BufEnter '. g:coc_whitelisted_files. ' execute "silent! CocEnable"'
+execute 'autocmd InsertEnter     '. g:coc_whitelisted_files. ' execute "silent! CocEnable"'
+execute 'autocmd BufLeave        '. g:coc_whitelisted_files. ' execute "silent! CocDisable"'
+execute 'autocmd BufNew,BufEnter '. g:coc_whitelisted_files. ' inoremap <silent><buffer><expr> <C-k> coc#refresh()'
 
 " }}}
 " {{{ CtrlP
@@ -610,6 +607,11 @@ inoremap <c-c> <ESC>
 nmap <C-p> :Files<CR>
 nmap <Leader>s :Buffers<CR>
 nmap <Leader>f :FilesFromVimHistory<CR>
+" }}}
+" {{{ devicons
+let g:webdevicons_enable_nerdtree = 1
+let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+let g:WebDevIconsNerdTreeBeforeGlyphPadding = ''
 " }}}
 " {{{ EasyMotion
 map s <Plug>(easymotion-s)
@@ -818,7 +820,7 @@ hi DiffChange ctermbg=0
 hi DiffDelete ctermbg=0
 hi DiffText ctermbg=0
 hi FoldColumn ctermbg=0 ctermfg=white
-hi Folded ctermbg=0 ctermfg=21
+hi Folded ctermbg=0 ctermfg=20
 hi GitGutterAdd ctermbg=0
 hi GitGutterChange ctermbg=0
 hi GitGutterChangeDelete ctermbg=0
@@ -887,5 +889,6 @@ autocmd FileType yaml setlocal foldmethod=indent
 " }}}
 
 " }}}
+
 
 " vim: foldmethod=marker: foldlevel=0: foldenable

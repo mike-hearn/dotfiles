@@ -1,13 +1,20 @@
 {
   "coc.preferences.diagnostic.enable": true,
-  "coc.preferences.diagnostic.warningSign": "·",
   "coc.preferences.diagnostic.errorSign": "✖",
   "coc.preferences.diagnostic.hintSign": "·",
   "coc.preferences.diagnostic.infoSign": "·",
+  "coc.preferences.diagnostic.warningSign": "·",
+  "coc.source.ultisnips.priority": 5,
+  "coc.preferences.snippetIndicator": "",
   "languageserver": {
     "lua": {
       "command": "lua-lsp",
       "filetypes": ["lua"]
+    },
+    "dockerfile": {
+      "command": "docker-langserver",
+      "filetypes": ["Dockerfile"],
+      "args": ["--stdio"]
     }
   }
 }

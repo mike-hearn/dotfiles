@@ -602,12 +602,6 @@ execute 'autocmd BufLeave        '. g:coc_whitelisted_files. ' execute "silent! 
 execute 'autocmd BufNew,BufEnter '. g:coc_whitelisted_files. ' inoremap <silent><buffer><expr> <C-k> coc#refresh()'
 
 " }}}
-" {{{ CtrlP
-" Mapping meta+p to its special character
-nmap <C-p> :Files<CR>
-nmap <Leader>s :Buffers<CR>
-nmap <Leader>f :FilesFromVimHistory<CR>
-" }}}
 " {{{ devicons
 let g:webdevicons_enable_nerdtree = 1
 let g:WebDevIconsUnicodeDecorateFolderNodes = 1
@@ -627,6 +621,12 @@ nmap <leader>gr :Gread<cr>
 nmap <leader>gcc :Gwrite<cr>:Gcommit<cr>I
 " }}}
 " {{{ fzf
+
+" Mappings
+nmap <silent> <C-p> :call FZFWithDevIcons()<CR>
+nmap <Leader>s :Buffers<CR>
+nmap <Leader>f :FilesFromVimHistory<CR>
+
 let g:fzf_files_options =
             \ '--preview "(highlight -O ansi {} || cat {}) 2> /dev/null | head -'.&lines.'"'
 
@@ -658,6 +658,48 @@ else
     command! -bang -nargs=* FilesFromVimHistory
                 \ call fzf#vim#grep('tail -r ~/.vim_history | cat -n | sort -uk2 | sort -nk1 | cut -f2- | sed "s/$/:1/"', 0)
 endif
+
+function! FZFWithDevIcons()
+  let l:fzf_files_options = ' -m --bind ctrl-d:preview-page-down,ctrl-u:preview-page-up --preview "bat --color always --style numbers {2..}"'
+
+  function! s:files()
+    let l:files = split(system($FZF_DEFAULT_COMMAND), '\n')
+    return s:prepend_icon(l:files)
+  endfunction
+
+  function! s:prepend_icon(candidates)
+    let result = []
+    for candidate in a:candidates
+      let filename = fnamemodify(candidate, ':p:t')
+      let icon = WebDevIconsGetFileTypeSymbol(filename, isdirectory(filename))
+      call add(result, printf("%s %s", icon, candidate))
+    endfor
+
+    return result
+  endfunction
+
+  function! s:edit_file(items)
+    let items = a:items
+    let i = 1
+    let ln = len(items)
+    while i < ln
+      let item = items[i]
+      let parts = split(item, ' ')
+      let file_path = get(parts, 1, '')
+      let items[i] = file_path
+      let i += 1
+    endwhile
+    call s:Sink(items)
+  endfunction
+
+  let opts = fzf#wrap({})
+  let opts.source = <sid>files()
+  let s:Sink = opts['sink*']
+  let opts['sink*'] = function('s:edit_file')
+  let opts.options .= l:fzf_files_options
+  call fzf#run(opts)
+
+endfunction
 " }}}
 " {{{ Gitgutter
 let g:gitgutter_max_signs = 1500
@@ -722,6 +764,7 @@ let g:lightline = {
 let g:NERDSpaceDelims=1
 " }}}
 " {{{ NERDTree
+let NERDTreeMinimalUI = 1
 let NERDTreeIgnore = [
             \ 'node_modules',
             \ '\.pyc$',
@@ -826,6 +869,7 @@ hi GitGutterChange ctermbg=0
 hi GitGutterChangeDelete ctermbg=0
 hi GitGutterDelete ctermbg=0
 hi LineNr ctermbg=0
+hi NonText ctermfg=bg
 hi Pmenu ctermbg=18
 hi PmenuSel ctermfg=0 ctermbg=7
 hi QuickFixLine ctermbg=19
@@ -889,6 +933,5 @@ autocmd FileType yaml setlocal foldmethod=indent
 " }}}
 
 " }}}
-
 
 " vim: foldmethod=marker: foldlevel=0: foldenable

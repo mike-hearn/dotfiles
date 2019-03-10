@@ -63,9 +63,9 @@ set undoreload=10000            " Load last 10,000 changes?
 set wildmenu                    " Visual autocomplete for command menu
 
 " Set python to homebrew version
-let homebrew_prefix=systemlist("brew --prefix")[0]
-let g:python_host_prog=homebrew_prefix . "/bin/python"
-let g:python3_host_prog=homebrew_prefix . "/bin/python3"
+" let homebrew_prefix=systemlist("brew --prefix")[0]
+" let g:python_host_prog=homebrew_prefix . "/bin/python"
+" let g:python3_host_prog=homebrew_prefix . "/bin/python3"
 
 " ========================================================================= }}}
 
@@ -190,6 +190,11 @@ function! GoToDefinition()
 
     if l:originalpos == l:newlinepos
         silent! execute "YcmCompleter GoTo"
+        let l:newlinepos = getpos('.')
+    endif
+
+    if l:originalpos == l:newlinepos
+        silent! call jedi#goto_assignments()
         let l:newlinepos = getpos('.')
     endif
 
@@ -453,15 +458,14 @@ endfunction
     Plug 'mike-hearn/base16-vim-lightline'
 
     " Syntax & IDE plugins
-    Plug 'sheerun/vim-polyglot'
     Plug 'posva/vim-vue', {'for': 'vue'}
-    Plug 'fatih/vim-go', { 'for': 'go' }
-    Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
+    Plug 'fatih/vim-go'
     Plug 'jceb/vim-orgmode'
     Plug 'tpope/vim-speeddating', { 'for': 'org'}  " Required by orgmode
     Plug 'davidhalter/jedi-vim', { 'for': 'python' }
     Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
     Plug 'ekalinin/Dockerfile.vim', { 'for': ['Dockerfile', 'docker-compose'] }
+    Plug 'sheerun/vim-polyglot' " Multi-language pack
 
     " Linters/Formatters/Checkers
     Plug 'w0rp/ale'
@@ -506,7 +510,17 @@ endfunction
     Plug 'Shougo/neco-vim'
     Plug 'neoclide/coc-neco'
     Plug 'neoclide/coc.nvim', {'tag': '*', 'do': 'yarn install', 'on': 'CocEnable'}
-    Plug 'Valloric/YouCompleteMe', { 'do': './install.py --go-completer --ts-completer'}
+    Plug 'roxma/nvim-yarp'
+    Plug 'ncm2/ncm2'
+    Plug 'ncm2/ncm2-bufword'
+    Plug 'ncm2/ncm2-cssomni'
+    Plug 'ncm2/ncm2-go'
+    Plug 'ncm2/ncm2-jedi'
+    Plug 'ncm2/ncm2-path'
+    Plug 'ncm2/ncm2-syntax' | Plug 'Shougo/neco-syntax'
+    Plug 'ncm2/ncm2-tagprefix'
+    Plug 'ncm2/ncm2-tmux'
+    Plug 'ncm2/ncm2-ultisnips'
 
     call plug#end()
 
@@ -577,29 +591,43 @@ endtry
 
 autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 " }}}
-" {{{ Completion (YouCompleteMe/ycm, coc.nvim, ncm2)
+" {{{ Completion (coc.nvim, ncm2)
 
-" YouCompleteMe
-let g:ycm_key_invoke_completion = '<C-k>'
-let g:ycm_collect_identifiers_from_tags_files = 1
-let g:ycm_semantic_triggers =  {
-            \   'python': ['re!^.*import\s', 're!^.*import\s\w*,\s'],
-            \   'go': ['re!...'],
-            \   'css': ['re!  .', ': '],
-            \   'scss': ['re!  .', ': '],
-            \ }
+let g:ncm2#matcher = 'substrfuzzy'
+let g:ncm2_filetype_whitelist = ['python', 'scss', 'css', 'go']
 
-" coc.nvim run only on certain files
-let g:coc_whitelisted_files = '*.html,*.json,*.lua,*.vim,*.vue,Dockerfile'
+function EnableCompletion()
+    let my_filetype = &ft
 
-let g:ycm_filetype_blacklist = {}
-for f in split(g:coc_whitelisted_files, '\*\W*\|,\W*')
-    let g:ycm_filetype_blacklist[f] = 1
-endfor
-execute 'autocmd BufNew,BufEnter '. g:coc_whitelisted_files. ' execute "silent! CocEnable"'
-execute 'autocmd InsertEnter     '. g:coc_whitelisted_files. ' execute "silent! CocEnable"'
-execute 'autocmd BufLeave        '. g:coc_whitelisted_files. ' execute "silent! CocDisable"'
-execute 'autocmd BufNew,BufEnter '. g:coc_whitelisted_files. ' inoremap <silent><buffer><expr> <C-k> coc#refresh()'
+    " Use ncm2
+    if index(g:ncm2_filetype_whitelist, my_filetype) > -1
+        silent! CocDisable
+
+        call ncm2#enable_for_buffer()
+        inoremap <buffer><expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+        inoremap <buffer><expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+        inoremap <buffer><expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+        inoremap <silent><buffer> <c-k> <c-r>=ncm2#force_trigger()<cr>
+
+    " Use coc
+    else
+        silent! CocEnable
+        inoremap <silent><buffer><expr> <c-k> coc#refresh()
+        inoremap <silent><buffer><expr> <TAB>
+                    \ pumvisible() ? "\<C-n>" :
+                    \ <SID>check_back_space() ? "\<TAB>" :
+                    \ coc#refresh()
+        inoremap <buffer><expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+        inoremap <buffer><expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+        function! s:check_back_space() abort
+            let col = col('.') - 1
+            return !col || getline('.')[col - 1]  =~# '\s'
+        endfunction
+
+    endif
+endfunction
+autocmd VimEnter,BufNew,BufEnter * call EnableCompletion()
 
 " }}}
 " {{{ devicons
@@ -732,33 +760,28 @@ let g:lightline = {
 " {{{ ncm2 (nvim-completion-manager)
 " autocmd BufEnter * call ncm2#enable_for_buffer()
 
-" set completeopt=noinsert,menuone,noselect
-" set shortmess+=c
+set completeopt=noinsert,menuone,noselect
+set shortmess+=c
 
-" " autocmd TextChangedI * call ncm2#auto_trigger()
-" " autocmd BufEnter * call ncm2#enable_for_buffer()
-
-" inoremap <c-c> <ESC>
-" inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
-" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+" autocmd TextChangedI * call ncm2#auto_trigger()
+" autocmd BufEnter * call ncm2#enable_for_buffer()
 
 
-" " This function, paired with the below mapping, make C-n load all high priority
-" " (priority 9) completions before any characters are typed. The autocmd
-" " InsertLeave command then returns the popup back to 1 character.
-" let g:ncm2#complete_length=[[1,3],[7,2],[9,1]]
-" function! TemporarilySetPopupToZero()
-"     let g:ncm2#complete_length=[[1,3],[7,2],[9,0]]
-"     if len(getline('.')) == 0
-"         execute "normal \"_ddk"
-"         call feedkeys('o', 'n')
-"     else
-"         call feedkeys('a', 'n')
-"     endif
-" endfunction
-" inoremap <C-k> <esc>:call TemporarilySetPopupToZero()<CR>
-" autocmd InsertLeave * let g:ncm2#complete_length=[[1,3],[7,2],[9,1]]
+
+" This function, paired with the below mapping, make C-n load all high priority
+" (priority 9) completions before any characters are typed. The autocmd
+" InsertLeave command then returns the popup back to 1 character.
+let g:ncm2#complete_length=[[1,3],[7,2],[9,1]]
+function! TemporarilySetPopupToZero()
+    let g:ncm2#complete_length=[[1,3],[7,2],[9,0]]
+    if len(getline('.')) == 0
+        execute "normal \"_ddk"
+        call feedkeys('o', 'n')
+    else
+        call feedkeys('a', 'n')
+    endif
+endfunction
+autocmd InsertLeave * let g:ncm2#complete_length=[[1,3],[7,2],[9,1]]
 " }}}
 " {{{ NERDCommenter
 let g:NERDSpaceDelims=1

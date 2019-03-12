@@ -36,6 +36,10 @@ ADDPATH="$HOME/.pyenv/shims" \
 ADDPATH="$HOME/.poetry/bin" \
     && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
 
+# ruby env
+ADDPATH="$HOME/.rbenv/shims" \
+    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
+
 # Rustup support
 ADDPATH="$HOME/.cargo/bin" \
     && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"

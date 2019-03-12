@@ -22,7 +22,7 @@ ADDPATH="$HOME/.yarn/bin" \
 ADDPATH="$HOME/.config/yarn/global/node_modules/.bin" \
     && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
 
-# python site-packages support
+# Python site-packages support
 ADDPATH="$HOME/Library/Python/2.7/bin" \
     && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
 ADDPATH="$HOME/Library/Python/3.5/bin" \
@@ -36,7 +36,7 @@ ADDPATH="$HOME/.pyenv/shims" \
 ADDPATH="$HOME/.poetry/bin" \
     && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
 
-# ruby env
+# Ruby env
 ADDPATH="$HOME/.rbenv/shims" \
     && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
 
@@ -56,7 +56,7 @@ ADDPATH="/home/linuxbrew/.linuxbrew/bin" \
 ADDPATH="/home/linuxbrew/.linuxbrew/Homebrew/Library/Homebrew/vendor/portable-ruby/2.3.3/bin:" \
     && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
 
-# various local `bin` directories
+# Various local `bin` directories
 ADDPATH="$HOME/bin" \
     && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
 ADDPATH="$HOME/.bin" \
@@ -64,7 +64,17 @@ ADDPATH="$HOME/.bin" \
 ADDPATH="$HOME/.local/bin" \
     && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
 
+# nvidia cuda
+ADDPATH="/usr/local/cuda/bin" \
+    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
+
 # Final export
 export PATH
+
+
+# LD_LIBRARY_PATH -------------------------------------------------------------
+
+ADDPATH="/usr/local/cuda/lib64" \
+    && [[ ! $LD_LIBRARY_PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && LD_LIBRARY_PATH="$ADDPATH:$LD_LIBRARY_PATH"
 
 # vim: syntax=sh ts=4 sts=4 shiftwidth=4 expandtab

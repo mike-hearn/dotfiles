@@ -320,7 +320,8 @@ function cdg() {
 
 # Actviate virtualenv from anywhere in repo (only works when named 'venv')
 function vactivate() {
-    source $(git rev-parse --show-toplevel)/venv/bin/activate
+    source $(git rev-parse --show-toplevel)/venv/bin/activate 2> /dev/null
+    source $(git rev-parse --show-toplevel)/.venv/bin/activate 2> /dev/null
 }
 
 # fbr - checkout git branch

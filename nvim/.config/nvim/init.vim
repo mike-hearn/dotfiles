@@ -498,7 +498,7 @@ endfunction
     Plug 'honza/vim-snippets' " Community custom snippets
     Plug 'tpope/vim-surround' " Shortcuts to modify characters/code around an object, eg add quotes on a string
     Plug 'editorconfig/editorconfig-vim' " Imports editorconfig file
-    Plug 'junegunn/vim-slash' " Un-highlights text if you navigate away from word
+    Plug 'romainl/vim-cool' " Un-highlights text if you navigate away from word
     Plug 'tpope/vim-sleuth' " Basically triggers :noh once you move your cursor off a highlighted word
     Plug 'tpope/vim-tbone'  " Adds tmux commands to vim, specifically copying into tmux clipboard
     Plug 'Konfekt/FastFold' " Speeds up folding, supposedly
@@ -534,6 +534,7 @@ let g:ale_sign_warning = '·'
 
 " ALELint settings
 let g:ale_linters = {
+            \   'sh': ['shellcheck'],
             \   'go': ['go build'],
             \   'css': ['stylelint'],
             \   'scss': ['stylelint'],
@@ -543,14 +544,15 @@ let g:ale_linters = {
 
 " ALEFix settings
 let g:ale_fixers = {
+            \   'css': ['stylelint', 'prettier'],
+            \   'go': ['gofmt'],
+            \   'html': ['prettier'],
+            \   'html.handlebars': ['prettier'],
             \   'javascript': ['eslint', 'prettier'],
             \   'json': ['prettier'],
-            \   'html.handlebars': ['prettier'],
-            \   'html': ['prettier'],
-            \   'go': ['gofmt'],
-            \   'css': ['stylelint', 'prettier'],
-            \   'scss': ['stylelint', 'prettier', 'remove_trailing_lines'],
             \   'python': ['isort', 'black'],
+            \   'scss': ['stylelint', 'prettier', 'remove_trailing_lines'],
+            \   'sh': ['shfmt'],
             \   'vue': ['prettier'],
             \}
 
@@ -648,10 +650,10 @@ nmap <leader>gw :Gwrite<cr>
 nmap <leader>gr :Gread<cr>
 nmap <leader>gcc :Gwrite<cr>:Gcommit<cr>I
 " }}}
-" {{{ fzf
+" {{{ FZF
 
 " Mappings
-nmap <silent> <C-p> :call FZFWithDevIcons()<CR>
+nmap <silent> <C-p> :Files<CR>
 nmap <Leader>s :Buffers<CR>
 nmap <Leader>f :FilesFromVimHistory<CR>
 
@@ -686,48 +688,6 @@ else
     command! -bang -nargs=* FilesFromVimHistory
                 \ call fzf#vim#grep('tail -r ~/.vim_history | cat -n | sort -uk2 | sort -nk1 | cut -f2- | sed "s/$/:1/"', 0)
 endif
-
-function! FZFWithDevIcons()
-  let l:fzf_files_options = ' -m --bind ctrl-d:preview-page-down,ctrl-u:preview-page-up --preview "bat --color always --style numbers {2..}"'
-
-  function! s:files()
-    let l:files = split(system($FZF_DEFAULT_COMMAND), '\n')
-    return s:prepend_icon(l:files)
-  endfunction
-
-  function! s:prepend_icon(candidates)
-    let result = []
-    for candidate in a:candidates
-      let filename = fnamemodify(candidate, ':p:t')
-      let icon = WebDevIconsGetFileTypeSymbol(filename, isdirectory(filename))
-      call add(result, printf("%s %s", icon, candidate))
-    endfor
-
-    return result
-  endfunction
-
-  function! s:edit_file(items)
-    let items = a:items
-    let i = 1
-    let ln = len(items)
-    while i < ln
-      let item = items[i]
-      let parts = split(item, ' ')
-      let file_path = get(parts, 1, '')
-      let items[i] = file_path
-      let i += 1
-    endwhile
-    call s:Sink(items)
-  endfunction
-
-  let opts = fzf#wrap({})
-  let opts.source = <sid>files()
-  let s:Sink = opts['sink*']
-  let opts['sink*'] = function('s:edit_file')
-  let opts.options .= l:fzf_files_options
-  call fzf#run(opts)
-
-endfunction
 " }}}
 " {{{ Gitgutter
 let g:gitgutter_max_signs = 1500
@@ -918,15 +878,14 @@ autocmd BufEnter * call AutoRestoreWinView()
 
 " }}}
 " {{{ CSS/SCSS
-
 autocmd FileType css,css setlocal foldmethod=syntax
-
 " }}}
 " {{{ Go
 autocmd FileType go setlocal foldmethod=syntax
 " }}}
 " {{{ HTML/Handlebars/Mustache
 autocmd FileType handlebars,html,html.handlebars setlocal foldmethod=indent
+autocmd FileType htmldjango setlocal foldmethod=indent
 " }}}
 " {{{ Javascript/JSX
 autocmd FileType html.handlebars setlocal foldmethod=indent

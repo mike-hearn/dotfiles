@@ -63,9 +63,9 @@ set undoreload=10000            " Load last 10,000 changes?
 set wildmenu                    " Visual autocomplete for command menu
 
 " Set python to homebrew version
-" let homebrew_prefix=systemlist("brew --prefix")[0]
-" let g:python_host_prog=homebrew_prefix . "/bin/python"
-" let g:python3_host_prog=homebrew_prefix . "/bin/python3"
+let homebrew_prefix=systemlist("brew --prefix")[0]
+let g:python_host_prog=homebrew_prefix . "/bin/python"
+let g:python3_host_prog=homebrew_prefix . "/bin/python3"
 
 " ========================================================================= }}}
 
@@ -153,8 +153,8 @@ vnoremap <D-s> :w<CR>
 nnoremap <leader>u :GundoToggle<CR>
 
 " Vertically split the current & alternative buffer
-nnoremap <leader>v :b #<CR>:vsp #<CR>
-nnoremap <leader>V :call SplitAndMaintainPosition()<CR>
+nnoremap <leader>V :b #<CR>:vsp #<CR>
+nnoremap <leader>v :call SplitAndMaintainPosition()<CR><C-w><C-w>
 nnoremap <leader>S :call ShiftSplitAndLock()<CR>
 nnoremap <leader>D :call TriShiftSplitAndLock()<CR>
 
@@ -371,6 +371,20 @@ function! NumberToggle()
     endif
 endfunc
 
+" Remove dead files from MRU list
+function! Refresh_MRU()
+    for l:file in fzf_mru#mrufiles#list('raw')
+        let l:to_remove = []
+        if !filereadable(l:file)
+            call add(l:to_remove, l:file)
+        endif
+        if len(l:to_remove) > 0
+            call fzf_mru#mrufiles#remove(l:to_remove)
+        endif
+    endfor
+endfunction
+
+
 " }}}
 " {{{ Test Functions
 "
@@ -459,12 +473,13 @@ endfunction
 
     " Syntax & IDE plugins
     Plug 'posva/vim-vue', {'for': 'vue'}
-    Plug 'fatih/vim-go'
+    Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
     Plug 'jceb/vim-orgmode'
     Plug 'tpope/vim-speeddating', { 'for': 'org'}  " Required by orgmode
     Plug 'davidhalter/jedi-vim', { 'for': 'python' }
     Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
     Plug 'ekalinin/Dockerfile.vim', { 'for': ['Dockerfile', 'docker-compose'] }
+    Plug 'tweekmonster/django-plus.vim', { 'for': ['Dockerfile', 'docker-compose'] }
     Plug 'sheerun/vim-polyglot' " Multi-language pack
 
     " Linters/Formatters/Checkers
@@ -473,7 +488,7 @@ endfunction
 
     " IDE & Productivity Features
     Plug 'itchyny/lightline.vim' " Lightweight powerline-esque bar at bottom of window
-    Plug 'ap/vim-buftabline' " List buffers at top of vim window
+    Plug 'mike-hearn/vim-buftabline-with-devicons' " List buffers at top of vim window
     Plug 'tpope/vim-commentary' " Comment stuff out with gcc
     Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] } " Sidebar file explorer (c+\)
     Plug 'tpope/vim-fugitive' " Git management within vim
@@ -505,22 +520,13 @@ endfunction
     Plug 'ludovicchabant/vim-gutentags' " Automatically creates tags file
     Plug 'ryanoasis/vim-devicons'
     Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+    Plug 'pbogut/fzf-mru.vim'
 
     " Completion
     Plug 'Shougo/neco-vim'
+    Plug 'neoclide/coc.nvim', {'tag': '*', 'do': 'yarn install --frozen-lockfile'}
     Plug 'neoclide/coc-neco'
-    Plug 'neoclide/coc.nvim', {'tag': '*', 'do': 'yarn install', 'on': 'CocEnable'}
-    Plug 'roxma/nvim-yarp'
-    Plug 'ncm2/ncm2'
-    Plug 'ncm2/ncm2-bufword'
-    Plug 'ncm2/ncm2-cssomni'
-    Plug 'ncm2/ncm2-go'
-    Plug 'ncm2/ncm2-jedi'
-    Plug 'ncm2/ncm2-path'
-    Plug 'ncm2/ncm2-syntax' | Plug 'Shougo/neco-syntax'
-    Plug 'ncm2/ncm2-tagprefix'
-    Plug 'ncm2/ncm2-tmux'
-    Plug 'ncm2/ncm2-ultisnips'
+    " Plug 'neoclide/coc-jedi', {'do': 'yarn install'}
 
     call plug#end()
 
@@ -562,13 +568,13 @@ autocmd FileType html.handlebars let b:ale_javascript_prettier_options = '--pars
 let g:jsx_ext_required = 0
 " }}}
 " {{{ BufTabLine
-map π :call AutoPairsToggle()<CR>
 let g:buftabline_numbers = 2
 let g:buftabline_indicators = 1
-let g:buftabline_separators = 1
+let g:buftabline_separators = 0
 hi! link BufTabLineCurrent LightlineLeft_normal_0
 hi! link BufTabLineActive TabLineSel
 
+map π :call AutoPairsToggle()<CR>
 nmap <leader>1 <Plug>BufTabLine.Go(1)
 nmap <leader>2 <Plug>BufTabLine.Go(2)
 nmap <leader>3 <Plug>BufTabLine.Go(3)
@@ -596,9 +602,9 @@ autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 " {{{ Completion (coc.nvim, ncm2)
 
 let g:ncm2#matcher = 'substrfuzzy'
-let g:ncm2_filetype_whitelist = ['python', 'scss', 'css', 'go']
+let g:ncm2_filetype_whitelist = ['gitrebase']
 
-function EnableCompletion()
+function! EnableCompletion()
     let my_filetype = &ft
 
     " Use ncm2
@@ -655,7 +661,8 @@ nmap <leader>gcc :Gwrite<cr>:Gcommit<cr>I
 " Mappings
 nmap <silent> <C-p> :Files<CR>
 nmap <Leader>s :Buffers<CR>
-nmap <Leader>f :FilesFromVimHistory<CR>
+nmap <Leader>f :FZFMru<CR>
+nmap <c-t> :FZFMru<CR>
 
 let g:fzf_files_options =
             \ '--preview "(highlight -O ansi {} || cat {}) 2> /dev/null | head -'.&lines.'"'
@@ -742,6 +749,9 @@ function! TemporarilySetPopupToZero()
     endif
 endfunction
 autocmd InsertLeave * let g:ncm2#complete_length=[[1,3],[7,2],[9,1]]
+" }}}
+" {{{ MRU (most recent files)
+let MRU_Max_Entries = 10000
 " }}}
 " {{{ NERDCommenter
 let g:NERDSpaceDelims=1
@@ -830,39 +840,45 @@ nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
 " }}}
 
 " {{{ Colors ··································································
-hi ALEError cterm=underline ctermfg=red
-hi ALEErrorSign ctermbg=0 ctermfg=1
-hi ALEWarning cterm=underline ctermfg=yellow
-hi ALEWarningSign ctermbg=0 ctermfg=3
-hi CocErrorSign ctermfg=red ctermbg=0
-hi CocHintSign ctermfg=green ctermbg=0
-hi CocInfoSign ctermfg=yellow ctermbg=0
-hi CocWarningSign ctermfg=yellow ctermbg=0
-hi ColorColumn ctermbg=18
-hi CursorLine ctermbg=0
-hi CursorLineNr ctermbg=0
-hi DiffAdd ctermbg=0
-hi DiffChange ctermbg=0
-hi DiffDelete ctermbg=0
-hi DiffText ctermbg=0
-hi FoldColumn ctermbg=0 ctermfg=white
-hi Folded ctermbg=0 ctermfg=20
-hi GitGutterAdd ctermbg=0
-hi GitGutterChange ctermbg=0
-hi GitGutterChangeDelete ctermbg=0
-hi GitGutterDelete ctermbg=0
-hi LineNr ctermbg=0
-hi NonText ctermfg=bg
-hi Pmenu ctermbg=18
-hi PmenuSel ctermfg=0 ctermbg=7
-hi QuickFixLine ctermbg=19
-hi StatusLineNC ctermbg=0
-hi TabLine ctermbg=18
-hi TabLineFill ctermbg=18 ctermfg=20
-hi TabLineSel ctermbg=19
-hi VertSplit ctermbg=NONE guibg=NONE
-hi VertSplit ctermfg=20
-hi Visual ctermbg=19
+set termguicolors
+if &term =~# '^screen'
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+endif
+
+exec 'hi ALEError cterm=underline ctermfg=1 gui=bold,undercurl guifg=' . g:terminal_color_1
+exec 'hi ALEErrorSign ctermbg=0 ctermfg=1 guifg=' . g:terminal_color_1
+exec 'hi ALEWarning cterm=underline ctermfg=3 gui=bold,undercurl guifg=' . g:terminal_color_3
+exec 'hi ALEWarningSign ctermbg=0 ctermfg=3 guifg=' . g:terminal_color_3
+exec 'hi CocErrorSign ctermfg=1 ctermbg=0'
+exec 'hi CocHintSign ctermfg=green ctermbg=0'
+exec 'hi CocInfoSign ctermfg=3 ctermbg=0'
+exec 'hi CocWarningSign ctermfg=3 ctermbg=0'
+exec 'hi ColorColumn ctermbg=18'
+exec 'hi CursorLine ctermbg=0'
+exec 'hi CursorLineNr ctermbg=0 guibg=0'
+exec 'hi DiffAdd ctermbg=0'
+exec 'hi DiffChange ctermbg=0'
+exec 'hi DiffDelete ctermbg=0'
+exec 'hi DiffText ctermbg=0'
+exec 'hi FoldColumn ctermbg=0 ctermfg=white'
+exec 'hi Folded ctermbg=0 ctermfg=20 guibg=0'
+exec 'hi GitGutterAdd ctermbg=0 guibg=0'
+exec 'hi GitGutterChange ctermbg=0 guibg=0'
+exec 'hi GitGutterChangeDelete ctermbg=0 guibg=0'
+exec 'hi GitGutterDelete ctermbg=0 guibg=0'
+exec 'hi LineNr ctermbg=0 guibg=0'
+exec 'hi NonText ctermfg=bg guifg=bg'
+exec 'hi Pmenu ctermbg=18'
+exec 'hi PmenuSel ctermfg=0 ctermbg=7'
+exec 'hi QuickFixLine ctermbg=19'
+exec 'hi StatusLineNC ctermbg=0'
+exec 'hi TabLine ctermbg=18'
+exec 'hi TabLineFill ctermbg=18 ctermfg=20'
+exec 'hi TabLineSel ctermbg=19'
+exec 'hi VertSplit ctermbg=NONE guibg=NONE'
+exec 'hi VertSplit ctermfg=20'
+exec 'hi Visual ctermbg=19'
 " }}}
 
 " Filetype/Autoload Settings {{{ ··············································
@@ -915,5 +931,22 @@ autocmd FileType yaml setlocal foldmethod=indent
 " }}}
 
 " }}}
+
+
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+nnoremap <silent> <leader>K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if &filetype == 'vim'
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
 
 " vim: foldmethod=marker: foldlevel=0: foldenable

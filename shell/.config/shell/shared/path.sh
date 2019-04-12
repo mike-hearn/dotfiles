@@ -12,6 +12,26 @@ ADDPATH="/sbin" \
 ADDPATH="$HOME/Dropbox/bin" \
     && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
 
+# Linuxbrew, if we're using the local package manager
+ADDPATH="$HOME/.linuxbrew/bin" \
+    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
+ADDPATH="/home/linuxbrew/.linuxbrew/bin" \
+    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
+ADDPATH="/home/linuxbrew/.linuxbrew/Homebrew/Library/Homebrew/vendor/portable-ruby/2.3.3/bin:" \
+    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
+
+# Various local `bin` directories
+ADDPATH="$HOME/bin" \
+    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
+ADDPATH="$HOME/.bin" \
+    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
+ADDPATH="$HOME/.local/bin" \
+    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
+
+# nvidia cuda
+ADDPATH="/usr/local/cuda/bin" \
+    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
+
 # npm/yarn/node bin directories
 ADDPATH="$NPM_PACKAGES/bin" \
     && [ ! -z "${NPM_PACKAGES}" ]&& [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
@@ -46,26 +66,6 @@ ADDPATH="$HOME/.cargo/bin" \
 
 # Go support
 ADDPATH="$HOME/.go/bin" \
-    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
-
-# Linuxbrew, if we're using the local package manager
-ADDPATH="$HOME/.linuxbrew/bin" \
-    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
-ADDPATH="/home/linuxbrew/.linuxbrew/bin" \
-    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
-ADDPATH="/home/linuxbrew/.linuxbrew/Homebrew/Library/Homebrew/vendor/portable-ruby/2.3.3/bin:" \
-    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
-
-# Various local `bin` directories
-ADDPATH="$HOME/bin" \
-    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
-ADDPATH="$HOME/.bin" \
-    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
-ADDPATH="$HOME/.local/bin" \
-    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
-
-# nvidia cuda
-ADDPATH="/usr/local/cuda/bin" \
     && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
 
 # Final export

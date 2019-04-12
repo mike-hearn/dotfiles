@@ -96,7 +96,6 @@ nnoremap <Leader>n :bp<CR>
 nnoremap <Leader>m :bn<CR>
 nnoremap <Leader>x :b #<CR>:bd #<CR>
 nnoremap <Leader>q <C-w>q
-nnoremap <Leader>r :on<CR>
 nnoremap <Leader>X :BufOnly<CR>
 
 " Home key buffer navigation
@@ -187,6 +186,7 @@ nmap <leader>i <C-a>
 function! GoToDefinition()
     let l:originalpos = getpos('.')
     let l:newlinepos = getpos('.')
+    let l:original_filename = expand('%')
 
     if l:originalpos == l:newlinepos
         silent! execute "YcmCompleter GoTo"
@@ -473,7 +473,7 @@ endfunction
 
     " Syntax & IDE plugins
     Plug 'posva/vim-vue', {'for': 'vue'}
-    Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+    Plug 'fatih/vim-go'
     Plug 'jceb/vim-orgmode'
     Plug 'tpope/vim-speeddating', { 'for': 'org'}  " Required by orgmode
     Plug 'davidhalter/jedi-vim', { 'for': 'python' }
@@ -485,6 +485,7 @@ endfunction
     " Linters/Formatters/Checkers
     Plug 'w0rp/ale'
     Plug 'prettier/vim-prettier', {'do': 'yarn install'}
+    Plug 'ambv/black'
 
     " IDE & Productivity Features
     Plug 'itchyny/lightline.vim' " Lightweight powerline-esque bar at bottom of window
@@ -524,9 +525,8 @@ endfunction
 
     " Completion
     Plug 'Shougo/neco-vim'
-    Plug 'neoclide/coc.nvim', {'tag': '*', 'do': 'yarn install --frozen-lockfile'}
+    Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
     Plug 'neoclide/coc-neco'
-    " Plug 'neoclide/coc-jedi', {'do': 'yarn install'}
 
     call plug#end()
 
@@ -544,7 +544,7 @@ let g:ale_linters = {
             \   'go': ['go build'],
             \   'css': ['stylelint'],
             \   'scss': ['stylelint'],
-            \   'python': ['pylint'],
+            \   'python': ['pylint', 'flake8'],
             \   'vue': ['vls']
             \}
 
@@ -599,43 +599,45 @@ endtry
 
 autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 " }}}
-" {{{ Completion (coc.nvim, ncm2)
+" {{{ Completion (coc.nvim)
 
-let g:ncm2#matcher = 'substrfuzzy'
-let g:ncm2_filetype_whitelist = ['gitrebase']
+" Use <c-k> for trigger completion.
+inoremap <silent><buffer><expr> <c-k> coc#refresh()
 
-function! EnableCompletion()
-    let my_filetype = &ft
+" Use tab for trigger completion with characters ahead and navigate.
+inoremap <silent><buffer><expr> <TAB>
+            \ pumvisible() ? "\<C-n>" :
+            \ <SID>check_back_space() ? "\<TAB>" :
+            \ coc#refresh()
+inoremap <buffer><expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <buffer><expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
-    " Use ncm2
-    if index(g:ncm2_filetype_whitelist, my_filetype) > -1
-        silent! CocDisable
-
-        call ncm2#enable_for_buffer()
-        inoremap <buffer><expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
-        inoremap <buffer><expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-        inoremap <buffer><expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-        inoremap <silent><buffer> <c-k> <c-r>=ncm2#force_trigger()<cr>
-
-    " Use coc
-    else
-        silent! CocEnable
-        inoremap <silent><buffer><expr> <c-k> coc#refresh()
-        inoremap <silent><buffer><expr> <TAB>
-                    \ pumvisible() ? "\<C-n>" :
-                    \ <SID>check_back_space() ? "\<TAB>" :
-                    \ coc#refresh()
-        inoremap <buffer><expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-        inoremap <buffer><expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-
-        function! s:check_back_space() abort
-            let col = col('.') - 1
-            return !col || getline('.')[col - 1]  =~# '\s'
-        endfunction
-
-    endif
+function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
-autocmd VimEnter,BufNew,BufEnter * call EnableCompletion()
+
+" Use `[c` and `]c` for navigate diagnostics
+nmap <silent> [c <Plug>(coc-diagnostic-prev)
+nmap <silent> ]c <Plug>(coc-diagnostic-next)
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K for show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+nnoremap <silent> <leader>K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if &filetype == 'vim'
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
 
 " }}}
 " {{{ devicons
@@ -723,32 +725,6 @@ command! -bang JediRename call jedi#rename()
 let g:lightline = {
             \ 'colorscheme': csunderscores,
             \ }
-" }}}
-" {{{ ncm2 (nvim-completion-manager)
-" autocmd BufEnter * call ncm2#enable_for_buffer()
-
-set completeopt=noinsert,menuone,noselect
-set shortmess+=c
-
-" autocmd TextChangedI * call ncm2#auto_trigger()
-" autocmd BufEnter * call ncm2#enable_for_buffer()
-
-
-
-" This function, paired with the below mapping, make C-n load all high priority
-" (priority 9) completions before any characters are typed. The autocmd
-" InsertLeave command then returns the popup back to 1 character.
-let g:ncm2#complete_length=[[1,3],[7,2],[9,1]]
-function! TemporarilySetPopupToZero()
-    let g:ncm2#complete_length=[[1,3],[7,2],[9,0]]
-    if len(getline('.')) == 0
-        execute "normal \"_ddk"
-        call feedkeys('o', 'n')
-    else
-        call feedkeys('a', 'n')
-    endif
-endfunction
-autocmd InsertLeave * let g:ncm2#complete_length=[[1,3],[7,2],[9,1]]
 " }}}
 " {{{ MRU (most recent files)
 let MRU_Max_Entries = 10000
@@ -931,22 +907,6 @@ autocmd FileType yaml setlocal foldmethod=indent
 " }}}
 
 " }}}
-
-
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-nnoremap <silent> <leader>K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-  if &filetype == 'vim'
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
 
 
 " vim: foldmethod=marker: foldlevel=0: foldenable

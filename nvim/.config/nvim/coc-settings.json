@@ -21,9 +21,11 @@
       "filetypes": ["go"],
       "initializationOptions": {
         "gocodeCompletionEnabled": true,
-        "diagnosticsEnabled": true,
+        "diagnosticsEnabled": false,
         "lintTool": "golint"
       }
     }
-  }
+  },
+  "python.pythonPath": "python3",
+  "python.jediEnabled": false
 }

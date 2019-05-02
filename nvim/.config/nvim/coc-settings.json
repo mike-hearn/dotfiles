@@ -1,11 +1,12 @@
 {
+  "diagnostic.displayByAle": true,
   "diagnostic.enable": true,
   "diagnostic.errorSign": "✖",
   "diagnostic.hintSign": "·",
   "diagnostic.infoSign": "·",
   "diagnostic.warningSign": "·",
-  "coc.source.ultisnips.priority": 5,
   "suggest.snippetIndicator": "",
+  "coc.source.ultisnips.priority": 5,
   "languageserver": {
     "lua": {
       "command": "lua-lsp",
@@ -15,15 +16,6 @@
       "command": "docker-langserver",
       "filetypes": ["Dockerfile"],
       "args": ["--stdio"]
-    },
-    "golang": {
-      "command": "go-langserver",
-      "filetypes": ["go"],
-      "initializationOptions": {
-        "gocodeCompletionEnabled": true,
-        "diagnosticsEnabled": false,
-        "lintTool": "golint"
-      }
     }
   },
   "python.pythonPath": "python3",

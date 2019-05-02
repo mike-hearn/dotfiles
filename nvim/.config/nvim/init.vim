@@ -485,7 +485,6 @@ endfunction
     " Linters/Formatters/Checkers
     Plug 'w0rp/ale'
     Plug 'prettier/vim-prettier', {'do': 'yarn install'}
-    Plug 'ambv/black'
 
     " IDE & Productivity Features
     Plug 'itchyny/lightline.vim' " Lightweight powerline-esque bar at bottom of window
@@ -602,15 +601,15 @@ autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 " {{{ Completion (coc.nvim)
 
 " Use <c-k> for trigger completion.
-inoremap <silent><buffer><expr> <c-k> coc#refresh()
+inoremap <silent><expr> <c-k> coc#refresh()
 
 " Use tab for trigger completion with characters ahead and navigate.
-inoremap <silent><buffer><expr> <TAB>
-            \ pumvisible() ? "\<C-n>" :
-            \ <SID>check_back_space() ? "\<TAB>" :
-            \ coc#refresh()
-inoremap <buffer><expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-inoremap <buffer><expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
 
 function! s:check_back_space() abort
     let col = col('.') - 1
@@ -638,6 +637,10 @@ function! s:show_documentation()
     call CocAction('doHover')
   endif
 endfunction
+
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
+
 
 " }}}
 " {{{ devicons

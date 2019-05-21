@@ -1,72 +1,86 @@
 #!/usr/bin/env bash
 
+TEMPORARY_PATH=""
+PREPEND_ARRAY=()
+APPEND_ARRAY=()
+
+function _add_to_path {
+    PATH_TO_BE_ADDED="$1"
+    2="${2:-prepend}"
+
+    # If 'append', put it at the back
+    if [ "$2" = "append" ]; then
+        # PATH="$PATH:$PATH_TO_BE_ADDED"
+        APPEND_ARRAY+=("$1")
+
+    # Else, prepend it to $PATH
+    else
+        # PATH="$PATH_TO_BE_ADDED:$PATH"
+        PREPEND_ARRAY+=("$1")
+    fi
+
+    return
+}
+
 # We want the various sbins on the path along with /usr/local/bin
-ADDPATH="/usr/local/sbin" \
-    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$PATH:$ADDPATH"
-ADDPATH="/usr/sbin" \
-    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$PATH:$ADDPATH"
-ADDPATH="/sbin" \
-    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$PATH:$ADDPATH"
+_add_to_path "/usr/local/sbin" append
+_add_to_path "/usr/sbin" append
+_add_to_path "/sbin" append
 
 # bin folder in dropbox for synced executables/scripts
-ADDPATH="$HOME/Dropbox/bin" \
-    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
+_add_to_path "$HOME/Dropbox/bin"
 
 # Linuxbrew, if we're using the local package manager
-ADDPATH="$HOME/.linuxbrew/bin" \
-    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
-ADDPATH="/home/linuxbrew/.linuxbrew/bin" \
-    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
-ADDPATH="/home/linuxbrew/.linuxbrew/Homebrew/Library/Homebrew/vendor/portable-ruby/2.3.3/bin:" \
-    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
+_add_to_path "$HOME/.linuxbrew/bin"
+_add_to_path "/home/linuxbrew/.linuxbrew/bin"
+_add_to_path "/home/linuxbrew/.linuxbrew/Homebrew/Library/Homebrew/vendor/portable-ruby/2.3.3/bin:"
 
 # Various local `bin` directories
-ADDPATH="$HOME/bin" \
-    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
-ADDPATH="$HOME/.bin" \
-    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
-ADDPATH="$HOME/.local/bin" \
-    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
+_add_to_path "$HOME/bin"
+_add_to_path "$HOME/.bin"
+_add_to_path "$HOME/.local/bin"
 
 # nvidia cuda
-ADDPATH="/usr/local/cuda/bin" \
-    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
+_add_to_path "/usr/local/cuda/bin"
 
 # npm/yarn/node bin directories
-ADDPATH="$NPM_PACKAGES/bin" \
-    && [ ! -z "${NPM_PACKAGES}" ]&& [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
-ADDPATH="$NPM_CONFIG_PREFIX/bin" \
-    && [ ! -z "${NPM_CONFIG_PREFIX}" ] && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
-ADDPATH="$HOME/.yarn/bin" \
-    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
-ADDPATH="$HOME/.config/yarn/global/node_modules/.bin" \
-    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
+_add_to_path "$NPM_PACKAGES/bin"
+_add_to_path "$NPM_CONFIG_PREFIX/bin"
+_add_to_path "$HOME/.yarn/bin"
+_add_to_path "$HOME/.config/yarn/global/node_modules/.bin"
 
 # Python site-packages support
-ADDPATH="$HOME/Library/Python/2.7/bin" \
-    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
-ADDPATH="$HOME/Library/Python/3.5/bin" \
-    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
-ADDPATH="$HOME/Library/Python/3.6/bin" \
-    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
-ADDPATH="$HOME/Library/Python/3.7/bin" \
-    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
-ADDPATH="$HOME/.pyenv/shims" \
-    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
-ADDPATH="$HOME/.poetry/bin" \
-    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
+_add_to_path "$HOME/Library/Python/2.7/bin"
+_add_to_path "$HOME/Library/Python/3.5/bin"
+_add_to_path "$HOME/Library/Python/3.6/bin"
+_add_to_path "$HOME/Library/Python/3.7/bin"
+_add_to_path "$HOME/.pyenv/shims"
+_add_to_path "$HOME/.poetry/bin"
 
 # Ruby env
-ADDPATH="$HOME/.rbenv/shims" \
-    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
+_add_to_path "$HOME/.rbenv/shims"
 
 # Rustup support
-ADDPATH="$HOME/.cargo/bin" \
-    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
+_add_to_path "$HOME/.cargo/bin"
 
 # Go support
-ADDPATH="$HOME/.go/bin" \
-    && [[ ! $PATH == *"$ADDPATH"* ]] && [ -d $ADDPATH ] && PATH="$ADDPATH:$PATH"
+_add_to_path "$HOME/.go/bin"
+
+for x in $PREPEND_ARRAY; do
+  case ":$TEMPORARY_PATH:" in
+    *":$x:"*) :;; # already there
+    *) TEMPORARY_PATH="$x:$TEMPORARY_PATH";;
+  esac
+done
+
+for x in $APPEND_ARRAY; do
+  case ":$TEMPORARY_PATH:" in
+    *":$x:"*) :;; # already there
+    *) TEMPORARY_PATH="$TEMPORARY_PATH:$x";;
+  esac
+done
+
+PATH="$TEMPORARY_PATH:$PATH"
 
 # Final export
 export PATH

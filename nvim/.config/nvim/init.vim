@@ -61,6 +61,7 @@ set undofile                    " Undo history maintained across sessions
 set undolevels=1000             " Save last 1000 changes"
 set undoreload=10000            " Load last 10,000 changes?
 set wildmenu                    " Visual autocomplete for command menu
+set updatetime=250              " UI update time for things like git-gutter
 
 " Set python to homebrew version
 let homebrew_prefix=systemlist("brew --prefix")[0]

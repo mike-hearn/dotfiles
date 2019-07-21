@@ -753,9 +753,22 @@ command! -bang JediUsage  call jedi#usages()
 command! -bang JediRename call jedi#rename()
 " }}}
 " {{{ lightline
+" let g:lightline = {
+"             \ 'colorscheme': csunderscores,
+"             \ }
 let g:lightline = {
             \ 'colorscheme': csunderscores,
+            \ 'active': {
+            \   'left': [ [ 'mode', 'paste' ],
+            \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
+            \ },
+            \ 'component_function': {
+            \   'cocstatus': 'coc#status'
+            \ },
             \ }
+
+  " Use auocmd to force lightline update.
+  autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
 " }}}
 " {{{ MRU (most recent files)
 let MRU_Max_Entries = 10000

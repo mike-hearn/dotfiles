@@ -385,6 +385,24 @@ function! Refresh_MRU()
     endfor
 endfunction
 
+" Displays an input field where it accepts two characters, then sends those
+" characters to the FZF Command FileAndCodeSearchWithPrefix
+function! GetTwoCharactersAndSendToFZF()
+  echon "File/code search> "
+  let l:number = 2
+  let l:string = ""
+
+  while l:number > 0
+    let l:newchar = nr2char(getchar())
+    let l:string .= l:newchar
+    echon l:newchar
+    let l:number -= 1
+  endwhile
+
+  execute "FileAndCodeSearchWithPrefix " . l:string
+  call feedkeys(l:string)
+endfunction
+
 
 " }}}
 " {{{ Test Functions
@@ -617,10 +635,6 @@ function! s:check_back_space() abort
     return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-" Use `[c` and `]c` for navigate diagnostics
-nmap <silent> [c <Plug>(coc-diagnostic-prev)
-nmap <silent> ]c <Plug>(coc-diagnostic-next)
-
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
@@ -652,9 +666,6 @@ let g:WebDevIconsNerdTreeBeforeGlyphPadding = ''
 " {{{ EasyMotion
 map s <Plug>(easymotion-s)
 " }}}
-" {{{ EditorConfig
-let g:EditorConfig_core_mode = 'python_external'
-" }}}
 " {{{ fugitive.vim
 nmap <leader>gs :Gstatus<cr>gg<C-n>
 nmap <leader>gd :Gdiff<cr>
@@ -665,7 +676,7 @@ nmap <leader>gcc :Gwrite<cr>:Gcommit<cr>I
 " {{{ FZF
 
 " Mappings
-nmap <silent> <C-p> :Files<CR>
+nmap <silent> <C-p> :call GetTwoCharactersAndSendToFZF()<CR>
 nmap <Leader>s :Buffers<CR>
 nmap <Leader>f :FZFMru<CR>
 nmap <c-t> :FZFMru<CR>
@@ -683,7 +694,7 @@ autocmd VimEnter * command! -bang -nargs=* FileAndCodeSearch
 
 autocmd VimEnter * command! -bang -nargs=* FileAndCodeSearchWithPrefix
             \ call fzf#vim#grep(
-            \   'fd ' . shellescape(<q-args>).' | sed "s/$/:0:0/g"; rg --column --hidden --max-columns=500  --line-number --no-heading --color=always --invert-match "(' . shellescape(<q-args>) . '|^\s*$)" $(fd ' . shellescape(<q-args>).'); rg --column --hidden --max-columns=500  --line-number --no-heading --color=always ' . shellescape(<q-args>), 1,
+            \   'fd --full-path ' . shellescape(<q-args>).' | sed "s/$/:0:0/g"; rg --column --hidden --max-columns=500  --line-number --no-heading --color=always --invert-match "(' . shellescape(<q-args>) . '|^\s*$)" $(fd ' . shellescape(<q-args>).'); rg --column --hidden --max-columns=500  --line-number --ignore-case --no-heading --color=always ' . shellescape(<q-args>), 1,
             \   <bang>0 ? fzf#vim#with_preview('up:60%')
             \           : fzf#vim#with_preview('right:50%:hidden', '?'),
             \   <bang>0

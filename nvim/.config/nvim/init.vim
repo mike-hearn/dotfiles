@@ -61,7 +61,7 @@ set undofile                    " Undo history maintained across sessions
 set undolevels=1000             " Save last 1000 changes"
 set undoreload=10000            " Load last 10,000 changes?
 set wildmenu                    " Visual autocomplete for command menu
-set updatetime=250              " UI update time for things like git-gutter
+set updatetime=750              " UI update time for things like git-gutter
 
 " Set python to homebrew version
 let homebrew_prefix=systemlist("brew --prefix")[0]
@@ -694,7 +694,7 @@ autocmd VimEnter * command! -bang -nargs=* FileAndCodeSearch
 
 autocmd VimEnter * command! -bang -nargs=* FileAndCodeSearchWithPrefix
             \ call fzf#vim#grep(
-            \   'fd --full-path ' . shellescape(<q-args>).' | sed "s/$/:0:0/g"; rg --column --hidden --max-columns=500  --line-number --no-heading --color=always --invert-match "(' . <q-args> . '|^\s*$)" $(fd "' . <q-args>.'"); rg --column --hidden --max-columns=500  --line-number --ignore-case --no-heading --color=always ' . shellescape(<q-args>), 1,
+            \   'fd --full-path ' . shellescape(<q-args>).' | sed "s/$/:0:0/g"; rg --column --hidden --max-columns=500  --line-number --no-heading --color=always --invert-match "(' . <q-args> . '|^\s*$)" $(fd "' . <q-args>.'") | rg ":\s+.*\w.*"; rg --column --hidden --max-columns=500  --line-number --ignore-case --no-heading --color=always ' . shellescape(<q-args>), 1,
             \   <bang>0 ? fzf#vim#with_preview('up:60%')
             \           : fzf#vim#with_preview('right:50%:hidden', '?'),
             \   <bang>0

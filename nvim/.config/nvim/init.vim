@@ -385,25 +385,6 @@ function! Refresh_MRU()
     endfor
 endfunction
 
-" Displays an input field where it accepts two characters, then sends those
-" characters to the FZF Command FileAndCodeSearchWithPrefix
-function! GetTwoCharactersAndSendToFZF()
-  echon "File/code search> "
-  let l:number = 2
-  let l:string = ""
-
-  while l:number > 0
-    let l:newchar = nr2char(getchar())
-    let l:string .= l:newchar
-    echon l:newchar
-    let l:number -= 1
-  endwhile
-
-  execute "FileAndCodeSearchWithPrefix " . l:string
-  call feedkeys(l:string)
-endfunction
-
-
 " }}}
 " {{{ Test Functions
 "
@@ -522,6 +503,7 @@ endfunction
     Plug 'mike-hearn/vim-buffer-history' " Keeps track of buffer history
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  } " Installs fzf if not already installed
     Plug 'junegunn/fzf.vim' " My favorite fuzzy search
+    Plug 'mike-hearn/vim-supersearch' " Trying to create my own code search
     Plug 'tpope/vim-obsession' " Remember vim session state
     Plug 'christoomey/vim-tmux-navigator' " Treats vim splits as tmux panes, allowing same shortcuts
     Plug 'jiangmiao/auto-pairs' " Completes the pair for ( and { and [ etc
@@ -687,14 +669,6 @@ let g:fzf_files_options =
 autocmd VimEnter * command! -bang -nargs=* FileAndCodeSearch
             \ call fzf#vim#grep(
             \   'fd | sed "s/$/:0:0/g"; rg --smart-case --column --hidden --max-columns=500  --glob=\!".git" --line-number --no-heading --color=always "[A-Za-z0-9]"', 1,
-            \   <bang>0 ? fzf#vim#with_preview('up:60%')
-            \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-            \   <bang>0
-            \)
-
-autocmd VimEnter * command! -bang -nargs=* FileAndCodeSearchWithPrefix
-            \ call fzf#vim#grep(
-            \   'fd --full-path ' . shellescape(<q-args>).' | sed "s/$/:0:0/g"; rg --column --hidden --max-columns=500  --line-number --no-heading --color=always --invert-match "(' . <q-args> . '|^\s*$)" $(fd "' . <q-args>.'") | rg ":\s+.*\w.*"; rg --column --hidden --max-columns=500  --line-number --ignore-case --no-heading --color=always ' . shellescape(<q-args>), 1,
             \   <bang>0 ? fzf#vim#with_preview('up:60%')
             \           : fzf#vim#with_preview('right:50%:hidden', '?'),
             \   <bang>0

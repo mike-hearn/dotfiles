@@ -18,6 +18,5 @@
       "args": ["--stdio"]
     }
   },
-  "python.pythonPath": "python3",
-  "python.jediEnabled": false
+  "python.pythonPath": "python3"
 }

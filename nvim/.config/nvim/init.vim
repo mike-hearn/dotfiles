@@ -155,6 +155,7 @@ nnoremap <leader>u :GundoToggle<CR>
 " Vertically split the current & alternative buffer
 nnoremap <leader>V :b #<CR>:vsp #<CR>
 nnoremap <leader>v :call SplitAndMaintainPosition()<CR><C-w><C-w>
+nnoremap <leader>A :on<CR>
 nnoremap <leader>S :call ShiftSplitAndLock()<CR>
 nnoremap <leader>D :call TriShiftSplitAndLock()<CR>
 
@@ -503,7 +504,7 @@ endfunction
     Plug 'mike-hearn/vim-buffer-history' " Keeps track of buffer history
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  } " Installs fzf if not already installed
     Plug 'junegunn/fzf.vim' " My favorite fuzzy search
-    Plug 'mike-hearn/vim-supersearch' " Trying to create my own code search
+    Plug 'mike-hearn/vim-combosearch' " Trying to create my own code search
     Plug 'tpope/vim-obsession' " Remember vim session state
     Plug 'christoomey/vim-tmux-navigator' " Treats vim splits as tmux panes, allowing same shortcuts
     Plug 'jiangmiao/auto-pairs' " Completes the pair for ( and { and [ etc

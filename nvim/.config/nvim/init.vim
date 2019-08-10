@@ -649,6 +649,10 @@ let g:WebDevIconsNerdTreeBeforeGlyphPadding = ''
 " {{{ EasyMotion
 map s <Plug>(easymotion-s)
 " }}}
+" {{{ emmet
+let g:user_emmet_install_global = 0
+autocmd FileType html,css EmmetInstall
+" }}}
 " {{{ fugitive.vim
 nmap <leader>gs :Gstatus<cr>gg<C-n>
 nmap <leader>gd :Gdiff<cr>

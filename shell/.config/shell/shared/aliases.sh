@@ -20,6 +20,7 @@ alias gx="gitx --all"
 alias pull="git pull"
 alias recent="git for-each-ref --sort=-committerdate"
 alias recentdate="git for-each-ref --sort=-committerdate refs/heads/ --format='%(refname) %(committerdate) %(authorname)' | sed 's/refs\/heads\///g'"
+alias lg="lazygit"
 
 # Read things aloud faster
 alias say="say --voice=Daniel --rate=275"

@@ -10,6 +10,7 @@ export ZSH="$HOME/.oh-my-zsh"
 
 plugins=(
   autojump
+  conda
   django
   docker
   docker-compose
@@ -17,7 +18,6 @@ plugins=(
   git
   npm
   nvmfast
-  pyenv
   ssh-agent
   vi-mode
   yarn
@@ -40,12 +40,11 @@ _fzf_compgen_dir() {
 }
 
 export LESS="-R --quit-if-one-screen"
-
 for f in ~/.config/shell/shared/*; do . "$f"; done
 for f in ~/.config/shell/apps/*; do . "$f"; done
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-fpath=($fpath "/home/mikehearn/.zfunctions")
+fpath=( "$HOME/.zfunctions" ""  "${fpath[@]}" )
 
 # Spaceship prompt settings
 autoload -U promptinit; promptinit
@@ -60,5 +59,9 @@ SPACESHIP_PACKAGE_SHOW=false
 SPACESHIP_VI_MODE_SHOW=false
 SPACESHIP_VENV_COLOR="016"
 
+# Autosource files from ~/.config/shell/zsh/autosource dir
+for file in ~/.config/shell/zsh/autosource/*sh; do
+  source "$file"
+done
 
-fpath=($fpath "/home/mikehearn/.zfunctions")
+eval "$(direnv hook zsh)"

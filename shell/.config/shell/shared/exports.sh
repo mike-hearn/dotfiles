@@ -26,7 +26,4 @@ export LC_CTYPE="en_US.UTF-8"
 # golang
 export GOPATH=~/.go
 
-# npm global path to allow global packages w/o sudo
-export NPM_CONFIG_PREFIX=~/.npm-global
-
 # vim: syntax=sh ts=4 sts=4 shiftwidth=4 expandtab

@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
+BREW_PREFIX=$(brew --prefix 2> /dev/null || true)
 TEMPORARY_PATH=""
 PREPEND_ARRAY=()
 APPEND_ARRAY=()
 
 function _add_to_path {
     PATH_TO_BE_ADDED="$1"
-    2="${2:-prepend}"
 
     # If 'append', put it at the back
     if [ "$2" = "append" ]; then
@@ -44,8 +44,6 @@ _add_to_path "$HOME/.local/bin"
 _add_to_path "/usr/local/cuda/bin"
 
 # npm/yarn/node bin directories
-_add_to_path "$NPM_PACKAGES/bin"
-_add_to_path "$NPM_CONFIG_PREFIX/bin"
 _add_to_path "$HOME/.yarn/bin"
 _add_to_path "$HOME/.config/yarn/global/node_modules/.bin"
 

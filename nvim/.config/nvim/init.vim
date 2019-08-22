@@ -61,7 +61,7 @@ set undofile                    " Undo history maintained across sessions
 set undolevels=1000             " Save last 1000 changes"
 set undoreload=10000            " Load last 10,000 changes?
 set wildmenu                    " Visual autocomplete for command menu
-set updatetime=750              " UI update time for things like git-gutter
+set updatetime=500              " UI update time for things like git-gutter
 
 " Set python to homebrew version
 let homebrew_prefix=systemlist("brew --prefix")[0]
@@ -484,7 +484,8 @@ endfunction
     Plug 'sheerun/vim-polyglot' " Multi-language pack
 
     " Linters/Formatters/Checkers
-    Plug 'w0rp/ale'
+    Plug 'dense-analysis/ale'
+    Plug 'maximbaz/lightline-ale'
     Plug 'prettier/vim-prettier', {'do': 'yarn install'}
 
     " IDE & Productivity Features
@@ -523,11 +524,15 @@ endfunction
     Plug 'ryanoasis/vim-devicons'
     Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
     Plug 'pbogut/fzf-mru.vim'
+    Plug 'mike-hearn/vim-remote-vscode-connection'
 
     " Completion
     Plug 'Shougo/neco-vim'
     Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
     Plug 'neoclide/coc-neco'
+
+    " Local settings
+    Plug 'embear/vim-localvimrc'
 
     call plug#end()
 
@@ -539,7 +544,6 @@ endfunction
 let g:ale_sign_error = '✖'
 let g:ale_sign_warning = '·'
 
-" ALELint settings
 let g:ale_linters = {
             \   'sh': ['shellcheck'],
             \   'go': ['go build'],
@@ -549,7 +553,6 @@ let g:ale_linters = {
             \   'vue': ['vls']
             \}
 
-" ALEFix settings
 let g:ale_fixers = {
             \   'css': ['stylelint', 'prettier'],
             \   'go': ['gofmt'],
@@ -732,19 +735,35 @@ command! -bang JediUsage  call jedi#usages()
 command! -bang JediRename call jedi#rename()
 " }}}
 " {{{ lightline
-" let g:lightline = {
-"             \ 'colorscheme': csunderscores,
-"             \ }
-let g:lightline = {
-            \ 'colorscheme': csunderscores,
-            \ 'active': {
-            \   'left': [ [ 'mode', 'paste' ],
-            \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
-            \ },
-            \ 'component_function': {
-            \   'cocstatus': 'coc#status'
-            \ },
+let g:lightline = {}
+let g:lightline.colorscheme = csunderscores
+let g:lightline.component = {
+            \ 'customlineinfo': "Line %{line('.') . '/' . line('$')}",
             \ }
+let g:lightline.component_expand = {
+            \ 'linter_checking': 'lightline#ale#checking',
+            \ 'linter_warnings': 'lightline#ale#warnings',
+            \ 'linter_errors': 'lightline#ale#errors',
+            \ 'linter_ok': 'lightline#ale#ok',
+            \ }
+let g:lightline.component_type = {
+            \ 'linter_checking': 'left',
+            \ 'linter_warnings': 'warning',
+            \ 'linter_errors': 'error',
+            \ 'linter_ok': 'left',
+            \ }
+let g:lightline.component_function = {
+            \ 'cocstatus': 'coc#status'
+            \ }
+let g:lightline.active = {
+            \ 'left': [ [ 'mode', 'paste' ],
+            \           [ 'cocstatus', 'readonly', 'filename', 'modified' ] ],
+            \ 'right': [
+            \            [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok'],
+            \            [ 'filetype'],
+            \            [ 'customlineinfo' ],
+            \ ]
+            \}
 
   " Use auocmd to force lightline update.
   autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
@@ -824,6 +843,9 @@ let g:black_linelength = 79
 " {{{ vim-commentary
 nnoremap <silent> <leader>c<space> :Commentary<CR>
 vnoremap <silent> <leader>c<space> :Commentary<CR>
+" }}}
+" {{{ vim-localvimrc
+let g:localvimrc_persistent = 2
 " }}}
 " {{{ vim-rooter
 let g:rooter_silent_chdir = 1
@@ -930,6 +952,7 @@ autocmd FileType yaml setlocal foldmethod=indent
 " }}}
 
 " }}}
+
 
 
 " vim: foldmethod=marker: foldlevel=0: foldenable

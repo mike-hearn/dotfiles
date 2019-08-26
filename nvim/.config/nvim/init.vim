@@ -481,6 +481,7 @@ endfunction
     Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
     Plug 'ekalinin/Dockerfile.vim', { 'for': ['Dockerfile', 'docker-compose'] }
     Plug 'tweekmonster/django-plus.vim', { 'for': ['Dockerfile', 'docker-compose'] }
+    Plug 'chr4/nginx.vim'
     Plug 'sheerun/vim-polyglot' " Multi-language pack
 
     " Linters/Formatters/Checkers
@@ -666,7 +667,6 @@ nmap <leader>gcc :Gwrite<cr>:Gcommit<cr>I
 " {{{ FZF
 
 " Mappings
-nmap <silent> <C-p> :call GetTwoCharactersAndSendToFZF()<CR>
 nmap <Leader>s :Buffers<CR>
 nmap <Leader>f :FZFMru<CR>
 nmap <c-t> :FZFMru<CR>
@@ -756,10 +756,12 @@ let g:lightline.component_function = {
             \ 'cocstatus': 'coc#status'
             \ }
 let g:lightline.active = {
-            \ 'left': [ [ 'mode', 'paste' ],
-            \           [ 'cocstatus', 'readonly', 'filename', 'modified' ] ],
-            \ 'right': [
+            \ 'left': [
+            \            [ 'mode', 'paste' ],
             \            [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok'],
+            \            [ 'cocstatus', 'readonly', 'filename', 'modified' ],
+            \  ],
+            \ 'right': [
             \            [ 'filetype'],
             \            [ 'customlineinfo' ],
             \ ]
@@ -843,6 +845,12 @@ let g:black_linelength = 79
 " {{{ vim-commentary
 nnoremap <silent> <leader>c<space> :Commentary<CR>
 vnoremap <silent> <leader>c<space> :Commentary<CR>
+" }}}
+" {{{ vim-combosearch
+let g:combosearch_trigger_key = "<c-p>"
+let g:combosearch_pattern_length = 3
+let g:combosearch_ignore_patterns = [".git", "node_modules", ".venv"]
+let g:combosearch_fzf_exact_match = 1
 " }}}
 " {{{ vim-localvimrc
 let g:localvimrc_persistent = 2

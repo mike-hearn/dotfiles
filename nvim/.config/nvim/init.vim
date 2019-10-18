@@ -675,7 +675,6 @@ nmap <leader>gcc :Gwrite<cr>:Gcommit<cr>I
 " Mappings
 nmap <Leader>s :Buffers<CR>
 nmap <Leader>f :FZFMru<CR>
-nmap <c-t> :FZFMru<CR>
 
 let g:fzf_files_options =
             \ '--preview "(highlight -O ansi {} || cat {}) 2> /dev/null | head -'.&lines.'"'
@@ -854,6 +853,7 @@ vnoremap <silent> <leader>c<space> :Commentary<CR>
 " }}}
 " {{{ vim-combosearch
 let g:combosearch_trigger_key = "<c-p>"
+let g:combosearch_trigger_key_all = "<c-t>"
 let g:combosearch_pattern_length = 3
 let g:combosearch_ignore_patterns = [".git", "node_modules", ".venv"]
 let g:combosearch_fzf_exact_match = 1

@@ -486,6 +486,7 @@ endfunction
     Plug 'ekalinin/Dockerfile.vim', { 'for': ['Dockerfile', 'docker-compose'] }
     Plug 'tweekmonster/django-plus.vim', { 'for': ['Dockerfile', 'docker-compose'] }
     Plug 'chr4/nginx.vim'
+    Plug 'amadeus/vim-mjml'
     Plug 'sheerun/vim-polyglot' " Multi-language pack
 
     " Linters/Formatters/Checkers

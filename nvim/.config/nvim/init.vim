@@ -570,6 +570,7 @@ let g:ale_fixers = {
             \   'scss': ['stylelint', 'prettier', 'remove_trailing_lines'],
             \   'sh': ['shfmt'],
             \   'vue': ['prettier'],
+            \   'xml': ['xmllint'],
             \}
 
 let g:ale_python_black_options = '--line-length=80'

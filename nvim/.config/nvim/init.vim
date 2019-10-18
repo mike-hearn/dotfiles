@@ -184,6 +184,10 @@ vnoremap <leader>f y:Ag <C-R>0<CR>
 " C-i now incremeents, because C-a is tmux prefix
 nmap <leader>i <C-a>
 
+" Remap arrow keys for blink/mobile usage
+nnoremap <up> <c-u>
+nnoremap <down> <c-d>
+
 " Map c-] to go to definition
 function! GoToDefinition()
     let l:originalpos = getpos('.')

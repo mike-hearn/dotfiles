@@ -764,7 +764,7 @@ let g:lightline.active = {
             \ 'left': [
             \            [ 'mode', 'paste' ],
             \            [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok'],
-            \            [ 'cocstatus', 'readonly', 'filename', 'modified' ],
+            \            [ 'readonly', 'filename', 'modified' ],
             \  ],
             \ 'right': [
             \            [ 'filetype'],

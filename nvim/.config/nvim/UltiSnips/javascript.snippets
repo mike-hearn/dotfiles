@@ -184,6 +184,8 @@ endsnippet
 # }}}
 # {{{ Cypress Snippets
 snippet cypresstest "Cypress test" b
+/// <reference types="Cypress" />
+
 describe('$0', function() {
 	beforeEach(() => {
 		cy.visit('/');

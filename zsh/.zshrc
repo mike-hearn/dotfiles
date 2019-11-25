@@ -1,12 +1,10 @@
-SHELL=/bin/zsh
+unset ENV
 
-ZSH_CUSTOM="$HOME/.config/shell/zsh"
-
-fpath=( "$ZSH_CUSTOM/functions" $fpath )
-
-# Path to your oh-my-zsh installation.
+export SHELL=/bin/zsh
+export ZSH_CUSTOM="$HOME/.config/shell/zsh"
 export ZSH="$HOME/.oh-my-zsh"
 
+fpath=( "$ZSH_CUSTOM/functions" $fpath )
 
 plugins=(
   autojump
@@ -47,17 +45,7 @@ for f in ~/.config/shell/apps/*; do . "$f"; done
 fpath=( "$HOME/.zfunctions" ""  "${fpath[@]}" )
 
 # Spaceship prompt settings
-autoload -U promptinit; promptinit
-prompt spaceship
-SPACESHIP_PROMPT_ORDER=(user host dir git ember venv exec_time line_sep jobs exit_code char)
-SPACESHIP_CHAR_PREFIX=""
-SPACESHIP_CHAR_SUFFIX=" "
-SPACESHIP_CHAR_SYMBOL="❯"
-SPACESHIP_DOCKER_SHOW=false
-SPACESHIP_GIT_BRANCH_PREFIX=""
-SPACESHIP_PACKAGE_SHOW=false
-SPACESHIP_VI_MODE_SHOW=false
-SPACESHIP_VENV_COLOR="016"
+eval "$(starship init zsh)"
 
 # Autosource files from ~/.config/shell/zsh/autosource dir
 for file in ~/.config/shell/zsh/autosource/*sh; do
@@ -65,3 +53,8 @@ for file in ~/.config/shell/zsh/autosource/*sh; do
 done
 
 eval "$(direnv hook zsh)"
+fpath=($fpath "/home/mikehearn/.zfunctions")
+
+  # Set Spaceship ZSH as a prompt
+  autoload -U promptinit; promptinit
+  prompt spaceship

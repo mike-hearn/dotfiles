@@ -1,6 +1,5 @@
 {
   "diagnostic.displayByAle": true,
-  "diagnostic.enable": true,
   "diagnostic.errorSign": "✖",
   "diagnostic.hintSign": "·",
   "diagnostic.infoSign": "·",
@@ -8,16 +7,21 @@
   "suggest.snippetIndicator": "",
   "coc.source.ultisnips.priority": 5,
   "languageserver": {
-    "lua": {
-      "command": "lua-lsp",
-      "filetypes": ["lua"]
+    "bash": {
+      "command": "bash-language-server",
+      "args": ["start"],
+      "filetypes": ["sh"],
+      "ignoredRootPaths": ["~"]
     },
     "dockerfile": {
       "command": "docker-langserver",
       "filetypes": ["Dockerfile"],
       "args": ["--stdio"]
+    },
+    "lua": {
+      "command": "lua-lsp",
+      "filetypes": ["lua"]
     }
   },
-  "python.pythonPath": "python3",
-  "python.linting.enabled": false
+  "python.pythonPath": "python3"
 }

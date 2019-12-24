@@ -36,7 +36,7 @@ set autoindent                  " Copy the indentation from the previous line
 set backup
 set colorcolumn=80              " Visually mark col 80
 set fillchars+=vert:│           " Sleeker split character between panes
-set fo-=t                       " Don't wrap at 80 characters when typing
+set formatoptions-=t
 set hidden                      " Allows changing buffers w/o outright closing them
 set ignorecase                  " Ignore case when searching
 set iskeyword+=\-               " Makes '-' char part of a word for tags, searching, etc
@@ -481,7 +481,6 @@ endfunction
     Plug 'fatih/vim-go'
     Plug 'jceb/vim-orgmode'
     Plug 'tpope/vim-speeddating', { 'for': 'org'}  " Required by orgmode
-    Plug 'davidhalter/jedi-vim', { 'for': 'python' }
     Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
     Plug 'ekalinin/Dockerfile.vim', { 'for': ['Dockerfile', 'docker-compose'] }
     Plug 'tweekmonster/django-plus.vim', { 'for': ['Dockerfile', 'docker-compose'] }
@@ -525,7 +524,6 @@ endfunction
     Plug 'romainl/vim-cool' " Un-highlights text if you navigate away from word
     Plug 'tpope/vim-sleuth' " Basically triggers :noh once you move your cursor off a highlighted word
     Plug 'tpope/vim-tbone'  " Adds tmux commands to vim, specifically copying into tmux clipboard
-    Plug 'Konfekt/FastFold' " Speeds up folding, supposedly
     Plug 'ludovicchabant/vim-gutentags' " Automatically creates tags file
     Plug 'ryanoasis/vim-devicons'
     Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
@@ -920,52 +918,80 @@ exec 'hi Visual ctermbg=19'
 " {{{ General file settings
 
 " Write filename to history file on open/read
-autocmd BufReadPost * call WriteFileToHistory()
+augroup write_file
+  autocmd!
+  autocmd BufReadPost * call WriteFileToHistory()
+augroup END
 
 " When switching buffers, preserve window view.
-autocmd BufLeave * call AutoSaveWinView()
-autocmd BufEnter * call AutoRestoreWinView()
+augroup save_restore_win_view
+  autocmd!
+  autocmd BufLeave * call AutoSaveWinView()
+  autocmd BufEnter * call AutoRestoreWinView()
+augroup END
 
 " }}}
 " {{{ CSS/SCSS
-autocmd FileType css,css setlocal foldmethod=syntax
+augroup filetype_css
+  autocmd!
+  autocmd FileType css setlocal foldmethod=syntax
+augroup END
 " }}}
 " {{{ Go
-autocmd FileType go setlocal foldmethod=syntax
+augroup filetype_go
+  autocmd!
+  autocmd FileType go setlocal foldmethod=syntax
+augroup END
 " }}}
 " {{{ HTML/Handlebars/Mustache
-autocmd FileType handlebars,html,html.handlebars setlocal foldmethod=indent
-autocmd FileType htmldjango setlocal foldmethod=indent
+augroup filetype_html_handlebars_etc
+  autocmd!
+  autocmd FileType handlebars,html,html.handlebars setlocal foldmethod=indent
+  autocmd FileType htmldjango setlocal foldmethod=indent
+augroup END
 " }}}
 " {{{ Javascript/JSX
-autocmd FileType html.handlebars setlocal foldmethod=indent
-autocmd FileType javascript,javascript.jsx,json setlocal foldmethod=syntax
-autocmd FileType javascript,javascript.jsx,json nnoremap <buffer> <leader>b odebugger;<esc>k
-autocmd FileType javascript,javascript.jsx,json nnoremap <buffer> <leader>B Odebugger;<esc>j
+augroup filetype_javascript_jsx
+  autocmd!
+  autocmd FileType javascript,javascript.jsx,json setlocal foldmethod=syntax
+  autocmd FileType javascript,javascript.jsx,json nnoremap <buffer> <leader>b odebugger;<esc>k
+  autocmd FileType javascript,javascript.jsx,json nnoremap <buffer> <leader>B Odebugger;<esc>j
+augroup END
 " }}}
 " {{{ JSON
-autocmd FileType json setlocal foldmethod=syntax
+augroup filetype_json
+  autocmd!
+  autocmd FileType json setlocal foldmethod=syntax
+augroup END
 " }}}
 " {{{ Python
-autocmd FileType python setlocal foldmethod=expr
-autocmd FileType python nnoremap <buffer> <leader>b oimport ipdb<CR>ipdb.set_trace()  # XXX BREAKPOINT<esc>k
-autocmd FileType python nnoremap <buffer> <leader>B Oimport ipdb<CR>ipdb.set_trace()  # XXX BREAKPOINT<esc>j
+augroup filetype_python
+  autocmd!
+  autocmd FileType python setlocal foldmethod=indent
+  autocmd FileType python nnoremap <buffer> <leader>b oimport ipdb<CR>ipdb.set_trace()  # XXX BREAKPOINT<esc>k
+  autocmd FileType python nnoremap <buffer> <leader>B Oimport ipdb<CR>ipdb.set_trace()  # XXX BREAKPOINT<esc>j
+augroup END
 " }}}
 " {{{ sh
-autocmd FileType sh setlocal foldmethod=indent
+augroup filetype_sh
+  autocmd!
+  autocmd FileType sh setlocal foldmethod=indent
+augroup END
 " }}}
 " {{{ Vim
-autocmd FileType vim setlocal shiftwidth=4
-autocmd FileType vim setlocal foldmethod=marker
-autocmd FileType vim map <buffer> [[ ?{{{<CR>:noh<CR>
-autocmd FileType vim map <buffer> ]] ?}}}<CR>:noh<CR>
+augroup filetype_vim
+  autocmd!
+  autocmd FileType vim setlocal shiftwidth=4
+  autocmd FileType vim setlocal foldmethod=marker
+augroup END
 " }}}
 " {{{ YAML
-autocmd FileType yaml setlocal foldmethod=indent
+augroup filetype_yaml
+  autocmd!
+  autocmd FileType yaml setlocal foldmethod=indent
+augroup END
 " }}}
 
 " }}}
-
-
 
 " vim: foldmethod=marker: foldlevel=0: foldenable

@@ -9,10 +9,16 @@ export SHELL=/bin/zsh
 export ZSH_CUSTOM="$HOME/.config/shell/zsh"
 export ZSH="$HOME/.oh-my-zsh"
 
+# Autosource files
+for f in ~/.config/shell/shared/*; do . "$f"; done
+for f in ~/.config/shell/apps/*; do . "$f"; done
+for f in ~/.config/shell/zsh/autosource/*sh; do . "$f"; done
+
 # function path
 fpath+=(
   "$ZSH_CUSTOM/functions"
   "$HOME/.zfunctions"
+  "$fpath"
 )
 
 # oh-my-zsh plugins+source
@@ -53,8 +59,3 @@ eval "$(starship init zsh)"
 
 # Direnv
 eval "$(direnv hook zsh)"
-
-# Autosource files
-for f in ~/.config/shell/shared/*; do . "$f"; done
-for f in ~/.config/shell/apps/*; do . "$f"; done
-for f in ~/.config/shell/zsh/autosource/*sh; do . "$f"; done

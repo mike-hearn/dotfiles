@@ -36,6 +36,9 @@ shopt -s no_empty_cmd_completion >/dev/null 2>&1
 # fuck that you have new mail shit
 unset MAILCHECK
 
+# this gets used elsewhere so unset it
+unset ENV
+
 # disable core dumps
 ulimit -S -c 0
 

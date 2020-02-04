@@ -9,11 +9,6 @@ export SHELL=/bin/zsh
 export ZSH_CUSTOM="$HOME/.config/shell/zsh"
 export ZSH="$HOME/.oh-my-zsh"
 
-# Autosource files
-for f in ~/.config/shell/shared/*; do . "$f"; done
-for f in ~/.config/shell/apps/*; do . "$f"; done
-for f in ~/.config/shell/zsh/autosource/*sh; do . "$f"; done
-
 # function path
 fpath+=(
   "$ZSH_CUSTOM/functions"
@@ -24,7 +19,6 @@ fpath+=(
 # oh-my-zsh plugins+source
 plugins=(
   autojump
-  conda
   django
   docker
   docker-compose
@@ -38,6 +32,11 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
+
+# Autosource files
+for f in ~/.config/shell/shared/*; do . "$f"; done
+for f in ~/.config/shell/apps/*; do . "$f"; done
+for f in ~/.config/shell/zsh/autosource/*sh; do . "$f"; done
 
 # Base16 shell
 BASE16_SHELL="$HOME/.config/base16-shell/"
@@ -59,3 +58,7 @@ eval "$(starship init zsh)"
 
 # Direnv
 eval "$(direnv hook zsh)"
+
+# Set Spaceship ZSH as a prompt
+autoload -U promptinit; promptinit
+prompt spaceship

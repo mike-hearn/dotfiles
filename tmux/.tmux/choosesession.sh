@@ -15,6 +15,6 @@ function tmux_switch_to_session() {
 
 cat <(echo "$TMUXSESSIONS") <(echo "$TMUXINATORSESSIONS") \
 	| sort -rfu \
-	| ~/.fzf/bin/fzf-tmux \
+	| fzf-tmux \
 	| tr -d '\n' \
 	| tmux_switch_to_session

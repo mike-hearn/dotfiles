@@ -3,6 +3,9 @@
     email = git@mikehearn.net
 [alias]
     cont = rebase --continue
+    ignore = update-index --assume-unchanged
+    ignored = !git ls-files -v | grep "^[[:lower:]]" | cut -c 3-
+    unignore-all = !git update-index --no-assume-unchanged $(git ignored)
     lg = log -10 --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
     lga = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
     oldest-ancestor = !bash -c 'diff -u <(git rev-list --first-parent "${1:-master}") <(git rev-list --first-parent "${2:-HEAD}") | sed -ne \"s/^ //p\" | head -1' -
@@ -47,3 +50,8 @@
     oldHighlight = red bold 52
     newNormal = green bold
     newHighlight = green bold 22
+[log]
+  date = relative
+[format]
+  pretty = format:%C(yellow)%C(bold)%h%Creset %ae %Cgreen%s%Creset %Cblue%ad%Creset
+

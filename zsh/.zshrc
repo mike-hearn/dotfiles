@@ -58,7 +58,3 @@ eval "$(starship init zsh)"
 
 # Direnv
 eval "$(direnv hook zsh)"
-
-# Set Spaceship ZSH as a prompt
-autoload -U promptinit; promptinit
-prompt spaceship

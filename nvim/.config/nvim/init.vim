@@ -33,8 +33,10 @@ syntax enable
 
 set autochdir                   " Autoset working dir to current file's dir
 set autoindent                  " Copy the indentation from the previous line
-set backup
+set nobackup                    " Advised by setting by coc.nvim
+set nowritebackup               " Advised by setting by coc.nvim
 set colorcolumn=80              " Visually mark col 80
+set cmdheight=2
 set fillchars+=vert:│           " Sleeker split character between panes
 set formatoptions-=t
 set hidden                      " Allows changing buffers w/o outright closing them
@@ -52,6 +54,7 @@ set shiftround                  " Rounds your tabs if you're on a weird interval
 set shiftwidth=4                " Amount of whitespace to insert
 set shortmess+=c
 set showmatch                   " Highlight matching paren, brace, bracket
+set signcolumn=yes
 set smartcase                   " Ignore case if search pattern is lowercase
 set softtabstop=4               " Fine-tunes amount of insert whitespace
 set spellsuggest=best,10        " Spelling
@@ -61,7 +64,7 @@ set undofile                    " Undo history maintained across sessions
 set undolevels=1000             " Save last 1000 changes"
 set undoreload=10000            " Load last 10,000 changes?
 set wildmenu                    " Visual autocomplete for command menu
-set updatetime=500              " UI update time for things like git-gutter
+set updatetime=300              " UI update time for things like git-gutter
 
 " Set python to homebrew version
 let homebrew_prefix=systemlist("brew --prefix")[0]
@@ -189,7 +192,7 @@ nnoremap <up> <c-u>
 nnoremap <down> <c-d>
 
 " Map c-] to go to definition
-function! GoToDefinition()
+function! GoToDefinition() abort
     let l:originalpos = getpos('.')
     let l:newlinepos = getpos('.')
     let l:original_filename = expand('%')
@@ -229,7 +232,7 @@ nnoremap <silent> <c-]> :call GoToDefinition()<CR>
 
 " Writes current full file path to ~/.vim_history unless it is part of a
 " plugin (hence the check for ///, e.g. fugitive:///...)
-function! WriteFileToHistory()
+function! WriteFileToHistory() abort
     if expand('%:p') !~ "\/\/\/"
         call system('touch ~/.vim_history')
         call system('echo '.shellescape(expand('%:p')).' >> ~/.vim_history')
@@ -247,7 +250,7 @@ endfunction
 
 
 " Restore current view settings.
-function! AutoRestoreWinView()
+function! AutoRestoreWinView() abort
     let buf = bufnr("%")
     if exists("w:SavedBufView") && has_key(w:SavedBufView, buf)
         let v = winsaveview()
@@ -260,7 +263,7 @@ function! AutoRestoreWinView()
 endfunction
 
 
-function! FoldAroundSelection()
+function! FoldAroundSelection() abort
     if !exists("b:originalfoldmethod")
         let b:originalfoldmethod = &foldmethod
     endif
@@ -276,7 +279,7 @@ function! FoldAroundSelection()
 endfunction
 
 
-function! RemoveAllFoldsAndResetFoldmethod()
+function! RemoveAllFoldsAndResetFoldmethod() abort
     if exists("b:originalfoldmethod")
         let &foldmethod = b:originalfoldmethod
     endif
@@ -284,7 +287,7 @@ function! RemoveAllFoldsAndResetFoldmethod()
 endfunction
 
 
-function! UnfoldAndRememberScrollPosition(foldlevel)
+function! UnfoldAndRememberScrollPosition(foldlevel) abort
     " Grab initial line & curs position
     let l:originalpos = getpos('.')
     let l:originalline = l:originalpos[1]
@@ -315,14 +318,14 @@ function! UnfoldAndRememberScrollPosition(foldlevel)
 
 endfunction
 
-function! SplitAndMaintainPosition()
+function! SplitAndMaintainPosition() abort
     only
     let l:winview = winsaveview()
     :vsp %
     call winrestview(l:winview)
 endfunc
 
-function! ShiftSplitAndLock()
+function! ShiftSplitAndLock() abort
     " When a pane is split in two, this will shift the right page a full page
     " view, and scrollbind the two panes, so double the length is visible
     only
@@ -336,7 +339,7 @@ function! ShiftSplitAndLock()
     set scrollbind
 endfunction
 
-function! TriShiftSplitAndLock()
+function! TriShiftSplitAndLock() abort
     " Same as ShiftSplitAndLock, except creates three scrollbound panes.
 
     " First window
@@ -368,7 +371,7 @@ endfunction
 
 
 " Toggle between standard and relative line numbers
-function! NumberToggle()
+function! NumberToggle() abort
     if(&relativenumber == 1)
         set norelativenumber
         set number
@@ -378,7 +381,7 @@ function! NumberToggle()
 endfunc
 
 " Remove dead files from MRU list
-function! Refresh_MRU()
+function! Refresh_MRU() abort
     for l:file in fzf_mru#mrufiles#list('raw')
         let l:to_remove = []
         if !filereadable(l:file)
@@ -401,7 +404,8 @@ command! -nargs=0 -range SortWords call SortWords()
 vmap ,s :SortWords<CR>
 " Normal mode one: ,s to select the string and sort it
 nmap ,s vi",s
-function! SortWords()
+
+function! SortWords() abort
     " Get the visual mark points
     let StartPosition = getpos("'<")
     let EndPosition = getpos("'>")
@@ -532,7 +536,7 @@ endfunction
 
     " Completion
     Plug 'Shougo/neco-vim'
-    Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'neoclide/coc-neco'
 
     " Local settings
@@ -636,7 +640,7 @@ nmap <silent> gr <Plug>(coc-references)
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 nnoremap <silent> <leader>K :call <SID>show_documentation()<CR>
 
-function! s:show_documentation()
+function! s:show_documentation() abort
   if &filetype == 'vim'
     execute 'h '.expand('<cword>')
   else

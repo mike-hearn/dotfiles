@@ -15,7 +15,7 @@ alias gk="gitk --all&"
 alias got="git "
 alias gps="git stash save --include-untracked; git pull; git stash pop;"
 alias grb="git for-each-ref --sort=-committerdate refs/remotes/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'"
-alias gs=$'git -c color.ui=always status --short --branch | /usr/bin/python -c \'import sys, re; \ order = {"A ":1," M":3,"??":2,"##":0}; ansi_re = re.compile(r"\x1b[^m]*m");\ print "".join(sorted(sys.stdin.readlines(),cmp=lambda x,y: \ cmp(order.get(ansi_re.sub("", x)[0:2],0), order.get(ansi_re.sub("", y)[0:2],0))))\''
+alias gs=$'git -c color.ui=always status --short --branch | /usr/bin/python2 -c \'import sys, re; \ order = {"A ":1," M":3,"??":2,"##":0}; ansi_re = re.compile(r"\x1b[^m]*m");\ print "".join(sorted(sys.stdin.readlines(),cmp=lambda x,y: \ cmp(order.get(ansi_re.sub("", x)[0:2],0), order.get(ansi_re.sub("", y)[0:2],0))))\''
 alias gx="gitx --all"
 alias pull="git pull"
 alias recent="git for-each-ref --sort=-committerdate"

@@ -255,9 +255,17 @@ function ffsplit() { ffmpeg -i "$1" -f segment -segment_time 0.001 -vcodec copy 
 # Use ffmpeg to create a GIF
 palette="/tmp/palette.png"
 filters="scale=${2-400}:-1:flags=lanczos"
+gifsize="400"
 function Ffmpeggif() {
     ffmpeg -v warning -i "$1" -vf "$filters,palettegen" -y $palette
     ffmpeg -v warning -i "$1" -i $palette -lavfi "$filters [x]; [x][1:v] paletteuse" -y "$1.gif"
+}
+function Ffmpeggif2() {
+    echo "Creating gif..."
+    ffmpeg -i "$1" -filter_complex "[0:v]scale=${2-$gifsize}:-2:flags=bicubic[bg];[bg]split[vid][pal];[pal]palettegen[pal];[vid][pal]paletteuse" -y "$1.gif"
+    echo "Creating compressed/lossy GIF via gifsicle..."
+    gifsicle "$1.gif" --lossy -o "$1.lossy.gif"
+    echo "Done."
 }
 
 # Convert file to WebM

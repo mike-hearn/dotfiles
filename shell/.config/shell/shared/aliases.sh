@@ -33,7 +33,7 @@ alias x='exit'
 alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
 
 # ls priority: exa, then gls, then ls
-if [[ -n $(command -v exa) ]]; then
+if [ -x "$(command -v exa)" ]; then
     alias ls="command exa -l --group-directories-first --git"
     alias la="command exa -la --group-directories-first --git"
     alias l="command exa -la --group-directories-first --git"

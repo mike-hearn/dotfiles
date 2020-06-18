@@ -4,16 +4,6 @@
 set -o vi # Default editor is now VIM
 export EDITOR=nvim
 
-# PAGER
-if [ -n "$(command -v less)" ]; then
-    PAGER="less -FirSwX"
-    MANPAGER="less -FiRswX"
-else
-    PAGER=more
-    MANPAGER="$PAGER"
-fi
-export PAGER MANPAGER
-
 # Make Python use UTF-8 encoding for output to stdin, stdout, and stderr.
 export PYTHONIOENCODING='UTF-8';
 

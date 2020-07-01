@@ -33,26 +33,8 @@ source $ZSH/oh-my-zsh.sh
 
 # Autosource files
 for f in ~/.config/shell/shared/*; do . "$f"; done
-for f in ~/.config/shell/apps/*; do . "$f"; done
+for f in ~/.config/shell/settings/*; do . "$f"; done
 for f in ~/.config/shell/zsh/autosource/*sh; do . "$f"; done
-
-# Source environment specific instructions
-source $HOME/.shenv
-
-# Base16 shell
-BASE16_SHELL="$HOME/.config/base16-shell/"
-[ -n "$PS1" ] && \
-  [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
-  eval "$("$BASE16_SHELL/profile_helper.sh")"
-
-# FZF
-_fzf_compgen_path() {
-  fd --hidden --follow --exclude ".git" . "$1"
-}
-_fzf_compgen_dir() {
-  fd --type d --hidden --follow --exclude ".git" . "$1"
-}
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Spaceship prompt settings
 eval "$(starship init zsh)"

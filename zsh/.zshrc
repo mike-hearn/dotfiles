@@ -1,8 +1,5 @@
 unset ENV
 
-# autoloads
-autoload -Uz compinit; compinit
-
 # exports
 export LESS="-R --quit-if-one-screen"
 export SHELL=/bin/zsh
@@ -19,6 +16,7 @@ fpath+=(
 # oh-my-zsh plugins+source
 plugins=(
   autojump
+  direnv
   django
   docker
   docker-compose
@@ -38,6 +36,9 @@ for f in ~/.config/shell/shared/*; do . "$f"; done
 for f in ~/.config/shell/apps/*; do . "$f"; done
 for f in ~/.config/shell/zsh/autosource/*sh; do . "$f"; done
 
+# Source environment specific instructions
+source $HOME/.shenv
+
 # Base16 shell
 BASE16_SHELL="$HOME/.config/base16-shell/"
 [ -n "$PS1" ] && \
@@ -55,6 +56,3 @@ _fzf_compgen_dir() {
 
 # Spaceship prompt settings
 eval "$(starship init zsh)"
-
-# Direnv
-eval "$(direnv hook zsh)"

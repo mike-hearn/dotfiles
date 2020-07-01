@@ -59,6 +59,7 @@ set smartcase                   " Ignore case if search pattern is lowercase
 set softtabstop=4               " Fine-tunes amount of insert whitespace
 set spellsuggest=best,10        " Spelling
 set tabstop=4                   " Specifies width of tab character
+set termguicolors
 set tw=79                       " Width of document (used by gd)
 set undofile                    " Undo history maintained across sessions
 set undolevels=1000             " Save last 1000 changes"
@@ -533,6 +534,7 @@ endfunction
     Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
     Plug 'pbogut/fzf-mru.vim'
     Plug 'mike-hearn/vim-remote-vscode-connection'
+    Plug 'danilamihailov/beacon.nvim'
 
     " Completion
     Plug 'Shougo/neco-vim'
@@ -579,6 +581,9 @@ let g:ale_python_black_options = '--line-length=80'
 autocmd FileType html.handlebars let b:ale_javascript_prettier_options = '--parser=glimmer'
 
 let g:jsx_ext_required = 0
+" }}}
+" {{{ beacon.nvim
+let g:beacon_size = 40
 " }}}
 " {{{ BufTabLine
 let g:buftabline_numbers = 2

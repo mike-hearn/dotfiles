@@ -1,7 +1,12 @@
-extra
-tmux/.tmux/plugins/
 .netrwhist
-.stignore
-.stfolder
-.stversions
 .npmrc
+.stfolder
+.stignore
+.stversions
+extra
+nvim/.config/coc/extensions/coc-python-data/
+nvim/.config/coc/extensions/db.json
+nvim/.config/coc/extensions/node_modules/
+nvim/.config/coc/extensions/yarn.lock
+nvim/.config/coc/memos.json
+tmux/.tmux/plugins/

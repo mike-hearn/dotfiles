@@ -1,6 +1,7 @@
 *~
 .DS_Store
-venv/
+.direnv
+.lvimrc
 .venv/
 tags
-.lvimrc
+venv/

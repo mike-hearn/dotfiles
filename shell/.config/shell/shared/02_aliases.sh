@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
 # Git
-alias ga="git add "
-alias gaa="git add --all"
+alias ga="git add " alias gaa="git add --all"
 alias gb="git branch "
 alias gbr="git for-each-ref --sort=-committerdate refs/remotes/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'"
 alias gc="git commit"
@@ -43,3 +42,6 @@ fi
 
 # Default ripgrep settings
 alias rg="rg --max-columns=1000 --smart-case"
+
+# autojump key now uses z, in case I can't fix my muscle memory
+alias j="z"

@@ -59,7 +59,6 @@ set smartcase                   " Ignore case if search pattern is lowercase
 set softtabstop=4               " Fine-tunes amount of insert whitespace
 set spellsuggest=best,10        " Spelling
 set tabstop=4                   " Specifies width of tab character
-set termguicolors
 set tw=79                       " Width of document (used by gd)
 set undofile                    " Undo history maintained across sessions
 set undolevels=1000             " Save last 1000 changes"
@@ -913,6 +912,7 @@ exec 'hi NonText ctermfg=bg guifg=bg'
 exec 'hi Pmenu ctermbg=18'
 exec 'hi PmenuSel ctermfg=0 ctermbg=7'
 exec 'hi QuickFixLine ctermbg=19'
+exec 'hi SignColumn ctermbg=0 ctermfg=15'
 exec 'hi StatusLineNC ctermbg=0'
 exec 'hi TabLine ctermbg=18'
 exec 'hi TabLineFill ctermbg=18 ctermfg=20'

@@ -15,7 +15,6 @@ fpath+=(
 
 # oh-my-zsh plugins+source
 plugins=(
-  autojump
   direnv
   django
   docker
@@ -27,6 +26,7 @@ plugins=(
   ssh-agent
   vi-mode
   yarn
+  z
 )
 
 source $ZSH/oh-my-zsh.sh

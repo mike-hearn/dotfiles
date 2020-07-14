@@ -881,9 +881,11 @@ nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
 " }}}
 
 " {{{ Colors ··································································
-if &term =~# '^screen'
-    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+" Fixes a bug with termguicolors and tmux
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
 endif
 
 exec 'hi ALEError cterm=underline ctermfg=1 gui=bold,undercurl guifg=' . g:terminal_color_1
@@ -912,7 +914,7 @@ exec 'hi NonText ctermfg=bg guifg=bg'
 exec 'hi Pmenu ctermbg=18'
 exec 'hi PmenuSel ctermfg=0 ctermbg=7'
 exec 'hi QuickFixLine ctermbg=19'
-exec 'hi SignColumn ctermbg=0 ctermfg=15'
+exec 'hi SignColumn ctermbg=0 ctermfg=15 guibg=0'
 exec 'hi StatusLineNC ctermbg=0'
 exec 'hi TabLine ctermbg=18'
 exec 'hi TabLineFill ctermbg=18 ctermfg=20'

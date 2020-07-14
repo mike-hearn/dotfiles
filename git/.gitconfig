@@ -12,6 +12,7 @@
     rb = for-each-ref --count=20 --sort=-committerdate refs/heads/ --format=\\'%(refname:short)\\'
     stash-all = stash save --include-untracked
     stash-unstaged = stash save --keep-index
+    submoduleupdate = submodule update --remote --merge
     top = rev-parse --show-toplevel
 [core]
     excludesfile = ~/.gitignore_global

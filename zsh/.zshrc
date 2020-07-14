@@ -29,6 +29,9 @@ plugins=(
   z
 )
 
+# Don't auto-update oh-my-zsh
+DISABLE_AUTO_UPDATE="true"
+
 source $ZSH/oh-my-zsh.sh
 
 # Autosource files

@@ -46,6 +46,7 @@ _add_to_path "/usr/local/cuda/bin"
 # npm/yarn/node bin directories
 _add_to_path "$HOME/.yarn/bin"
 _add_to_path "$HOME/.config/yarn/global/node_modules/.bin"
+_add_to_path "$HOME/.nodenv/shims"
 
 # Python site-packages support
 _add_to_path "$HOME/Library/Python/2.7/bin"

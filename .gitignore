@@ -8,8 +8,7 @@ nvim/.config/coc/extensions/coc-python-data/
 nvim/.config/coc/extensions/db.json
 nvim/.config/coc/extensions/node_modules/
 nvim/.config/coc/extensions/yarn.lock
-nvim/.config/coc/memos.json
-tmux/.tmux/plugins/
-
 nvim/.config/coc/history.json
+nvim/.config/coc/memos.json
 nvim/.config/coc/mru
+tmux/.tmux/plugins/

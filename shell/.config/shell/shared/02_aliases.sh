@@ -14,7 +14,7 @@ alias gk="gitk --all&"
 alias got="git "
 alias gps="git stash save --include-untracked; git pull; git stash pop;"
 alias grb="git for-each-ref --sort=-committerdate refs/remotes/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'"
-alias gs=$'git -c color.ui=always status --short --branch | /usr/bin/python2 -c \'import sys, re; \ order = {"A ":1," M":3,"??":2,"##":0}; ansi_re = re.compile(r"\x1b[^m]*m");\ print "".join(sorted(sys.stdin.readlines(),cmp=lambda x,y: \ cmp(order.get(ansi_re.sub("", x)[0:2],0), order.get(ansi_re.sub("", y)[0:2],0))))\''
+alias gs="echo;echo;git status -s;echo;"
 alias gx="gitx --all"
 alias pull="git pull"
 alias recent="git for-each-ref --sort=-committerdate"
@@ -30,7 +30,6 @@ alias x='exit'
 
 # Find external IP address
 alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
-
 # ls priority: exa, then gls, then ls
 if [ -x "$(command -v exa)" ]; then
     alias ls="command exa -l --group-directories-first --git"
@@ -45,3 +44,6 @@ alias rg="rg --max-columns=1000 --smart-case"
 
 # autojump key now uses z, in case I can't fix my muscle memory
 alias j="z"
+
+# move the system bin path to the front of $PATH
+alias systembin="export PATH=/usr/bin:$PATH"

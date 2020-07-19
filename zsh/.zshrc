@@ -22,7 +22,6 @@ plugins=(
   fzf
   git
   npm
-  nvmfast
   ssh-agent
   vi-mode
   yarn

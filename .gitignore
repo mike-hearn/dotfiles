@@ -10,3 +10,6 @@ nvim/.config/coc/extensions/node_modules/
 nvim/.config/coc/extensions/yarn.lock
 nvim/.config/coc/memos.json
 tmux/.tmux/plugins/
+
+nvim/.config/coc/history.json
+nvim/.config/coc/mru

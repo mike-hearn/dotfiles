@@ -16,24 +16,12 @@
     top = rev-parse --show-toplevel
 [core]
     excludesfile = ~/.gitignore_global
-    pager = diff-so-fancy | less --tabs=4 -RFX
-[difftool "sourcetree"]
-    cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-    path =
-[mergetool "sourcetree"]
-    cmd = /opt/homebrew-cask/Caskroom/sourcetree/2.0.2/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-    trustExitCode = true
-[color]
-    diff = auto
-    ui = true
-
-[color "diff"]
-    meta = yellow
-    frag = magenta bold
-    old = red bold
-    new = green bold
-    commit = yellow bold
-    whitespace = red reverse
+    pager = delta
+[delta]
+    plus-color = "#012800"
+    minus-color = "#340001"
+	side-by-side = true
+  line-numbers = true
 [filter "lfs"]
     process = git-lfs filter-process
     required = true
@@ -43,9 +31,6 @@
     added = green bold
     changed = yellow bold
     untracked = red
-[pager]
-    diff = "diff-so-fancy | less --tabs=4 -RFX"
-    show = "diff-so-fancy | less --tabs=4 -RFX"
 [color "diff-highlight"]
     oldNormal = red bold
     oldHighlight = red bold 52
@@ -55,6 +40,5 @@
   date = relative
 [format]
   pretty = format:%C(yellow)%C(bold)%h%Creset %ae %Cgreen%s%Creset %Cblue%ad%Creset
-
 [pull]
-	rebase = true
+  rebase = true

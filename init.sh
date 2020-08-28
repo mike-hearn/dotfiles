@@ -16,6 +16,7 @@ stow -t $HOME git
 stow -t $HOME node
 stow -t $HOME nvim
 stow -t $HOME shell
+stow -t $HOME terminfo
 stow -t $HOME tmux
 stow -t $HOME tmuxinator
 stow -t $HOME vim

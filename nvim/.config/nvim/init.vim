@@ -623,16 +623,18 @@ inoremap <silent><expr> <c-k> coc#refresh()
 
 " Use tab for trigger completion with characters ahead and navigate.
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
 
 function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~# '\s'
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
+
+let g:coc_snippet_next = '<tab>'
+
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
@@ -845,9 +847,9 @@ call tinymode#Map("winsize", ">", "3wincmd >")
 call tinymode#Map("winsize", "<", "3wincmd <")
 " }}}
 " {{{ UltiSnips
-let g:UltiSnipsExpandTrigger="<c-t>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsExpandTrigger="<NUL>"
+let g:UltiSnipsJumpBackwardTrigger="<NUL>"
+let g:UltiSnipsJumpForwardTrigger="<NUL>"
 nnoremap <Leader>U :UltiSnipsEdit<CR>
 " }}}
 " {{{ vim-black

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TMUXINATORSESSIONS=$(\ls ~/.tmuxinator/ | sed -e 's/\.yml$//' | sed -e 's/[ -_]/-/g')
+TMUXINATORSESSIONS=$(\ls ~/.tmuxinator/ | sed -e 's/\.yml$//')
 
 function restart_session() {
 	read session

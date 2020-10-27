@@ -680,6 +680,8 @@ nmap <leader>gcc :Gwrite<cr>:Gcommit<cr>I
 " }}}
 " {{{ FZF
 
+let g:fzf_layout = { 'down': '~40%' }
+
 " Mappings
 nmap <Leader>s :Buffers<CR>
 nmap <Leader>f :FZFMru<CR>

@@ -7,6 +7,6 @@
 [submodule "zsh/.oh-my-zsh"]
 	path = zsh/.oh-my-zsh
 	url = https://github.com/robbyrussell/oh-my-zsh.git
-[submodule "submodules/fzf-tab-completion"]
-	path = submodules/fzf-tab-completion
-	url = https://github.com/lincheney/fzf-tab-completion.git
+[submodule "shell/.config/shell/zsh/plugins/fzf-tab"]
+	path = shell/.config/shell/zsh/plugins/fzf-tab
+	url = https://github.com/Aloxaf/fzf-tab.git

@@ -20,6 +20,7 @@ plugins=(
   docker
   docker-compose
   fzf
+  fzf-tab
   git
   npm
   ssh-agent
@@ -41,5 +42,4 @@ for f in ~/.config/shell/zsh/autosource/*sh; do . "$f"; done
 # Spaceship prompt settings
 eval "$(starship init zsh)"
 
-# Use fzf for autocomplete
-source $HOME/.dotfiles/submodules/fzf-tab-completion/zsh/fzf-zsh-completion.sh
+enable-fzf-tab

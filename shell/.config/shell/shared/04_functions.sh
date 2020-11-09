@@ -424,4 +424,22 @@ deactivate () {
 }
 
 
+portkill () {
+    local _hasbeenkilled=0
+    if sudo lsof -t -i ":$1" | xargs kill 2> /dev/null; then
+        echo -e "\nKilled :$1"
+        _hasbeenkilled=1
+    fi
+    if sudo docker container ls | grep ":$1" | awk '{print $1}' | xargs docker kill 2> /dev/null; then
+        echo -e "\nKilled :$1"
+        _hasbeenkilled=1
+    fi
+
+    if [ $_hasbeenkilled -eq 0 ]; then
+        echo -e "\nNothing killed"
+    fi
+
+}
+
+
 # vim: syntax=sh ts=4 sts=4 shiftwidth=4 expandtab

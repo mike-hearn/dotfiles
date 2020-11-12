@@ -26,7 +26,6 @@ plugins=(
   ssh-agent
   vi-mode
   yarn
-  z
 )
 
 # Don't auto-update oh-my-zsh
@@ -41,5 +40,8 @@ for f in ~/.config/shell/zsh/autosource/*sh; do . "$f"; done
 
 # Spaceship prompt settings
 eval "$(starship init zsh)"
+
+# Jump directory navigation
+eval "$(jump shell zsh)"
 
 enable-fzf-tab

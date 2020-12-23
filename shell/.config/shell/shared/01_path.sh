@@ -36,6 +36,9 @@ function _construct_path {
     _add_to_path "/home/linuxbrew/.linuxbrew/bin"
     _add_to_path "/home/linuxbrew/.linuxbrew/Homebrew/Library/Homebrew/vendor/portable-ruby/2.3.3/bin:"
 
+    # Homebrew on Apple Silicon, if you please
+    _add_to_path "/opt/homebrew/bin"
+
     # Various local `bin` directories
     _add_to_path "$HOME/bin"
     _add_to_path "$HOME/.bin"

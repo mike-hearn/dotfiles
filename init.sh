@@ -8,11 +8,12 @@ mkdir -p $HOME/.vim
 mkdir -p $HOME/.terminfo/78/
 
 # Initial stow
-stow -t $HOME bin
 stow -t $HOME base16
+stow -t $HOME bin
 stow -t $HOME ctags
 stow -t $HOME editorconfig
 stow -t $HOME git
+stow -t $HOME kitty
 stow -t $HOME node
 stow -t $HOME nvim
 stow -t $HOME shell

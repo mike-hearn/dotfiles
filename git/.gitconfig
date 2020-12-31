@@ -13,6 +13,7 @@
     stash-all = stash save --include-untracked
     stash-unstaged = stash save --keep-index
     submoduleupdate = submodule update --remote --merge
+    submoduledownload = submodule update --init --recursive
     top = rev-parse --show-toplevel
 [core]
     excludesfile = ~/.gitignore_global

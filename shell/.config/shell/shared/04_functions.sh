@@ -257,12 +257,9 @@ palette="/tmp/palette.png"
 filters="scale=${2-400}:-1:flags=lanczos"
 gifsize="400"
 function Ffmpeggif() {
-    ffmpeg -v warning -i "$1" -vf "$filters,palettegen" -y $palette
-    ffmpeg -v warning -i "$1" -i $palette -lavfi "$filters [x]; [x][1:v] paletteuse" -y "$1.gif"
-}
-function Ffmpeggif2() {
+    framerate=$(ffprobe -v 0 -of csv=p=0 -select_streams v:0 -show_entries stream=r_frame_rate "$1")
     echo "Creating gif..."
-    ffmpeg -i "$1" -filter_complex "[0:v]scale=${2-$gifsize}:-2:flags=bicubic[bg];[bg]split[vid][pal];[pal]palettegen[pal];[vid][pal]paletteuse" -y "$1.gif"
+    ffmpeg -i "$1" -r "${3:-$framerate}" -filter_complex "[0:v]scale=${2-$gifsize}:-2:flags=bicubic[bg];[bg]split[vid][pal];[pal]palettegen[pal];[vid][pal]paletteuse" -y "$1.gif"
     echo "Creating compressed/lossy GIF via gifsicle..."
     gifsicle "$1.gif" --lossy -o "$1.lossy.gif"
     echo "Done."
@@ -283,7 +280,7 @@ function to24fps() { vspipe --arg in_filename="$1" --arg display_fps=24 --y4m ~/
 
 function stable() {
     ffmpeg -i "$1" -vf vidstabdetect=stepsize=12:result=transform_vectors.trf -f null -
-    ffmpeg -i "$1" -vf vidstabtransform=input=transform_vectors.trf:zoom=1:smoothing=30,unsharp=5:5:0.8:3:3:0.4 -vcodec libx264 -preset slow -tune film -crf 18 -acodec copy "$1.stable.mp4"
+    ffmpeg -i "$1" -vf vidstabtransform=input=transform_vectors.trf:zoom=1:smoothing=30,unsharp=5:5:0.8:3:3:0.4 -vcodec libx264 -preset slow -tune film -crf 17 -acodec copy "$1.stable.mp4"
 }
 
 function deshake() {
@@ -439,6 +436,16 @@ portkill () {
         echo -e "\nNothing killed"
     fi
 
+}
+
+smooth() {
+    local file
+    if [ -f $1 ]; then
+        file=$(greadlink -f $1)
+    else
+        file=$(greadlink -f "$1")
+    fi
+    vspipe --arg in_filename="$file" --arg display_fps=60 --y4m ~/.config/mpv/motioninterpolation.vpy - |ffmpeg -i - -crf 18 -y "$file.smoothed.mp4"
 }
 
 

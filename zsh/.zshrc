@@ -15,13 +15,13 @@ autoload -Uz _zinit
 export LESS="-R --quit-if-one-screen"
 export SHELL=/bin/zsh
 export ZSH_CUSTOM="$HOME/.config/shell/zsh"
-export ZSH="$HOME/.oh-my-zsh"
 
 zinit wait lucid light-mode for \
-  atinit"zicompinit; zicdreplay" zdharma/fast-syntax-highlighting \
   atload"_zsh_autosuggest_start" zsh-users/zsh-autosuggestions \
+  atinit"zicompinit; zicdreplay" zdharma/fast-syntax-highlighting \
   blockf atpull'zinit creinstall -q .' zsh-users/zsh-completions \
   https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/fzf/fzf.plugin.zsh \
+  softmoth/zsh-vim-mode \
   OMZ::plugins/docker/_docker \
   OMZP::colored-man-pages \
   OMZP::direnv \
@@ -31,12 +31,13 @@ zinit wait lucid light-mode for \
   OMZP::git \
   OMZP::npm \
   OMZP::ssh-agent \
-  OMZP::vi-mode \
   OMZP::yarn \
+  OMZL::history.zsh \
   atload"enable-fzf-tab" Aloxaf/fzf-tab \
 
 zinit lucid light-mode for \
-  OMZP::direnv
+  OMZP::direnv \
+  OMZL::history.zsh \
 
 
 # function path
@@ -47,6 +48,7 @@ fpath+=(
 )
 
 # Autosource files
+zinit snippet ~/.dotfiles/shell/.config/shell/shared/01_path.sh
 for f in ~/.config/shell/shared/*
 do
   zinit ice wait lucid

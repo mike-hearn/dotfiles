@@ -39,8 +39,9 @@ zinit lucid light-mode for \
 
 
 # Install required binaries
+[[ $(uname -m) = arm64 ]] && local PICK="*-aarch64-apple-*"
 zinit from"gh-r" as"program" \
-  atclone'./starship init zsh > zhook.zsh' atpull'%atclone' \
+  bpick"$PICK" atclone'./starship init zsh > zhook.zsh' atpull'%atclone' \
   pick"starship" src="zhook.zsh" for \
   starship/starship
 
@@ -89,4 +90,3 @@ do
   zinit ice wait lucid
   zinit snippet $f
 done
-

@@ -16,18 +16,17 @@ export LESS="-R --quit-if-one-screen"
 export SHELL=/bin/zsh
 export ZSH_CUSTOM="$HOME/.config/shell/zsh"
 
+
+# Base extensions + oh-my-zsh
 zinit wait lucid light-mode for \
   atload"_zsh_autosuggest_start" zsh-users/zsh-autosuggestions \
   atinit"zicompinit; zicdreplay" zdharma/fast-syntax-highlighting \
   blockf atpull'zinit creinstall -q .' zsh-users/zsh-completions \
-  https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/fzf/fzf.plugin.zsh \
   softmoth/zsh-vim-mode \
   OMZ::plugins/docker/_docker \
   OMZP::colored-man-pages \
-  OMZP::direnv \
   OMZP::django \
   OMZP::docker-compose \
-  OMZP::fzf \
   OMZP::git \
   OMZP::npm \
   OMZP::ssh-agent \
@@ -36,16 +35,42 @@ zinit wait lucid light-mode for \
   atload"enable-fzf-tab" Aloxaf/fzf-tab \
 
 zinit lucid light-mode for \
-  OMZP::direnv \
   OMZL::history.zsh \
 
 
-# function path
+# Install required binaries
+zinit from"gh-r" as"program" \
+  atclone'./starship init zsh > zhook.zsh' atpull'%atclone' \
+  pick"starship" src="zhook.zsh" for \
+  starship/starship
+
+zinit from"gh-r" as"program" mv"direnv* -> direnv" \
+    atclone'./direnv hook zsh > zhook.zsh' atpull'%atclone' \
+    pick"direnv" src="zhook.zsh" for \
+    direnv/direnv
+
+zinit from"gh-r" as"program" mv"jump* -> jump" \
+    atclone'./jump shell zsh > zhook.zsh' atpull'%atclone' \
+    pick"jump" src="zhook.zsh" for \
+    gsamokovarov/jump
+
+zinit from"gh-r" as"program" mv"bin/exa* -> exa" \
+    pick"exa" for ogham/exa
+
+zinit ice from"gh-r" as"program"
+zinit load junegunn/fzf-bin
+
+zinit wait lucid light-mode for \
+  atload"enable-fzf-tab" Aloxaf/fzf-tab
+
+
+# Function path
 fpath+=(
   "$ZSH_CUSTOM/functions"
   "$HOME/.zfunctions"
   "$fpath"
 )
+
 
 # Autosource files
 zinit snippet ~/.dotfiles/shell/.config/shell/shared/01_path.sh
@@ -65,12 +90,3 @@ do
   zinit snippet $f
 done
 
-# Spaceship prompt settings
-eval "$(starship init zsh)"
-
-# Jump directory navigation
-eval "$(jump shell zsh)"
-
-
-zinit wait lucid light-mode for \
-  atload"enable-fzf-tab" Aloxaf/fzf-tab \

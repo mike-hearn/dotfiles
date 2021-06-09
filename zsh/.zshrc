@@ -49,8 +49,9 @@ zinit from"gh-r" as"program" mv"direnv* -> direnv" \
     pick"direnv" src="zhook.zsh" for \
     direnv/direnv
 
+[[ $OSTYPE = *darwin* ]] && local PICK="*osx*"
 zinit from"gh-r" as"program" mv"jump* -> jump" \
-    atclone'./jump shell zsh > zhook.zsh' atpull'%atclone' \
+    bpick"$PICK" atclone'./jump shell zsh > zhook.zsh' atpull'%atclone' \
     pick"jump" src="zhook.zsh" for \
     gsamokovarov/jump
 
@@ -73,7 +74,6 @@ fpath+=(
 
 
 # Autosource files
-zinit snippet ~/.dotfiles/shell/.config/shell/shared/01_path.sh
 for f in ~/.config/shell/shared/*
 do
   zinit ice wait lucid

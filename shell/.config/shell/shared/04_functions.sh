@@ -333,7 +333,7 @@ function vactivate() {
 
 tn() {
     local GITROOT=$(git rev-parse --show-toplevel 2>/dev/null)
-    tmux rename-session -t "$(tmux display-message -p '#{session_name}')" "$(basename ${GITROOT:-$(basename $(pwd))} | sed 's/[-_\. ]/-/g')"
+    tmux rename-session -t "$(tmux display-message -p '#{session_name}')" "$(basename ${GITROOT:-$(basename $(pwd))} | sed 's/[-_ ]/-/g; s/\.//g')"
 }
 
 gri() {
@@ -435,7 +435,6 @@ portkill () {
     if [ $_hasbeenkilled -eq 0 ]; then
         echo -e "\nNothing killed"
     fi
-
 }
 
 smooth() {
@@ -446,6 +445,15 @@ smooth() {
         file=$(greadlink -f "$1")
     fi
     vspipe --arg in_filename="$file" --arg display_fps=60 --y4m ~/.config/mpv/motioninterpolation.vpy - |ffmpeg -i - -crf 18 -y "$file.smoothed.mp4"
+}
+
+clear() {
+    printf "\033c"
+    eval "base16_$BASE16_THEME"
+}
+
+cclear() {
+    command clear
 }
 
 

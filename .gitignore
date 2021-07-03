@@ -4,7 +4,7 @@
 .stignore
 .stversions
 extra
-nvim/.config/coc/extensions/coc-*/
+nvim/.config/coc/extensions/coc-*
 nvim/.config/coc/extensions/db.json
 nvim/.config/coc/extensions/node_modules/
 nvim/.config/coc/extensions/yarn.lock

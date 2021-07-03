@@ -1,2 +1,3 @@
 #!/usr/bin/env sh
 printf "\033c"
+eval base16_$BASE16_THEME 2> /dev/null
